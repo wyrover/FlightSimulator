@@ -1,55 +1,30 @@
-﻿Build started 24/02/2015 16:26:00.
-     1>Project "T:\Documents\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
-     1>FxCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0 /Fo "T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\basic_fs.cso" /Od /Zi ..\asset\shader\hlsl\basic_fs.hlsl 
-     1>T:\Documents\GitHub\FlightSimulator\GFXiiFramework\asset\shader\hlsl\basic_fs.hlsl(13,12-55): warning X3206: 'Sample': implicit truncation of vector type
-         
-         compilation object save succeeded; see T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\basic_fs.cso
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T vs_4_0_level_9_1 /Fo "T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\basic_vs.cso" /Od /Zi ..\asset\shader\hlsl\basic_vs.hlsl 
-         compilation object save succeeded; see T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\basic_vs.cso
-       ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp D3D11\D3D11Cube.cpp D3D11\D3D11Mesh.cpp D3D11\D3D11Shader.cpp D3D11\D3D11Texture.cpp D3D11\D3D11Window.cpp GFXiiFramework.cpp ImageIO.cpp OBJFileReader.cpp OpenGL\OGLCube.cpp OpenGL\OGLMesh.cpp OpenGL\OGLShader.cpp OpenGL\OGLTexture.cpp OpenGL\OGLWindow.cpp Triangle.cpp Vector3.cpp
+﻿Build started 03/03/2015 18:25:31.
+     1>Project "D:\Downloads\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp GFXiiFramework.cpp ImageIO.cpp OBJFileReader.cpp OpenGL\OGLCube.cpp OpenGL\OGLMesh.cpp OpenGL\OGLShader.cpp OpenGL\OGLTexture.cpp OpenGL\OGLWindow.cpp Triangle.cpp Vector3.cpp
          Vector3.cpp
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\vector3.cpp(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\downloads\gfxiiframework\gfxiiframework\vector3.cpp(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
          Triangle.cpp
          OGLWindow.cpp
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\opengl\oglwindow.cpp(140): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\downloads\gfxiiframework\gfxiiframework\opengl\oglwindow.cpp(140): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
          OGLTexture.cpp
          OGLShader.cpp
          OGLMesh.cpp
          OGLCube.cpp
          OBJFileReader.cpp
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\objfilereader.cpp(114): warning C4101: 'index4' : unreferenced local variable
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\objfilereader.cpp(110): warning C4101: 'dummy' : unreferenced local variable
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\objfilereader.cpp(118): warning C4101: 'tidx4' : unreferenced local variable
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\objfilereader.cpp(116): warning C4101: 'nidx4' : unreferenced local variable
+     1>d:\downloads\gfxiiframework\gfxiiframework\objfilereader.cpp(114): warning C4101: 'index4' : unreferenced local variable
+     1>d:\downloads\gfxiiframework\gfxiiframework\objfilereader.cpp(110): warning C4101: 'dummy' : unreferenced local variable
+     1>d:\downloads\gfxiiframework\gfxiiframework\objfilereader.cpp(118): warning C4101: 'tidx4' : unreferenced local variable
+     1>d:\downloads\gfxiiframework\gfxiiframework\objfilereader.cpp(116): warning C4101: 'nidx4' : unreferenced local variable
          ImageIO.cpp
          GFXiiFramework.cpp
-         D3D11Window.cpp
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\d3d11\d3d11window.cpp(156): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\d3d11\d3d11window.cpp(158): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\d3d11\d3d11window.cpp(171): warning C4244: 'argument' : conversion from 'double' to 'UINT8', possible loss of data
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\d3d11\d3d11window.cpp(201): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\d3d11\d3d11window.cpp(202): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\d3d11\d3d11window.cpp(209): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         D3D11Texture.cpp
-         D3D11Shader.cpp
-         D3D11Mesh.cpp
-         D3D11Cube.cpp
          BaseApplication.cpp
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\baseapplication.cpp(124): warning C4101: 'wmId' : unreferenced local variable
-     1>t:\documents\github\flightsimulator\gfxiiframework\gfxiiframework\baseapplication.cpp(124): warning C4101: 'wmEvent' : unreferenced local variable
+     1>d:\downloads\gfxiiframework\gfxiiframework\baseapplication.cpp(123): warning C4101: 'wmId' : unreferenced local variable
+     1>d:\downloads\gfxiiframework\gfxiiframework\baseapplication.cpp(123): warning C4101: 'wmEvent' : unreferenced local variable
          Generating Code...
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\GFXiiFramework.res" GFXiiFramework.rc 
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Downloads\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Downloads\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Downloads\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
          Debug\BaseApplication.obj
-         Debug\D3D11Cube.obj
-         Debug\D3D11Mesh.obj
-         Debug\D3D11Shader.obj
-         Debug\D3D11Texture.obj
-         Debug\D3D11Window.obj
          Debug\GFXiiFramework.obj
          Debug\ImageIO.obj
          Debug\OBJFileReader.obj
@@ -61,9 +36,9 @@
          Debug\Triangle.obj
          Debug\Vector3.obj
          GLEW\lib\glew32.lib
-         GFXiiFramework.vcxproj -> T:\Documents\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe
-     1>Done Building Project "T:\Documents\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Rebuild target(s)).
+         GFXiiFramework.vcxproj -> D:\Downloads\GFXiiFramework\Debug\GFXiiFramework.exe
+     1>Done Building Project "D:\Downloads\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:10.60
+Time Elapsed 00:00:05.02

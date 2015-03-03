@@ -13,11 +13,6 @@
   <ItemGroup>
     <ClInclude Include="BaseApplication.h" />
     <ClInclude Include="BaseTexture.h" />
-    <ClInclude Include="D3D11\D3D11Cube.h" />
-    <ClInclude Include="D3D11\D3D11Mesh.h" />
-    <ClInclude Include="D3D11\D3D11Shader.h" />
-    <ClInclude Include="D3D11\D3D11Texture.h" />
-    <ClInclude Include="D3D11\D3D11Window.h" />
     <ClInclude Include="GFXiiFramework.h" />
     <ClInclude Include="GLEW\include\glew.h" />
     <ClInclude Include="GLEW\include\glxew.h" />
@@ -40,11 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApplication.cpp" />
-    <ClCompile Include="D3D11\D3D11Cube.cpp" />
-    <ClCompile Include="D3D11\D3D11Mesh.cpp" />
-    <ClCompile Include="D3D11\D3D11Shader.cpp" />
-    <ClCompile Include="D3D11\D3D11Texture.cpp" />
-    <ClCompile Include="D3D11\D3D11Window.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="ImageIO.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
@@ -69,16 +59,10 @@
     <None Include="GLEW\glew32.dll" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\asset\shader\hlsl\basic_fs.hlsl">
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="..\asset\shader\hlsl\basic_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="GLEW\lib\glew32.lib" />
+    <Library Include="GLEW\lib\glew32.lib">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
+    </Library>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D3D76059-5FF0-475F-836A-CFF6ABA7EBC3}</ProjectGuid>
@@ -116,6 +100,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
+    <LibraryPath>$(ProjectDir)/GLEW/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -125,10 +111,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,12 +130,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
