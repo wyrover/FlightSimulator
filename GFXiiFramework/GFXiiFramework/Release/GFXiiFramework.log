@@ -1,33 +1,38 @@
-﻿Build started 05/03/2015 15:16:01.
-     1>Project "\\ctstudent2\studentusers\100271404\Documents\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
+﻿Build started 05/03/2015 21:41:54.
+     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp GFXiiFramework.cpp ImageIO.cpp OBJFileReader.cpp OpenGL\OGLCube.cpp OpenGL\OGLMesh.cpp OpenGL\OGLShader.cpp OpenGL\OGLTexture.cpp OpenGL\OGLWindow.cpp Triangle.cpp Vector3.cpp
-         BaseApplication.cpp
-     1>BaseApplication.cpp(123): warning C4101: 'wmId' : unreferenced local variable
-     1>BaseApplication.cpp(123): warning C4101: 'wmEvent' : unreferenced local variable
-         GFXiiFramework.cpp
-         ImageIO.cpp
-         OBJFileReader.cpp
-     1>OBJFileReader.cpp(114): warning C4101: 'index4' : unreferenced local variable
-     1>OBJFileReader.cpp(110): warning C4101: 'dummy' : unreferenced local variable
-     1>OBJFileReader.cpp(118): warning C4101: 'tidx4' : unreferenced local variable
-     1>OBJFileReader.cpp(116): warning C4101: 'nidx4' : unreferenced local variable
-         OGLCube.cpp
-         OGLMesh.cpp
-         OGLShader.cpp
-         OGLTexture.cpp
-         OGLWindow.cpp
-     1>OpenGL\OGLWindow.cpp(140): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         Triangle.cpp
-         Vector3.cpp
-     1>Vector3.cpp(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\GFXiiFramework.res" GFXiiFramework.rc 
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Matrix4x4.cpp
+         Matrix4x4.cpp
+     1>Matrix4x4.cpp(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(59): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(66): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(67): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(68): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(69): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(76): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(77): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(78): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(79): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(88): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(89): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(90): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(91): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(95): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(96): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(97): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(98): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(102): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(103): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(104): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Matrix4x4.cpp(105): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\ctstudent2\studentusers\100271404\Documents\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\ctstudent2\studentusers\100271404\Documents\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\ctstudent2\studentusers\100271404\Documents\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.lib" /MACHINE:X86 /SAFESEH Release\GFXiiFramework.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.lib" /MACHINE:X86 /SAFESEH Release\GFXiiFramework.res
          Release\BaseApplication.obj
          Release\GFXiiFramework.obj
          Release\ImageIO.obj
+         Release\Matrix4x4.obj
          Release\OBJFileReader.obj
          Release\OGLCube.obj
          Release\OGLMesh.obj
@@ -39,9 +44,9 @@
          GLEW\lib\glew32.lib
          Generating code
          Finished generating code
-         GFXiiFramework.vcxproj -> \\ctstudent2\studentusers\100271404\Documents\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe
-     1>Done Building Project "\\ctstudent2\studentusers\100271404\Documents\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
+         GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe
+     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:07.56
+Time Elapsed 00:00:01.40
