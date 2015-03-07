@@ -1,44 +1,22 @@
-﻿Build started 05/03/2015 21:41:54.
+﻿Build started 07/03/2015 17:31:53.
      1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Matrix4x4.cpp
-         Matrix4x4.cpp
-     1>Matrix4x4.cpp(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(59): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(66): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(67): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(68): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(69): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(76): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(77): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(78): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(79): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(88): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(89): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(90): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(91): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(95): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(96): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(97): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(98): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(102): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(103): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(104): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Matrix4x4.cpp(105): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt OpenGL\OGLWindow.cpp
+         OGLWindow.cpp
+     1>OpenGL\OGLWindow.cpp(139): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.lib" /MACHINE:X86 /SAFESEH Release\GFXiiFramework.res
          Release\BaseApplication.obj
+         Release\camera.obj
          Release\GFXiiFramework.obj
          Release\ImageIO.obj
-         Release\Matrix4x4.obj
          Release\OBJFileReader.obj
          Release\OGLCube.obj
          Release\OGLMesh.obj
          Release\OGLShader.obj
          Release\OGLTexture.obj
          Release\OGLWindow.obj
+         Release\quaternion.obj
          Release\Triangle.obj
          Release\Vector3.obj
          GLEW\lib\glew32.lib
@@ -49,4 +27,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.40
+Time Elapsed 00:00:02.15

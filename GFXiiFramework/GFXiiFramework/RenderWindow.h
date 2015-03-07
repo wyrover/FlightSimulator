@@ -29,4 +29,10 @@ class RenderWindow
 		virtual BOOL		MouseLBDown ( int x, int y ) = 0;
 		virtual BOOL		MouseLBUp ( int x, int y ) = 0;
 		virtual BOOL		MouseMove ( int x, int y ) = 0;
+		virtual BOOL		KeyPressW() = 0;
+		virtual BOOL		KeyPressS() = 0;
+		virtual BOOL		KeyPressA() = 0;
+		virtual BOOL		KeyPressD() = 0;
+		virtual BOOL		KeyPressZ() = 0;
+		virtual BOOL		KeyPressX() = 0;
 };

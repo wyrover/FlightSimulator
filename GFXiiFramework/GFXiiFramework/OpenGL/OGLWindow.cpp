@@ -1,7 +1,7 @@
 #include "OGLWindow.h"
 #include "Resource.h"
 #include "GLEW/include/glew.h"
-
+#include <iostream>
 
 OGLWindow::OGLWindow()
 {
@@ -101,9 +101,7 @@ BOOL OGLWindow::DestroyOGLContext()
 
 BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 {
-	m_hwnd = CreateWindowEx( WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
-		L"RenderWindow", L"OGLWindow", WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|WS_CLIPCHILDREN,
-		0, 0, width, height, NULL, NULL, hInstance, NULL);
+	m_hwnd = CreateWindowEx( WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, L"RenderWindow", L"OGLWindow", WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|WS_CLIPCHILDREN, 0, 0, width, height, NULL, NULL, hInstance, NULL);
 
 	if ( ! m_hwnd )
 		return FALSE;
@@ -120,6 +118,7 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_width = width;
 	m_height = height;
 
+	//m_camera.SetCameraAspectRatio((float)width / (float)height);
 	
 	m_mesh = new OGLMesh(L"../asset/models/house.obj");
 
@@ -133,11 +132,11 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 void OGLWindow::Render()
 {
-	float modelview[16];
-	float projection[16];
+	float modelview[16] = { 0 };
+	float projection[16] = { 0 };
 
 	m_euler[0] = 15;//m_euler[0] > 360.0 ? 0 : m_euler[0] + 1.0;
-	m_euler[1] = m_euler[1] > 360.0 ? 0 : m_euler[1] + .01;
+	m_euler[1] = m_euler[1] > 360.0 ? 0 : m_euler[1] + .1;
 	//m_euler[2] = m_euler[2] > 360.0 ? 0 : m_euler[2] + .01;
 
 	Renderable* prenderable = static_cast<Renderable*>(m_mesh);
@@ -146,13 +145,15 @@ void OGLWindow::Render()
 
 	glLoadIdentity();
 	
-	glTranslatef( 0.0, 0.0, -10.0 );
-	glRotatef( m_euler[0], 1.0, 0.0, 0.0 );
-	glRotatef( m_euler[1], 0.0, 1.0, 0.0 );
-	glRotatef( m_euler[2], 0.0, 0.0, 1.0 );
-
-	glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
-	glGetFloatv( GL_PROJECTION_MATRIX, projection);
+	//glTranslatef( 0.0, 0.0, -10.0 );
+	//glRotatef( m_euler[0], 1.0, 0.0, 0.0 );
+	//glRotatef( m_euler[1], 0.0, 1.0, 0.0 );
+	//glRotatef( m_euler[2], 0.0, 0.0, 1.0 );
+	
+	//glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
+	m_camera.GetModelView(modelview);
+	m_camera.GetProjection(projection);
+	//glGetFloatv( GL_PROJECTION_MATRIX, projection);
 
 	glUniformMatrix4fv( m_uniform_modelview, 1, GL_FALSE, modelview );
 	glUniformMatrix4fv( m_uniform_projection, 1, GL_FALSE, projection );
@@ -169,17 +170,19 @@ void OGLWindow::Render()
 
 void OGLWindow::Resize( int width, int height )
 {
-	float aspect_ratio = (float)width/(float)height;
+	glViewport(0, 0, width, height);
 
-	glViewport( 0, 0, width, height );
+	//m_camera.SetCameraAspectRatio((float)width / (float)height);
+	m_camera.SetProjectionMatrix(60.f, (float)width / (float)height, 1.f, 1000.f);
 	
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	//glFrustum( -5*aspect_ratio, 5*aspect_ratio, -5, 5, 1.0, 100.0 );
-	gluPerspective(60.0, aspect_ratio, 1.0, 1000.0);
+	//glMatrixMode( GL_PROJECTION );
+	//glLoadIdentity();
+	//glFrustum( -10*aspect_ratio, 10*aspect_ratio, -10, 10, 1, 20.0 );
+	//glTranslatef(0, 0, -7);
+	//gluPerspective(60.0, aspect_ratio, 1.0, 1000.0);
 	
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
+	//glMatrixMode( GL_MODELVIEW );
+	//glLoadIdentity();
 
 	return;
 }
@@ -220,11 +223,15 @@ void OGLWindow::InitOGLState()
 	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
 	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MIN_FILTER , GL_LINEAR);  
 	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MAG_FILTER , GL_LINEAR);
+
+
+	m_camera.SetCameraPosition(&glm::vec3(0, 0, 10));
 }
 
 BOOL OGLWindow::MouseLBDown ( int x, int y )
 {
-	
+	m_camera.RotateCamera(0, 10, 0);
+
 	return TRUE;
 }
 
@@ -235,5 +242,47 @@ BOOL OGLWindow::MouseLBUp ( int x, int y )
 
 BOOL OGLWindow::MouseMove ( int x, int y )
 {
+	return TRUE;
+}
+
+BOOL OGLWindow::KeyPressS()
+{
+	m_camera.DollyCamera(0.1f);
+
+	return TRUE;
+}
+
+BOOL OGLWindow::KeyPressW()
+{
+	m_camera.DollyCamera(-0.1f);
+
+	return TRUE;
+}
+
+BOOL OGLWindow::KeyPressA()
+{
+	m_camera.StrafeCamera(-0.1f);
+
+	return TRUE;
+}
+
+BOOL OGLWindow::KeyPressD()
+{
+	m_camera.StrafeCamera(0.1f);
+
+	return TRUE;
+}
+
+BOOL OGLWindow::KeyPressX()
+{
+	m_camera.PedCamera(0.1f);
+
+	return TRUE;
+}
+
+BOOL OGLWindow::KeyPressZ()
+{
+	m_camera.PedCamera(-0.1f);
+
 	return TRUE;
 }

@@ -34,8 +34,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	//Create the application instance
 	//To Create a D3D11 render window: replace RenderSystemOGL with RenderSystemD3D11
-	BaseApplication* myapp = BaseApplication::CreateApplication(hInstance, 
-		BaseApplication::RenderSystemOGL);
+	BaseApplication* myapp = BaseApplication::CreateApplication(hInstance);
 	
 	exitcode = myapp->Run();
 	

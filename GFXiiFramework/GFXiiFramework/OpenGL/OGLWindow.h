@@ -5,6 +5,7 @@
 #include "OGLMesh.h"
 #include "OGLShader.h"
 #include "OGLTexture.h"
+#include "..\Camera.h"
 
 class OGLWindow : public RenderWindow
 {
@@ -27,6 +28,8 @@ class OGLWindow : public RenderWindow
 		int                     m_uniform_texture;
 		int						m_texDefaultSampler;
 
+		Camera					m_camera;
+
 protected:
 
 		HGLRC CreateOGLContext (HDC hdc);
@@ -47,4 +50,10 @@ protected:
 		BOOL		MouseLBDown ( int x, int y );
 		BOOL		MouseLBUp ( int x, int y );
 		BOOL		MouseMove ( int x, int y );
+		BOOL		KeyPressW();
+		BOOL		KeyPressS();
+		BOOL		KeyPressA();
+		BOOL		KeyPressD();
+		BOOL		KeyPressZ();
+		BOOL		KeyPressX();
 };

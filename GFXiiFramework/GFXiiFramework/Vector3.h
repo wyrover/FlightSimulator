@@ -63,12 +63,6 @@ public:
 	{
 		return m_element[2];
 	}
-	// MAY NEED TO CHANGE THIS
-	inline float GetW() const
-	{
-		return 1;
-	}
-
 };
 
 struct Vertex

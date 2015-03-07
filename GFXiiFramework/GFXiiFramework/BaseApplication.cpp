@@ -3,6 +3,13 @@
 #include "Resource.h"
 #include <Windowsx.h>
 
+#define KEY_CODE_W 0x57
+#define KEY_CODE_A 0x41
+#define KEY_CODE_S 0x53
+#define KEY_CODE_D 0x44
+#define KEY_CODE_X 0x58
+#define KEY_CODE_Z 0x5A
+
 BaseApplication* BaseApplication::s_oglapp = NULL;
 
 BaseApplication::BaseApplication()
@@ -42,7 +49,7 @@ BOOL BaseApplication::MyRegisterClass(HINSTANCE hinst)
 	return TRUE;
 }
 
-BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst, ERenderSystemType type)
+BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst)
 {
 	if ( ! s_oglapp )
 	{
@@ -51,8 +58,8 @@ BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst, ERenderSyst
 		s_oglapp->m_hInst = hinst;
 		s_oglapp->MyRegisterClass(hinst);
 
-		//Now create an OGLWindow for this application
-		s_oglapp->CreateApplicationWindow(1280,720, type);
+//Now create an OGLWindow for this application
+s_oglapp->CreateApplicationWindow(1280, 720);
 	}
 
 	return s_oglapp;
@@ -60,7 +67,7 @@ BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst, ERenderSyst
 
 void BaseApplication::DestroyApplication()
 {
-	if ( s_oglapp )
+	if (s_oglapp)
 		delete s_oglapp;
 }
 
@@ -69,20 +76,12 @@ BaseApplication* BaseApplication::GetApplication()
 	return s_oglapp;
 }
 
-void BaseApplication::CreateApplicationWindow( int width, int height, ERenderSystemType type )
+void BaseApplication::CreateApplicationWindow(int width, int height)
 {
 	if (!m_appwnd)
 	{
-		if (type == RenderSystemD3D11)
-		{
-			//m_appwnd = new D3D11Window();
-			//m_appwnd->InitWindow(m_hInst, width, height);
-		}
-		else if (type == RenderSystemOGL)
-		{
-			m_appwnd = new OGLWindow();
-			m_appwnd->InitWindow(m_hInst, width, height);
-		}
+		m_appwnd = new OGLWindow();
+		m_appwnd->InitWindow(m_hInst, width, height);
 		m_appwnd->SetVisible(TRUE);
 	}
 }
@@ -91,26 +90,26 @@ int BaseApplication::Run()
 {
 	MSG msg;
 
-	while ( !m_terminate )
+	while (!m_terminate)
 	{
-		if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			//peek for windows message
-			if ( msg.message == WM_QUIT )
+			if (msg.message == WM_QUIT)
 			{
 				Kill();
 			}
 			else
 			{
-				TranslateMessage ( &msg );
-				DispatchMessage ( &msg );
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 			}
 		}
-		
+		KeyboardInput();
 		m_appwnd->Render();
 	}
 
-	return (int) msg.wParam;
+	return (int)msg.wParam;
 }
 
 void BaseApplication::Kill()
@@ -122,35 +121,67 @@ LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LP
 {
 	int wmId, wmEvent;
 
-	switch ( msg )
+	switch (msg)
 	{
-		case WM_SIZE:
-			s_oglapp->GetApplicationWindow()->Resize( LOWORD(lparam), HIWORD(lparam) );
-			break;
+	case WM_SIZE:
+		s_oglapp->GetApplicationWindow()->Resize(LOWORD(lparam), HIWORD(lparam));
+		break;
 
-		case WM_CLOSE:
-			s_oglapp->GetApplicationWindow()->DestroyRenderWindow();
-			break;
+	case WM_CLOSE:
+		s_oglapp->GetApplicationWindow()->DestroyRenderWindow();
+		break;
 
-		case WM_MOUSEMOVE:
-			s_oglapp->GetApplicationWindow()->MouseMove( GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam) );
-			break;
+	case WM_MOUSEMOVE:
+		s_oglapp->GetApplicationWindow()->MouseMove(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+		break;
 
-		case WM_LBUTTONUP:
-			s_oglapp->GetApplicationWindow()->MouseLBUp( GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam) );
-			break;
+	case WM_LBUTTONUP:
+		s_oglapp->GetApplicationWindow()->MouseLBUp(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+		break;
 
-		case WM_LBUTTONDOWN:
-			s_oglapp->GetApplicationWindow()->MouseLBDown( GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam) );
-			break;
+	case WM_LBUTTONDOWN:
+		s_oglapp->GetApplicationWindow()->MouseLBDown(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+		break;
 
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
 
-		default:
-			return DefWindowProc( hwnd, msg, wparam, lparam );
+	default:
+		return DefWindowProc(hwnd, msg, wparam, lparam);
 	}
 
 	return 0;
+}
+
+// Handle key presses here, as the window procedure is delayed!
+void BaseApplication::KeyboardInput()
+{
+	if ((unsigned short)GetKeyState(KEY_CODE_W) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressW();
+	}
+	else if ((unsigned short)GetKeyState(KEY_CODE_S) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressS();
+	}
+
+	if ((unsigned short)GetKeyState(KEY_CODE_A) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressA();
+	}
+	else if ((unsigned short)GetKeyState(KEY_CODE_D) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressD();
+	}
+
+	if ((unsigned short)GetKeyState(KEY_CODE_Z) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressZ();
+	}
+	else if ((unsigned short)GetKeyState(KEY_CODE_X) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressX();
+	}
+
 }
