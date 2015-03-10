@@ -28,6 +28,9 @@ class Camera
 		ECameraType						m_cameratype;				//Projection time
 		float							m_fov;						//vertical field of view in degree
 		float							m_aspectRatio;
+
+		glm::mat4 m_rotX, m_rotY, m_rotZ;
+		float rotAmount;
 		
 	public:
 	

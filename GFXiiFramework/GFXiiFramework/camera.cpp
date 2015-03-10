@@ -102,15 +102,19 @@ void Camera::UpdateViewMatrix()
 	mat[15] = 1.0f;
 
 	m_viewMatrix = glm::make_mat4(mat);
+
+	//m_viewMatrix *= m_rotY;
 }
 
 void Camera::GetModelView(float mat[16])
 {
+	glm::mat4 temp = m_viewMatrix * m_rotY;
+
 	for (unsigned row = 0; row < 4; row++)
 	{
 		for (unsigned column = 0; column < 4; column++)
 		{
-			*mat = m_viewMatrix[row][column];
+			*mat = temp[row][column];
 			mat++;
 		}
 	}
@@ -138,15 +142,23 @@ void Camera::SetProjectionMatrix(float fov, float aspectRatio, float nPlane, flo
 	float f = fPlane;
 
 	float t = tan(fov * 3.14159 / 360.0) * nPlane;
-	float b = -t;
+	//float b = -t;
 
 	float r = aspectRatio * t;
-	float l = aspectRatio * b;
+	float l = aspectRatio * -t;
+
+	//m_projectionMatrix[0][0] = (2 * n) / (r - l);
+	//m_projectionMatrix[0][2] = (r + l) / (r - l);
+	//m_projectionMatrix[1][1] = (2 * n) / (t - b);
+	//m_projectionMatrix[1][2] = (t + b) / (t - b);
+	//m_projectionMatrix[2][2] = (n + f) / (n - f);
+	//m_projectionMatrix[2][3] = (2 * f * n) / (n - f);
+	//m_projectionMatrix[3][2] = -1;
 
 	m_projectionMatrix[0][0] = (2 * n) / (r - l);
 	m_projectionMatrix[0][2] = (r + l) / (r - l);
-	m_projectionMatrix[1][1] = (2 * n) / (t - b);
-	m_projectionMatrix[1][2] = (t + b) / (t - b);
+	m_projectionMatrix[1][1] = (2 * n) / (t + t);
+	m_projectionMatrix[1][2] = (t - t) / (t + t);
 	m_projectionMatrix[2][2] = (n + f) / (n - f);
 	m_projectionMatrix[2][3] = (2 * f * n) / (n - f);
 	m_projectionMatrix[3][2] = -1;
@@ -175,30 +187,33 @@ void Camera::PedCamera(float amount)
 
 void Camera::RotateCamera(float yaw, float pitch, float roll)
 {
-	glm::mat4 rotX, rotY, rotZ;
+	//glm::mat4 rotX, rotY, rotZ;
 
-	SetRotationY(rotY, pitch);
+	SetRotationY(m_rotY, pitch);
+	UpdateViewMatrix();
 
-	float tempX = m_viewMatrix[0][3];
-	float tempY = m_viewMatrix[1][3];
-	float tempZ = m_viewMatrix[2][3];
+	//float tempX = m_viewMatrix[0][3];
+	//float tempY = m_viewMatrix[1][3];
+	//float tempZ = m_viewMatrix[2][3];
 
-	m_viewMatrix[0][3] = m_viewMatrix[1][3] = m_viewMatrix[2][3] = 0;
-	m_viewMatrix *= rotY;
+	//m_viewMatrix[0][3] = m_viewMatrix[1][3] = m_viewMatrix[2][3] = 0;
+	//m_viewMatrix *= rotY;
 
-	m_viewMatrix[0][3] = tempX;
-	m_viewMatrix[1][3] = tempY;
-	m_viewMatrix[2][3] = tempZ;
+	//m_viewMatrix[0][3] = tempX;
+	//m_viewMatrix[1][3] = tempY;
+	//m_viewMatrix[2][3] = tempZ;
 }
 
 void Camera::ZoomCamera(float amount) {}
 
+// Rotating the world?
 void Camera::SetRotationY(glm::mat4 &mat, float &rot)
 {
 	mat = glm::mat4();
+	rotAmount += rot;
 
-	mat[0][0] = cos(rot * RADIANS);
-	mat[0][2] = sin(rot * RADIANS);
-	mat[2][0] = -sin(rot * RADIANS);
-	mat[2][2] = cos(rot * RADIANS);
+	mat[0][0] = cos(rotAmount * RADIANS);
+	mat[0][2] = sin(rotAmount * RADIANS);
+	mat[2][0] = -sin(rotAmount * RADIANS);
+	mat[2][2] = cos(rotAmount * RADIANS);
 }
