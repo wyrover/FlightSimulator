@@ -226,6 +226,7 @@ void OGLWindow::InitOGLState()
 
 
 	m_camera.SetCameraPosition(&glm::vec3(0, 0, 10));
+	m_camera.SetLookAtPoint(&glm::vec3(0, 0, 0));
 }
 
 BOOL OGLWindow::MouseLBDown ( int x, int y )

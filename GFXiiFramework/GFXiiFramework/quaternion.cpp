@@ -89,7 +89,8 @@ float Quaternion::Norm()
 
 float Quaternion::Norm_Sqr() const
 {
-	return (glm::length(m_vector) * glm::length(m_vector)) + (m_scalar * m_scalar);
+	return (m_vector[0] * m_vector[0]) + (m_vector[1] * m_vector[1]) + (m_vector[2] * m_vector[2]) + (m_scalar * m_scalar);
+	//return (glm::length(m_vector) * glm::length(m_vector)) + (m_scalar * m_scalar);
 	//return m_vector.Norm_Sqr() + (m_scalar*m_scalar);
 }
 
@@ -103,17 +104,17 @@ void Quaternion::ConvertToRotationMatrix(glm::mat4* rot) const
 	float s = (norm > 0.0f)?(2.0f/norm):0.0f;
 
 	float xs = m_vector[0]*s;
-	float ys = (m_vector)[1]*s;
-	float zs = (m_vector)[2]*s;
+	float ys = m_vector[1]*s;
+	float zs = m_vector[2]*s;
 	float wxs = m_scalar*xs;
 	float wys = m_scalar*ys;
 	float wzs = m_scalar*zs;
-	float xxs = (m_vector)[0]*xs;
-	float xys = (m_vector)[0]*ys;
-	float xzs = (m_vector)[0]*zs;
-	float yys = (m_vector)[1]*ys;
-	float yzs = (m_vector)[1]*zs;
-	float zzs = (m_vector)[2]*zs;
+	float xxs = m_vector[0]*xs;
+	float xys = m_vector[0]*ys;
+	float xzs = m_vector[0]*zs;
+	float yys = m_vector[1]*ys;
+	float yzs = m_vector[1]*zs;
+	float zzs = m_vector[2]*zs;
 	
 	rotmat[0] = 1.0f - (yys + zzs);
 	rotmat[1] = xys + wzs;

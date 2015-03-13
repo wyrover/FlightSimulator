@@ -5,9 +5,14 @@
 #include <gl\GL.h>
 #include "camera.h"
 #include "glm\gtc\type_ptr.hpp"
+#include "glm\gtc\quaternion.hpp"
 #include "glm\gtx\quaternion.hpp"
+#include "glm\gtc\matrix_transform.hpp"
 
-#define RADIANS 3.14159265359 / 180.0
+#include <iostream>
+
+#define TO_RADIANS(x) (x * 3.14159265359 / 180.0)
+//#define RADIANS 3.14159265359f / 180.f
 
 Camera::Camera()
 {
@@ -101,25 +106,32 @@ void Camera::UpdateViewMatrix()
 	mat[14] = -m_position[2];
 	mat[15] = 1.0f;
 
+	//mat[12] = 0.0f;
+	//mat[13] = 0.0f;
+	//mat[14] = 0.0f;
+	//mat[15] = 1.0f;
+
 	m_viewMatrix = glm::make_mat4(mat);
 
-	//m_viewMatrix *= m_rotY;
+
+	m_viewMatrix = glm::lookAt(m_position, m_direction, m_upVector);
+
+	std::cout << "Position: " << m_viewMatrix[3][0] << ", " << m_viewMatrix[3][1] << ", " << m_viewMatrix[3][2] << std::endl;
+	//std::cout << "Direction: " << mat[2] << ", " << mat[6] << ", " << mat[10] << std::endl;
+	std::cout << "Up Vector: " << m_viewMatrix[0][1] << ", " << m_viewMatrix[1][1] << ", " << m_viewMatrix[2][1] << std::endl;
+	//std::cout << "Right Vector: " << mat[0] << ", " << mat[4] << ", " << mat[8] << std::endl;
 }
 
 void Camera::GetModelView(float mat[16])
 {
-	glm::mat4 temp = m_viewMatrix * m_rotY;
-
 	for (unsigned row = 0; row < 4; row++)
 	{
 		for (unsigned column = 0; column < 4; column++)
 		{
-			*mat = temp[row][column];
+			*mat = m_viewMatrix[row][column];
 			mat++;
 		}
 	}
-
-	
 }
 
 void Camera::GetProjection(float mat[16])
@@ -138,29 +150,17 @@ void Camera::SetProjectionMatrix(float fov, float aspectRatio, float nPlane, flo
 {
 	m_projectionMatrix = glm::mat4();
 
-	float n = nPlane;
-	float f = fPlane;
-
 	float t = tan(fov * 3.14159 / 360.0) * nPlane;
-	//float b = -t;
 
 	float r = aspectRatio * t;
 	float l = aspectRatio * -t;
 
-	//m_projectionMatrix[0][0] = (2 * n) / (r - l);
-	//m_projectionMatrix[0][2] = (r + l) / (r - l);
-	//m_projectionMatrix[1][1] = (2 * n) / (t - b);
-	//m_projectionMatrix[1][2] = (t + b) / (t - b);
-	//m_projectionMatrix[2][2] = (n + f) / (n - f);
-	//m_projectionMatrix[2][3] = (2 * f * n) / (n - f);
-	//m_projectionMatrix[3][2] = -1;
-
-	m_projectionMatrix[0][0] = (2 * n) / (r - l);
+	m_projectionMatrix[0][0] = (2 * nPlane) / (r - l);
 	m_projectionMatrix[0][2] = (r + l) / (r - l);
-	m_projectionMatrix[1][1] = (2 * n) / (t + t);
+	m_projectionMatrix[1][1] = (2 * nPlane) / (t + t);
 	m_projectionMatrix[1][2] = (t - t) / (t + t);
-	m_projectionMatrix[2][2] = (n + f) / (n - f);
-	m_projectionMatrix[2][3] = (2 * f * n) / (n - f);
+	m_projectionMatrix[2][2] = (nPlane + fPlane) / (nPlane - fPlane);
+	m_projectionMatrix[2][3] = (2 * fPlane * nPlane) / (nPlane - fPlane);
 	m_projectionMatrix[3][2] = -1;
 }
 
@@ -168,6 +168,8 @@ void Camera::SetProjectionMatrix(float fov, float aspectRatio, float nPlane, flo
 void Camera::StrafeCamera(float amount) 
 {
 	m_position.x += amount;
+
+
 
 	UpdateViewMatrix();
 }
@@ -187,33 +189,27 @@ void Camera::PedCamera(float amount)
 
 void Camera::RotateCamera(float yaw, float pitch, float roll)
 {
-	//glm::mat4 rotX, rotY, rotZ;
+	Quaternion quatPitch, quatPitchConj, point;
 
-	SetRotationY(m_rotY, pitch);
+	point.SetQuaternion(m_rightVector, 0);
+	quatPitch.SetQuaternion(m_upVector * (float)sin(TO_RADIANS(pitch / 2.0)), cos(TO_RADIANS(pitch / 2.0)));
+	quatPitchConj.SetQuaternion(quatPitch.GetVector() * -1.f, quatPitch.GetScalar());
+
+	m_rightVector = (quatPitch * point * quatPitchConj).GetVector();
+
+	m_direction = glm::cross(m_upVector, m_rightVector);
 	UpdateViewMatrix();
 
-	//float tempX = m_viewMatrix[0][3];
-	//float tempY = m_viewMatrix[1][3];
-	//float tempZ = m_viewMatrix[2][3];
+	//Quaternion quatPitch, quatPitchConj, point;
 
-	//m_viewMatrix[0][3] = m_viewMatrix[1][3] = m_viewMatrix[2][3] = 0;
-	//m_viewMatrix *= rotY;
+	//point.SetQuaternion(m_upVector, 0);
+	//quatPitch.SetQuaternion(m_rightVector * (float)sin(TO_RADIANS(pitch) / 2.0), cos(TO_RADIANS(pitch / 2.0)));
+	//quatPitchConj.SetQuaternion(quatPitch.GetVector() * -1.f, quatPitch.GetScalar());
 
-	//m_viewMatrix[0][3] = tempX;
-	//m_viewMatrix[1][3] = tempY;
-	//m_viewMatrix[2][3] = tempZ;
+	//m_upVector = (quatPitch * point * quatPitchConj).GetVector();
+
+	//m_direction = glm::cross(m_upVector, m_rightVector);
+	//UpdateViewMatrix();
 }
 
 void Camera::ZoomCamera(float amount) {}
-
-// Rotating the world?
-void Camera::SetRotationY(glm::mat4 &mat, float &rot)
-{
-	mat = glm::mat4();
-	rotAmount += rot;
-
-	mat[0][0] = cos(rotAmount * RADIANS);
-	mat[0][2] = sin(rotAmount * RADIANS);
-	mat[2][0] = -sin(rotAmount * RADIANS);
-	mat[2][2] = cos(rotAmount * RADIANS);
-}

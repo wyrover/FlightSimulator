@@ -103,7 +103,6 @@ class Camera
 
 		void							GetModelView(float mat[16]);
 		void							GetProjection(float mat[16]);
-		void							SetRotationY(glm::mat4 &mat, float &rot);
 };
 
 #endif

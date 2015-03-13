@@ -1,22 +1,10 @@
-﻿Build started 10/03/2015 11:10:36.
+﻿Build started 13/03/2015 09:18:01.
      1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp OpenGL\OGLWindow.cpp camera.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt camera.cpp
          camera.cpp
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(144): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(214): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(215): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(216): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(217): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         Generating Code...
-         Compiling...
-         OGLWindow.cpp
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\opengl\oglwindow.cpp(139): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         BaseApplication.cpp
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\baseapplication.cpp(83): warning C4316: 'OGLWindow' : object allocated on the heap may not be aligned 16
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\baseapplication.cpp(122): warning C4101: 'wmId' : unreferenced local variable
-     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\baseapplication.cpp(122): warning C4101: 'wmEvent' : unreferenced local variable
-         Generating Code...
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(153): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
          Debug\BaseApplication.obj
@@ -38,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.68
+Time Elapsed 00:00:01.67

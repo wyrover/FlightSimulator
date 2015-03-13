@@ -1,29 +1,37 @@
-#include "glm\glm.hpp"
+#include "quaternion.h"
 #include "glm\gtc\type_ptr.hpp"
+#include "glm\gtc\quaternion.hpp"
 #include <iostream>
+
+#define TO_RADIANS(x) (float)(x * 3.14159265359 / 180.0)
 
 int main()
 {
-	float mat[16];
+	glm::vec3 upVector(0, 1, 0);
+	glm::vec3 rightVector(1, 0, 0);
+	glm::vec3 directionVector(0, 0, -1);
 
-	for (unsigned index = 0; index < 16; index++)
+	while (true)
 	{
-		if (index == 0 || index == 5 || index == 10 || index == 15)
-			mat[index] = 1;
-		else
-			mat[index] = 0;
-	}
+		//Quaternion quatYaw, quatYawConj, point;
 
-	glm::mat4 matrix = glm::make_mat4(mat);
+		//point.SetQuaternion(rightVector, 0);
+		//quatYaw.SetQuaternion(upVector * sin(TO_RADIANS(10.0 / 2.0)), cos(TO_RADIANS(10.0 / 2.0)));
+		//quatYawConj.SetQuaternion(quatYaw.GetVector() * -1.f, quatYaw.GetScalar());
 
-	unsigned index = 0;
-	for (unsigned i = 0; i < 4; i++)
-	{
-		for (unsigned j = 0; j < 4; j++)
-		{
-			std::cout << matrix[i][j];
-		}
-		std::cout << "\n";
+		//rightVector = (quatYaw * point * quatYawConj).GetVector();
+
+		//directionVector = glm::cross(upVector, rightVector);
+
+		//upVector = glm::vec3(0, 1, 0);
+		//rightVector = glm::vec3(1, 0, 0);
+		//directionVector = glm::vec3(0, 0, -1);
+
+		glm::quat newQuatYaw;
+
+		newQuatYaw = glm::quat(glm::vec3(0, TO_RADIANS(10.0 / 2.0), 0));
+
+		rightVector = newQuatYaw * rightVector * glm::conjugate(newQuatYaw);
 	}
 
 	return 0;
