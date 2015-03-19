@@ -9,6 +9,8 @@
 #define KEY_CODE_D 0x44
 #define KEY_CODE_X 0x58
 #define KEY_CODE_Z 0x5A
+#define KEY_CODE_Q 0x51
+#define KEY_CODE_E 0x45
 
 BaseApplication* BaseApplication::s_oglapp = NULL;
 
@@ -58,8 +60,8 @@ BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst)
 		s_oglapp->m_hInst = hinst;
 		s_oglapp->MyRegisterClass(hinst);
 
-//Now create an OGLWindow for this application
-s_oglapp->CreateApplicationWindow(1280, 720);
+		//Now create an OGLWindow for this application
+		s_oglapp->CreateApplicationWindow(1280, 720);
 	}
 
 	return s_oglapp;
@@ -143,6 +145,10 @@ LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LP
 		s_oglapp->GetApplicationWindow()->MouseLBDown(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
 		break;
 
+	case WM_MOUSEWHEEL:
+		s_oglapp->GetApplicationWindow()->MouseWheel((short)HIWORD(wparam));
+		break;
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -154,7 +160,7 @@ LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LP
 	return 0;
 }
 
-// Handle key presses here, as the window procedure is delayed!
+// Handle key presses here as the window procedure is delayed!
 void BaseApplication::KeyboardInput()
 {
 	if ((unsigned short)GetKeyState(KEY_CODE_W) >> 15)
@@ -184,4 +190,12 @@ void BaseApplication::KeyboardInput()
 		s_oglapp->GetApplicationWindow()->KeyPressX();
 	}
 
+	if ((unsigned short)GetKeyState(KEY_CODE_Q) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressQ();
+	}
+	else if ((unsigned short)GetKeyState(KEY_CODE_E) >> 15)
+	{
+		s_oglapp->GetApplicationWindow()->KeyPressE();
+	}
 }

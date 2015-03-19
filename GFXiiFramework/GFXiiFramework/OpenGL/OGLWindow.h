@@ -28,7 +28,12 @@ class OGLWindow : public RenderWindow
 		int                     m_uniform_texture;
 		int						m_texDefaultSampler;
 
+		// Jordan's code
 		Camera					m_camera;
+
+		bool					m_mouseDown;
+		int						m_lastX;
+		int						m_lastY;
 
 protected:
 
@@ -47,13 +52,16 @@ protected:
 		void		Resize( int width, int height );
 		void		DestroyRenderWindow();
 
-		BOOL		MouseLBDown ( int x, int y );
-		BOOL		MouseLBUp ( int x, int y );
-		BOOL		MouseMove ( int x, int y );
+		BOOL		MouseLBDown(int x, int y);
+		BOOL		MouseLBUp(int x, int y);
+		BOOL		MouseMove(int x, int y);
+		BOOL		MouseWheel(int val);
 		BOOL		KeyPressW();
 		BOOL		KeyPressS();
 		BOOL		KeyPressA();
 		BOOL		KeyPressD();
 		BOOL		KeyPressZ();
 		BOOL		KeyPressX();
+		BOOL		KeyPressQ();
+		BOOL		KeyPressE();
 };

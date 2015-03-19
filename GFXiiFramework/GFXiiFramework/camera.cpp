@@ -12,7 +12,6 @@
 #include <iostream>
 
 #define TO_RADIANS(x) (x * 3.14159265359 / 180.0)
-//#define RADIANS 3.14159265359f / 180.f
 
 Camera::Camera()
 {
@@ -26,16 +25,14 @@ Camera::~Camera()
 void Camera::InitCamera()
 {
 	//Initialise the camera that sits at the origin looking down the negative z-axis.
+
 	m_position = glm::vec3(0.0f, 0.0f, 0.0f);
-	//m_position.SetVector(0.0f, 0.0f, 0.0f);
 	m_upVector = glm::vec3(0.0f, 1.0f, 0.0f);
-	//m_upVector.SetVector(0.0f, 1.0f, 0.0f);
 	m_direction = glm::vec3(0.0f, 0.0f, -1.0f);
-	//m_direction.SetVector(0.0f, 0.0, -1.0f);
+
 	m_rightVector = glm::cross(m_direction, m_upVector);
-	//m_rightVector = m_direction.CrossProduct(m_upVector);
 	m_upVector = glm::cross(m_rightVector, m_direction);
-	//m_upVector = m_rightVector.CrossProduct(m_direction);
+
 	UpdateViewMatrix();
 }
 
@@ -48,20 +45,16 @@ void Camera::SetCameraPosition(const glm::vec3* position)
 void Camera::SetLookAtPoint(const glm::vec3* lookAt)
 {
 	m_direction = glm::normalize((*lookAt) - m_position);
-	//m_direction.Normalise();
 
 	//Recompute right vector and reinforce orthonormality of this three vectors.
 	//Recompute up vector, from new direction and right vector;
 	//TODO: Gram-Schmidt orthogonalisation algorithm can be used for this
+
 	m_rightVector = glm::cross(m_direction, m_upVector);
-	//m_rightVector = m_direction.CrossProduct(m_upVector);
 	m_upVector = glm::cross(m_rightVector, m_direction);
-	//m_upVector = m_rightVector.CrossProduct(m_direction);
 
 	glm::normalize(m_rightVector);
-	//m_rightVector.Normalise();
 	glm::normalize(m_upVector);
-	//m_upVector.Normalise();
 
 	UpdateViewMatrix();
 }
@@ -71,55 +64,34 @@ void Camera::SetUpVector(const glm::vec3* up)
 	m_upVector = (*up);
 	
 	m_rightVector = glm::cross(m_direction, m_upVector);
-	//m_rightVector = m_direction.CrossProduct(m_upVector);
 	m_upVector = glm::cross(m_rightVector, m_direction);
-	//m_upVector = m_rightVector.CrossProduct(m_direction);
 
 	glm::normalize(m_rightVector);
-	//m_rightVector.Normalise();
 	glm::normalize(m_upVector);
-	//m_upVector.Normalise();
 
 	UpdateViewMatrix();
 }
 
 void Camera::UpdateViewMatrix()
 {
-	float mat[16];
+	glm::vec3 zaxis = glm::normalize(m_position - (m_position + m_direction));
+	glm::vec3 xaxis = glm::normalize(glm::cross(m_upVector, zaxis));
+	glm::vec3 yaxis = glm::cross(zaxis, xaxis);
 
-	mat[0] = m_rightVector[0];
-	mat[4] = m_rightVector[1];
-	mat[8] = m_rightVector[2];
-	
-	mat[1] = m_upVector[0];
-	mat[5] = m_upVector[1];
-	mat[9] = m_upVector[2];
+	// view matrix... ??
+	m_viewMatrix = {
+		glm::vec4(xaxis.x, yaxis.x, zaxis.x, 0),
+		glm::vec4(xaxis.y, yaxis.y, zaxis.y, 0),
+		glm::vec4(xaxis.z, yaxis.z, zaxis.z, 0),
+		glm::vec4(-glm::dot(xaxis, m_position), -glm::dot(yaxis, m_position), -glm::dot(zaxis, m_position), 1)
+	};
 
-	mat[2] = -m_direction[0];
-	mat[6] = -m_direction[1];
-	mat[10] = -m_direction[2];
-
-	mat[3] = mat[7] = mat[11] = 0.0f;
-
-	mat[12] = -m_position[0];
-	mat[13] = -m_position[1];
-	mat[14] = -m_position[2];
-	mat[15] = 1.0f;
-
-	//mat[12] = 0.0f;
-	//mat[13] = 0.0f;
-	//mat[14] = 0.0f;
-	//mat[15] = 1.0f;
-
-	m_viewMatrix = glm::make_mat4(mat);
-
-
-	m_viewMatrix = glm::lookAt(m_position, m_direction, m_upVector);
-
-	std::cout << "Position: " << m_viewMatrix[3][0] << ", " << m_viewMatrix[3][1] << ", " << m_viewMatrix[3][2] << std::endl;
-	//std::cout << "Direction: " << mat[2] << ", " << mat[6] << ", " << mat[10] << std::endl;
-	std::cout << "Up Vector: " << m_viewMatrix[0][1] << ", " << m_viewMatrix[1][1] << ", " << m_viewMatrix[2][1] << std::endl;
-	//std::cout << "Right Vector: " << mat[0] << ", " << mat[4] << ", " << mat[8] << std::endl;
+	// Debug
+	std::cout << "========== camera.cpp ==========" << std::endl;
+	std::cout << m_viewMatrix[0][0] << " " << m_viewMatrix[0][1] << " " << m_viewMatrix[0][2] << " " << m_viewMatrix[0][3] << "\n"
+		<< m_viewMatrix[1][0] << " " << m_viewMatrix[1][1] << " " << m_viewMatrix[1][2] << " " << m_viewMatrix[1][3] << "\n"
+		<< m_viewMatrix[2][0] << " " << m_viewMatrix[2][1] << " " << m_viewMatrix[2][2] << " " << m_viewMatrix[2][3] << "\n"
+		<< m_viewMatrix[3][0] << " " << m_viewMatrix[3][1] << " " << m_viewMatrix[3][2] << " " << m_viewMatrix[3][3] << std::endl;
 }
 
 void Camera::GetModelView(float mat[16])
@@ -145,9 +117,9 @@ void Camera::GetProjection(float mat[16])
 	mat[14] = m_projectionMatrix[3][2];
 }
 
-// Setup the projection matrix
 void Camera::SetProjectionMatrix(float fov, float aspectRatio, float nPlane, float fPlane)
 {
+	// Set up
 	m_projectionMatrix = glm::mat4();
 
 	float t = tan(fov * 3.14159 / 360.0) * nPlane;
@@ -162,54 +134,74 @@ void Camera::SetProjectionMatrix(float fov, float aspectRatio, float nPlane, flo
 	m_projectionMatrix[2][2] = (nPlane + fPlane) / (nPlane - fPlane);
 	m_projectionMatrix[2][3] = (2 * fPlane * nPlane) / (nPlane - fPlane);
 	m_projectionMatrix[3][2] = -1;
+
+	// store values
+	m_fov = fov;
+	m_aspectRatio = aspectRatio;
+	m_nPlane = nPlane;
+	m_fPlane = fPlane;
 }
 
-//TODO: Implement the following camera movement
 void Camera::StrafeCamera(float amount) 
 {
-	m_position.x += amount;
-
-
+	m_position += (m_rightVector * amount);
 
 	UpdateViewMatrix();
 }
 
 void Camera::DollyCamera(float amount) 
 {
-	m_position.z += amount;
+	m_position -= (m_direction * amount);
 
 	UpdateViewMatrix();
 }
 void Camera::PedCamera(float amount) 
 {
-	m_position.y += amount;
+	m_position += (m_upVector * amount);
 
 	UpdateViewMatrix();
 }
 
 void Camera::RotateCamera(float yaw, float pitch, float roll)
 {
-	Quaternion quatPitch, quatPitchConj, point;
+	// Fuck quaternions
+	glm::fquat pitchQuat(cos(TO_RADIANS(pitch / 2.0)), m_rightVector * (float)sin(TO_RADIANS(pitch / 2.0)));
+	glm::fquat yawQuat(cos(TO_RADIANS(yaw / 2.0)), m_upVector * (float)sin(TO_RADIANS(yaw / 2.0)));
+	glm::fquat rollQuat(cos(TO_RADIANS(roll / 2.0)), m_direction * (float)sin(TO_RADIANS(roll / 2.0)));
+	glm::fquat rotation = pitchQuat * yawQuat * rollQuat;
 
-	point.SetQuaternion(m_rightVector, 0);
-	quatPitch.SetQuaternion(m_upVector * (float)sin(TO_RADIANS(pitch / 2.0)), cos(TO_RADIANS(pitch / 2.0)));
-	quatPitchConj.SetQuaternion(quatPitch.GetVector() * -1.f, quatPitch.GetScalar());
+	m_direction = rotation * m_direction * glm::conjugate(rotation);
+	m_rightVector = rotation * m_rightVector * glm::conjugate(rotation);
+	m_upVector = rotation * m_upVector * glm::conjugate(rotation);
 
-	m_rightVector = (quatPitch * point * quatPitchConj).GetVector();
-
-	m_direction = glm::cross(m_upVector, m_rightVector);
 	UpdateViewMatrix();
-
-	//Quaternion quatPitch, quatPitchConj, point;
-
-	//point.SetQuaternion(m_upVector, 0);
-	//quatPitch.SetQuaternion(m_rightVector * (float)sin(TO_RADIANS(pitch) / 2.0), cos(TO_RADIANS(pitch / 2.0)));
-	//quatPitchConj.SetQuaternion(quatPitch.GetVector() * -1.f, quatPitch.GetScalar());
-
-	//m_upVector = (quatPitch * point * quatPitchConj).GetVector();
-
-	//m_direction = glm::cross(m_upVector, m_rightVector);
-	//UpdateViewMatrix();
 }
 
-void Camera::ZoomCamera(float amount) {}
+void Camera::ZoomCamera(float amount)
+{
+	// ! May want to change this
+	if ((m_fov + amount) < 100.f && (m_fov + amount) > 25.f)
+		SetProjectionMatrix(m_fov + amount, m_aspectRatio, m_nPlane, m_fPlane);
+}
+
+void Camera::MouseDown()
+{
+	m_mouseDown = true;
+}
+
+void Camera::MouseUp()
+{
+	m_mouseDown = false;
+}
+
+void Camera::MouseMove(int x, int y)
+{
+	if (m_mouseDown)
+	{
+		RotateCamera((m_lastX - x) / 5.0, (m_lastY - y), 0);
+	}
+
+	// Update mouse positions
+	m_lastX = x;
+	m_lastY = y;
+}

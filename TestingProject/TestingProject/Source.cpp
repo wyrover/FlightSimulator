@@ -1,4 +1,3 @@
-#include "quaternion.h"
 #include "glm\gtc\type_ptr.hpp"
 #include "glm\gtc\quaternion.hpp"
 #include <iostream>
@@ -7,32 +6,17 @@
 
 int main()
 {
-	glm::vec3 upVector(0, 1, 0);
-	glm::vec3 rightVector(1, 0, 0);
-	glm::vec3 directionVector(0, 0, -1);
+	glm::mat4 rotX, rotY, rotZ;
 
-	while (true)
-	{
-		//Quaternion quatYaw, quatYawConj, point;
+	rotX[1][1] = cos(TO_RADIANS(90)); rotX[1][2] = -sin(TO_RADIANS(90));
+	rotX[2][1] = sin(TO_RADIANS(90)); rotX[2][2] = cos(TO_RADIANS(90));
 
-		//point.SetQuaternion(rightVector, 0);
-		//quatYaw.SetQuaternion(upVector * sin(TO_RADIANS(10.0 / 2.0)), cos(TO_RADIANS(10.0 / 2.0)));
-		//quatYawConj.SetQuaternion(quatYaw.GetVector() * -1.f, quatYaw.GetScalar());
+	rotY[0][0] = cos(TO_RADIANS(90)); rotY[0][2] = sin(TO_RADIANS(90));
+	rotY[2][0] = -sin(TO_RADIANS(90)); rotY[2][2] = cos(TO_RADIANS(90));
 
-		//rightVector = (quatYaw * point * quatYawConj).GetVector();
+	glm::vec4 point(0, 1, 0, 0);
 
-		//directionVector = glm::cross(upVector, rightVector);
-
-		//upVector = glm::vec3(0, 1, 0);
-		//rightVector = glm::vec3(1, 0, 0);
-		//directionVector = glm::vec3(0, 0, -1);
-
-		glm::quat newQuatYaw;
-
-		newQuatYaw = glm::quat(glm::vec3(0, TO_RADIANS(10.0 / 2.0), 0));
-
-		rightVector = newQuatYaw * rightVector * glm::conjugate(newQuatYaw);
-	}
+	glm::vec4 result = rotY * rotX * point;
 
 	return 0;
 }

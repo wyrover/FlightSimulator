@@ -5,7 +5,6 @@
 #define __CAMERA_H__
 
 #include "glm\glm.hpp"
-#include "quaternion.h"
 
 class Camera
 {
@@ -26,11 +25,16 @@ class Camera
 		glm::vec3						m_lookAt;					//look at position
 		glm::vec3						m_direction;
 		ECameraType						m_cameratype;				//Projection time
+
 		float							m_fov;						//vertical field of view in degree
 		float							m_aspectRatio;
+		float							m_nPlane;
+		float							m_fPlane;
 
-		glm::mat4 m_rotX, m_rotY, m_rotZ;
-		float rotAmount;
+		// Input
+		bool							m_mouseDown;
+		int								m_lastX;
+		int								m_lastY;
 		
 	public:
 	
@@ -91,10 +95,11 @@ class Camera
 			return &m_projectionMatrix;
 		}
 	
-		//TODO: Setup the projection matrix
 		void							SetProjectionMatrix(float fov, float aspectRatio, float nPlane, float fPlane);
 
-		//TODO: Implement the following camera movement
+		void							MouseDown();
+		void							MouseUp();
+		void							MouseMove(int x, int y);
 		void							StrafeCamera(float amount);
 		void							DollyCamera(float amount);
 		void							PedCamera(float amount);
