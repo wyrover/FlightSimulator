@@ -129,8 +129,7 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 void OGLWindow::Render()
 {
-	float modelview[16] = { 0 };
-	float projection[16] = { 0 };
+	float modelViewProjection[16] = { 0 };
 
 	Renderable* prenderable = static_cast<Renderable*>(m_mesh);
 
@@ -138,11 +137,10 @@ void OGLWindow::Render()
 
 	glLoadIdentity();
 
-	m_camera.GetModelView(modelview);
-	m_camera.GetProjection(projection);
+	m_camera.Update();
+	m_camera.GetModelViewProjection(modelViewProjection);
 
-	glUniformMatrix4fv( m_uniform_modelview, 1, GL_FALSE, modelview );
-	glUniformMatrix4fv( m_uniform_projection, 1, GL_FALSE, projection );
+	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, modelViewProjection);
 	
 	glBindSampler(0, m_texDefaultSampler);
 
@@ -176,18 +174,14 @@ void OGLWindow::InitOGLState()
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.vert", SHADER_VERTEX);
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.frag", SHADER_FRAGMENT);
 
-	//m_shader->BindAttributeLocation( 0, "position" );
-	//m_shader->BindAttributeLocation( 1, "inNormal" );
-	//m_shader->BindAttributeLocation( 2, "inUV" );
-
 	glBindFragDataLocation( m_shader->GetProgramHandle(), 0, "outFrag" );
 
 	m_shader->BuildShaderProgram();
 	m_shader->ActivateShaderProgram();
 
-	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "modelview");
-	m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
-	m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
+	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "MVP");
+	//m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
+	//m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
 
 	glUniform1i( m_uniform_texture, 0 );
 
@@ -201,92 +195,5 @@ void OGLWindow::InitOGLState()
 
 
 	m_camera.SetCameraPosition(&glm::vec3(0, 0, 10));
-	m_camera.SetLookAtPoint(&glm::vec3(0, 0, 0));
-}
-
-
-// ===== INPUT ===== \\
-
-BOOL OGLWindow::MouseLBDown (int x, int y)
-{
-	m_camera.MouseDown();
-
-	return TRUE;
-}
-
-BOOL OGLWindow::MouseLBUp (int x, int y)
-{
-	m_camera.MouseUp();
-
-	return TRUE;
-}
-
-BOOL OGLWindow::MouseMove (int x, int y)
-{
-	m_camera.MouseMove(x, y);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::MouseWheel(int val)
-{
-	val > 0 ? m_camera.ZoomCamera(-1) : m_camera.ZoomCamera(1);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressS()
-{
-	m_camera.DollyCamera(0.1f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressW()
-{
-	m_camera.DollyCamera(-0.1f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressA()
-{
-	m_camera.StrafeCamera(-0.1f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressD()
-{
-	m_camera.StrafeCamera(0.1f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressX()
-{
-	m_camera.PedCamera(0.1f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressZ()
-{
-	m_camera.PedCamera(-0.1f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressQ()
-{
-	m_camera.RotateCamera(0, 0, -1.f);
-
-	return TRUE;
-}
-
-BOOL OGLWindow::KeyPressE()
-{
-	m_camera.RotateCamera(0, 0, 1.f);
-
-	return TRUE;
+	m_camera.SetLookAtPoint(&glm::vec3(0, 0, -1));
 }

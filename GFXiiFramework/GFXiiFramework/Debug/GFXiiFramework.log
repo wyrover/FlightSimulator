@@ -1,29 +1,42 @@
-﻿Build started 15/03/2015 21:00:09.
-     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
+﻿Build started 23/03/2015 12:35:54.
+     1>Project "D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt OpenGL\OGLWindow.cpp camera.cpp
-         OGLWindow.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp Input.cpp camera.cpp
+         BaseApplication.cpp
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\baseapplication.cpp(86): warning C4316: 'OGLWindow' : object allocated on the heap may not be aligned 16
          Generating Code...
-         Skipping... (no relevant changes detected)
+         Compiling...
          camera.cpp
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(115): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(158): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(159): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(160): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\camera.cpp(190): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Input.cpp
+     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
          Debug\BaseApplication.obj
          Debug\camera.obj
          Debug\GFXiiFramework.obj
          Debug\ImageIO.obj
+         Debug\Input.obj
          Debug\OBJFileReader.obj
          Debug\OGLCube.obj
          Debug\OGLMesh.obj
          Debug\OGLShader.obj
          Debug\OGLTexture.obj
          Debug\OGLWindow.obj
+         Debug\Player.obj
          Debug\Triangle.obj
          Debug\Vector3.obj
          GLEW\lib\glew32.lib
-         GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe
-     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
+         GFXiiFramework.vcxproj -> D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe
+     1>Done Building Project "D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.61
+Time Elapsed 00:00:03.22

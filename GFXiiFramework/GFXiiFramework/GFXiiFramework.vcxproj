@@ -161,6 +161,7 @@
     <ClInclude Include="glm\vec4.hpp" />
     <ClInclude Include="glm\vector_relational.hpp" />
     <ClInclude Include="ImageIO.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="OpenGL\OGLCube.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="OpenGL\OGLShader.h" />
     <ClInclude Include="OpenGL\OGLTexture.h" />
     <ClInclude Include="OpenGL\OGLWindow.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderWindow.h" />
     <ClInclude Include="Resource.h" />
@@ -181,12 +183,14 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="ImageIO.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="OpenGL\OGLCube.cpp" />
     <ClCompile Include="OpenGL\OGLMesh.cpp" />
     <ClCompile Include="OpenGL\OGLShader.cpp" />
     <ClCompile Include="OpenGL\OGLTexture.cpp" />
     <ClCompile Include="OpenGL\OGLWindow.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>

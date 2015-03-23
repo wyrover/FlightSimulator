@@ -2,6 +2,7 @@
 #include "OpenGL/OGLWindow.h"
 #include "Resource.h"
 #include <Windowsx.h>
+#include "Input.h"
 
 #define KEY_CODE_W 0x57
 #define KEY_CODE_A 0x41
@@ -107,8 +108,9 @@ int BaseApplication::Run()
 				DispatchMessage(&msg);
 			}
 		}
-		KeyboardInput();
 		m_appwnd->Render();
+
+		Input::Get().Update();
 	}
 
 	return (int)msg.wParam;
@@ -121,8 +123,6 @@ void BaseApplication::Kill()
 
 LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	int wmId, wmEvent;
-
 	switch (msg)
 	{
 	case WM_SIZE:
@@ -133,20 +133,16 @@ LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LP
 		s_oglapp->GetApplicationWindow()->DestroyRenderWindow();
 		break;
 
-	case WM_MOUSEMOVE:
-		s_oglapp->GetApplicationWindow()->MouseMove(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
-		break;
-
 	case WM_LBUTTONUP:
-		s_oglapp->GetApplicationWindow()->MouseLBUp(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+		Input::Get().LeftMouseButtonDown(false);
 		break;
 
 	case WM_LBUTTONDOWN:
-		s_oglapp->GetApplicationWindow()->MouseLBDown(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+		Input::Get().LeftMouseButtonDown(true);
 		break;
 
 	case WM_MOUSEWHEEL:
-		s_oglapp->GetApplicationWindow()->MouseWheel((short)HIWORD(wparam));
+		Input::Get().SetZoom((short)HIWORD(wparam));
 		break;
 
 	case WM_DESTROY:
@@ -158,44 +154,4 @@ LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LP
 	}
 
 	return 0;
-}
-
-// Handle key presses here as the window procedure is delayed!
-void BaseApplication::KeyboardInput()
-{
-	if ((unsigned short)GetKeyState(KEY_CODE_W) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressW();
-	}
-	else if ((unsigned short)GetKeyState(KEY_CODE_S) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressS();
-	}
-
-	if ((unsigned short)GetKeyState(KEY_CODE_A) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressA();
-	}
-	else if ((unsigned short)GetKeyState(KEY_CODE_D) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressD();
-	}
-
-	if ((unsigned short)GetKeyState(KEY_CODE_Z) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressZ();
-	}
-	else if ((unsigned short)GetKeyState(KEY_CODE_X) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressX();
-	}
-
-	if ((unsigned short)GetKeyState(KEY_CODE_Q) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressQ();
-	}
-	else if ((unsigned short)GetKeyState(KEY_CODE_E) >> 15)
-	{
-		s_oglapp->GetApplicationWindow()->KeyPressE();
-	}
 }

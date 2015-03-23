@@ -5,6 +5,10 @@
 #define __CAMERA_H__
 
 #include "glm\glm.hpp"
+#include "glm\gtc\type_ptr.hpp"
+#include "glm\gtc\quaternion.hpp"
+#include "glm\gtx\quaternion.hpp"
+#include "glm\gtc\matrix_transform.hpp"
 
 class Camera
 {
@@ -26,15 +30,12 @@ class Camera
 		glm::vec3						m_direction;
 		ECameraType						m_cameratype;				//Projection time
 
+		glm::fquat						m_rotation;
+
 		float							m_fov;						//vertical field of view in degree
 		float							m_aspectRatio;
 		float							m_nPlane;
 		float							m_fPlane;
-
-		// Input
-		bool							m_mouseDown;
-		int								m_lastX;
-		int								m_lastY;
 		
 	public:
 	
@@ -63,19 +64,9 @@ class Camera
 			return m_cameratype;
 		}
 
-		inline void						SetCameraFOV(float fov)
-		{
-			m_fov = fov;
-		}
-
 		inline float					GetCameraFOV()
 		{
 			return m_fov;
-		}
-
-		inline void						SetCameraAspectRatio(float ar)
-		{
-			m_aspectRatio = ar;
 		}
 
 		inline float					GetCameraAspectRatio()
@@ -94,20 +85,30 @@ class Camera
 		{
 			return &m_projectionMatrix;
 		}
+
+		inline void GetModelViewProjection(float *modelViewProjection) const
+		{
+			glm::mat4 MVP = (m_projectionMatrix * m_viewMatrix);
+
+			for (int x = 0; x < 4; x++)
+			{
+				for (int y = 0; y < 4; y++)
+				{
+					*modelViewProjection = MVP[x][y];
+					modelViewProjection++;
+				}
+			}
+		}
 	
 		void							SetProjectionMatrix(float fov, float aspectRatio, float nPlane, float fPlane);
 
-		void							MouseDown();
-		void							MouseUp();
-		void							MouseMove(int x, int y);
 		void							StrafeCamera(float amount);
 		void							DollyCamera(float amount);
 		void							PedCamera(float amount);
 		void							RotateCamera(float yaw, float pitch, float roll);
 		void							ZoomCamera(float amount);
 
-		void							GetModelView(float mat[16]);
-		void							GetProjection(float mat[16]);
+		void							Update();
 };
 
 #endif

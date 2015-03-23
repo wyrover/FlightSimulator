@@ -1,6 +1,6 @@
 #version 430
 
-layout (location = 0) uniform mat4 modelview;	//modelview matrix
+layout (location = 0) uniform mat4 MVP;	//modelview matrix
 layout (location = 1) uniform mat4 projection;	//projection matrix
 layout (location = 2) uniform vec4 lightpos;	//light position
 layout (location = 3) uniform mat4 lightmatrix;	//light matrix
@@ -18,7 +18,7 @@ out vec4 outPosInLight;	//output: vertex position in light space
 
 void main()
 {	
-	gl_Position = projection*modelview*position;
+	gl_Position = MVP * position;
 		
 	outUV = inUV;
 }
