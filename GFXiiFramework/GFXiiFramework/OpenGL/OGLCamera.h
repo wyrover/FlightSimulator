@@ -5,6 +5,7 @@
 #define __CAMERA_H__
 
 #include "..\GLM\glm.hpp"
+#include "..\GLM\gtc\matrix_transform.hpp"
 
 class OGLCamera
 {
@@ -26,12 +27,12 @@ class OGLCamera
 		ECameraType						m_cameratype;				//Projection time
 		float							m_fov;						//vertical field of view in degree
 		float							m_aspectRatio;
+		float							m_width;
+		float							m_height;
+		float							m_near;
+		float							m_far;
 
 		glm::mat4						m_rotation;
-
-		float							m_yaw;
-		float							m_pitch;
-		float							m_roll;
 
 	public:
 	
@@ -99,9 +100,32 @@ class OGLCamera
 			}
 		}
 
+		inline void							SetProjection(float fov, float width, float height, float nPlane, float fPlane)
+		{
+			m_projectionMatrix = glm::perspectiveFov(glm::radians(fov), width, height, nPlane, fPlane);
+
+			m_fov = fov;
+			m_aspectRatio = width / height;
+			m_width = width;
+			m_height = height;
+			m_near = nPlane;
+			m_far = fPlane;
+		}
+
+		inline const void				GetProjectionArray(float *projection) const
+		{
+			for (int x = 0; x < 4; x++)
+			{
+				for (int y = 0; y < 4; y++)
+				{
+					*projection = m_projectionMatrix[x][y];
+					projection++;
+				}
+			}
+		}
+
 		void							Update();
 
-		//TODO: Implement the following OGLCamera movement
 		void							StrafeCamera(float amount);
 		void							DollyCamera(float amount);
 		void							PedCamera(float amount);

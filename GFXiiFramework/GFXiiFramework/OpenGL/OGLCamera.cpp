@@ -3,7 +3,6 @@
 
 #include "OGLCamera.h"
 #include "..\GLM\gtc\quaternion.hpp"
-#include "..\GLM\gtc\matrix_transform.hpp"
 #include "..\Input.h"
 
 OGLCamera::OGLCamera()
@@ -75,15 +74,15 @@ void OGLCamera::RotateCamera(float yaw, float pitch, float roll)
 	glm::fquat yawQuat(cos(glm::radians(yaw / 2.0f)), m_upVector * (float)sin(glm::radians(yaw / 2.0f)));
 	glm::fquat rollQuat(cos(glm::radians(roll / 2.0f)), m_viewVector * (float)sin(glm::radians(roll / 2.0f)));
 
-	glm::mat4 rotation = glm::mat4(pitchQuat * yawQuat * rollQuat);
+	m_rotation = glm::mat4(pitchQuat * yawQuat * rollQuat);
 
-	glm::vec4 direction = glm::vec4(m_viewVector.x, m_viewVector.y, m_viewVector.z, 0);
+	glm::vec4 view = glm::vec4(m_viewVector.x, m_viewVector.y, m_viewVector.z, 0);
 	glm::vec4 up = glm::vec4(m_upVector.x, m_upVector.y, m_upVector.z, 0);
 	glm::vec4 right = glm::vec4(m_rightVector.x, m_rightVector.y, m_rightVector.z, 0);
 
-	m_viewVector = glm::normalize(glm::vec3(rotation * direction));
-	m_upVector = glm::normalize(glm::vec3(rotation * up));
-	m_rightVector = glm::normalize(glm::vec3(rotation * right));
+	m_viewVector = glm::normalize(glm::vec3(m_rotation * view));
+	m_upVector = glm::normalize(glm::vec3(m_rotation * up));
+	m_rightVector = glm::normalize(glm::vec3(m_rotation * right));
 
 	m_viewVector = glm::normalize(glm::cross(m_upVector, m_rightVector));
 	m_upVector = glm::normalize(glm::cross(m_rightVector, m_viewVector));
@@ -99,6 +98,7 @@ void OGLCamera::Update()
 	DollyCamera(Input::Get().Forward());
 	StrafeCamera(Input::Get().Horizontal());
 	PedCamera(Input::Get().Vertical());
+	ZoomCamera(Input::Get().GetZoom());
 }
 
 void OGLCamera::StrafeCamera(float amount)
@@ -120,4 +120,9 @@ void OGLCamera::PedCamera(float amount)
 	m_position += (m_upVector * amount);
 
 	UpdateViewMatrix();
+}
+
+void OGLCamera::ZoomCamera(float amount)
+{
+	SetProjection(m_fov + amount, m_width, m_height, m_near, m_far);
 }

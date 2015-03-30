@@ -18,6 +18,18 @@ public:
 	// Call at the end of the frame
 	inline void Update()
 	{
+		GetCursorPos(&m_mousePosition);
+
+		if (m_leftMouseButtonDown && m_mousePosition.y != m_mousePositionLastFrame.y)
+			m_pitch = (m_mousePosition.y - m_mousePositionLastFrame.y) > 0.f ? 1.f : -1.f;
+		else
+			m_pitch = 0;
+
+		if (m_leftMouseButtonDown && m_mousePosition.x != m_mousePositionLastFrame.x)
+			m_yaw = (m_mousePosition.x - m_mousePositionLastFrame.x) > 0.f ? 1.f : -1.f;
+		else
+			m_yaw = 0;
+
 		UpdateMousePositions();
 	}
 
@@ -32,9 +44,17 @@ public:
 	float Vertical();
 
 	// Rotations
-	float Pitch();
-	float Yaw();
 	float Roll();
+
+	inline float Pitch()
+	{
+		return m_pitch;
+	}
+
+	inline float Yaw()
+	{
+		return m_yaw;
+	}
 
 	void SetZoom(int zoomDirection)
 	{
@@ -43,7 +63,11 @@ public:
 
 	inline int GetZoom()
 	{
-		return m_zoomDirection;
+		int result = m_zoomDirection;
+
+		m_zoomDirection = 0;
+
+		return result;
 	}
 
 private:
@@ -51,6 +75,10 @@ private:
 
 	POINT m_mousePosition;
 	POINT m_mousePositionLastFrame;
+
+	float m_yaw;
+	float m_roll;
+	float m_pitch;
 
 	bool m_leftMouseButtonDown;
 	int m_zoomDirection;

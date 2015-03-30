@@ -1,7 +1,7 @@
 #include "OGLWindow.h"
 #include "Resource.h"
 #include "GLEW/include/glew.h"
-
+#include "..\Input.h"
 
 OGLWindow::OGLWindow()
 {
@@ -126,8 +126,8 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 void OGLWindow::Render()
 {
-	float modelview[16] = { 0 };
-	float projection[16] = { 0 };
+	float viewMatrix[16] = { 0 };
+	float projectionMatrix[16] = { 0 };
 
 	Renderable* prenderable = static_cast<Renderable*>(m_mesh);
 
@@ -136,12 +136,11 @@ void OGLWindow::Render()
 	glLoadIdentity();
 	
 	m_camera.Update();
-	m_camera.GetViewMatrixArray(modelview);
+	m_camera.GetViewMatrixArray(viewMatrix);
+	m_camera.GetProjectionArray(projectionMatrix);
 	
-	glGetFloatv( GL_PROJECTION_MATRIX, projection);
-
-	glUniformMatrix4fv( m_uniform_modelview, 1, GL_FALSE, modelview );
-	glUniformMatrix4fv( m_uniform_projection, 1, GL_FALSE, projection );
+	glUniformMatrix4fv( m_uniform_modelview, 1, GL_FALSE, viewMatrix );
+	glUniformMatrix4fv( m_uniform_projection, 1, GL_FALSE, projectionMatrix );
 	
 	glBindSampler(0, m_texDefaultSampler);
 
@@ -154,18 +153,8 @@ void OGLWindow::Render()
 
 void OGLWindow::Resize( int width, int height )
 {
-	float aspect_ratio = (float)width/(float)height;
-
 	glViewport( 0, 0, width, height );
-	
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	gluPerspective(60.0, aspect_ratio, 1.0, 1000.0);
-	
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
-
-	return;
+	m_camera.SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
 }
 
 void OGLWindow::InitOGLState()
@@ -182,9 +171,9 @@ void OGLWindow::InitOGLState()
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.vert", SHADER_VERTEX);
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.frag", SHADER_FRAGMENT);
 
-	m_shader->BindAttributeLocation( 0, "position" );
-	m_shader->BindAttributeLocation( 1, "inNormal" );
-	m_shader->BindAttributeLocation( 2, "inUV" );
+	//m_shader->BindAttributeLocation( 0, "position" );
+	//m_shader->BindAttributeLocation( 1, "inNormal" );
+	//m_shader->BindAttributeLocation( 2, "inUV" );
 
 	glBindFragDataLocation( m_shader->GetProgramHandle(), 0, "outFrag" );
 

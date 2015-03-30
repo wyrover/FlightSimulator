@@ -56,26 +56,6 @@ float Input::Vertical()
 	return 0.f;
 }
 
-float Input::Pitch()
-{
-	GetCursorPos(&m_mousePosition);
-
-	if (!m_leftMouseButtonDown || m_mousePosition.y == m_mousePositionLastFrame.y)
-		return 0.f;
-
-	return (m_mousePosition.y - m_mousePositionLastFrame.y) > 0.f ? 1.f : -1.f;
-}
-
-float Input::Yaw()
-{
-	GetCursorPos(&m_mousePosition);
-
-	if (!m_leftMouseButtonDown || m_mousePosition.x == m_mousePositionLastFrame.x)
-		return 0.f;
-
-	return (m_mousePosition.x - m_mousePositionLastFrame.x) > 0.f ? 1.f : -1.f;
-}
-
 float Input::Roll()
 {
 	if ((unsigned short)GetKeyState(KEY_CODE_E) >> 15)
