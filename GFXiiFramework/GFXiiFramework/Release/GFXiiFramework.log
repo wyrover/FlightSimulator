@@ -1,59 +1,54 @@
-﻿Build started 23/03/2015 12:50:58.
-     1>Project "D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 30/03/2015 18:53:40.
+     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp camera.cpp GFXiiFramework.cpp ImageIO.cpp Input.cpp OBJFileReader.cpp OpenGL\OGLCube.cpp OpenGL\OGLMesh.cpp OpenGL\OGLShader.cpp OpenGL\OGLTexture.cpp OpenGL\OGLWindow.cpp Player.cpp Triangle.cpp Vector3.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp GFXiiFramework.cpp ImageIO.cpp Input.cpp OBJFileReader.cpp OpenGL\OGLCamera.cpp OpenGL\OGLCube.cpp OpenGL\OGLMesh.cpp OpenGL\OGLShader.cpp OpenGL\OGLTexture.cpp OpenGL\OGLWindow.cpp Triangle.cpp Vector3.cpp
          BaseApplication.cpp
-     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\Input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>BaseApplication.cpp(86): warning C4316: 'OGLWindow' : object allocated on the heap may not be aligned 16
-         camera.cpp
-     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\Input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>camera.cpp(82): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>camera.cpp(125): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-     1>camera.cpp(126): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-     1>camera.cpp(127): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-     1>camera.cpp(163): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\Input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>BaseApplication.cpp(77): warning C4316: 'OGLWindow' : object allocated on the heap may not be aligned 16
+     1>BaseApplication.cpp(117): warning C4101: 'wmId' : unreferenced local variable
+     1>BaseApplication.cpp(117): warning C4101: 'wmEvent' : unreferenced local variable
          GFXiiFramework.cpp
          ImageIO.cpp
          Input.cpp
-     1>d:\downloads\flightsimulator\flightsimulator\gfxiiframework\gfxiiframework\Input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\Input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
          OBJFileReader.cpp
      1>OBJFileReader.cpp(114): warning C4101: 'index4' : unreferenced local variable
      1>OBJFileReader.cpp(110): warning C4101: 'dummy' : unreferenced local variable
      1>OBJFileReader.cpp(118): warning C4101: 'tidx4' : unreferenced local variable
      1>OBJFileReader.cpp(116): warning C4101: 'nidx4' : unreferenced local variable
+         OGLCamera.cpp
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\opengl\..\Input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
          OGLCube.cpp
          OGLMesh.cpp
          OGLShader.cpp
          OGLTexture.cpp
          OGLWindow.cpp
-         Player.cpp
          Triangle.cpp
          Vector3.cpp
      1>Vector3.cpp(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
        ResourceCompile:
          C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\GFXiiFramework.res" GFXiiFramework.rc 
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.lib" /MACHINE:X86 /SAFESEH Release\GFXiiFramework.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.lib" /MACHINE:X86 /SAFESEH Release\GFXiiFramework.res
          Release\BaseApplication.obj
-         Release\camera.obj
          Release\GFXiiFramework.obj
          Release\ImageIO.obj
          Release\Input.obj
          Release\OBJFileReader.obj
+         Release\OGLCamera.obj
          Release\OGLCube.obj
          Release\OGLMesh.obj
          Release\OGLShader.obj
          Release\OGLTexture.obj
          Release\OGLWindow.obj
-         Release\Player.obj
          Release\Triangle.obj
          Release\Vector3.obj
          GLEW\lib\glew32.lib
          Generating code
          Finished generating code
-         GFXiiFramework.vcxproj -> D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe
-     1>Done Building Project "D:\Downloads\FlightSimulator\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Rebuild target(s)).
+         GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe
+     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:07.03
+Time Elapsed 00:00:07.05

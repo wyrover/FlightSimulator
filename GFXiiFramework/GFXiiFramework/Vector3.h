@@ -48,20 +48,8 @@ public:
 	void SetZero();
 	
 	inline void SetVector(float x, float y, float z)
-	{
-		m_element[0] = x; m_element[1] = y; m_element[2] = z;
-	}
-	inline float GetX() const
-	{
-		return m_element[0];
-	}
-	inline float GetY() const
-	{
-		return m_element[1];
-	}
-	inline float GetZ() const
-	{
-		return m_element[2];
+	{ 
+		m_element[0] = x; m_element[1] = y; m_element[2] = z; 
 	}
 };
 

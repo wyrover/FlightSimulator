@@ -5,12 +5,11 @@
 #include "OGLMesh.h"
 #include "OGLShader.h"
 #include "OGLTexture.h"
-#include "..\Camera.h"
+#include "OGLCamera.h"
 
 class OGLWindow : public RenderWindow
 {
 	private:
-		float	    m_euler[3];
 		HDC			m_hdc;				//handle to a device context
 		HGLRC		m_hglrc;			//handle to a gl rendering context
 
@@ -28,12 +27,7 @@ class OGLWindow : public RenderWindow
 		int                     m_uniform_texture;
 		int						m_texDefaultSampler;
 
-		// Jordan's code
-		Camera					m_camera;
-
-		bool					m_mouseDown;
-		int						m_lastX;
-		int						m_lastY;
+		OGLCamera				m_camera;
 
 protected:
 
@@ -43,7 +37,6 @@ protected:
 
 	public:
 					OGLWindow();
-					OGLWindow(HINSTANCE hInstance, int width, int height);
 					~OGLWindow();
 		
 		BOOL		InitWindow(HINSTANCE hInstance, int width, int height);
@@ -51,17 +44,4 @@ protected:
 		void		Render();
 		void		Resize( int width, int height );
 		void		DestroyRenderWindow();
-
-		BOOL		MouseLBDown(int x, int y);
-		BOOL		MouseLBUp(int x, int y);
-		BOOL		MouseMove(int x, int y);
-		BOOL		MouseWheel(int val);
-		BOOL		KeyPressW();
-		BOOL		KeyPressS();
-		BOOL		KeyPressA();
-		BOOL		KeyPressD();
-		BOOL		KeyPressZ();
-		BOOL		KeyPressX();
-		BOOL		KeyPressQ();
-		BOOL		KeyPressE();
 };

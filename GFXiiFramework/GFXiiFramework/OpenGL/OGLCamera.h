@@ -4,13 +4,9 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
-#include "glm\glm.hpp"
-#include "glm\gtc\type_ptr.hpp"
-#include "glm\gtc\quaternion.hpp"
-#include "glm\gtx\quaternion.hpp"
-#include "glm\gtc\matrix_transform.hpp"
+#include "..\GLM\glm.hpp"
 
-class Camera
+class OGLCamera
 {
 	public:
 		enum ECameraType
@@ -27,46 +23,56 @@ class Camera
 		glm::vec3						m_rightVector;				//right vector
 		glm::vec3						m_viewVector;				//view vector
 		glm::vec3						m_lookAt;					//look at position
-		glm::vec3						m_direction;
 		ECameraType						m_cameratype;				//Projection time
-
-		glm::fquat						m_rotation;
-
 		float							m_fov;						//vertical field of view in degree
 		float							m_aspectRatio;
-		float							m_nPlane;
-		float							m_fPlane;
-		
+
+		glm::mat4						m_rotation;
+
+		float							m_yaw;
+		float							m_pitch;
+		float							m_roll;
+
 	public:
 	
-										Camera();
-		virtual							~Camera();
+										OGLCamera();
+		virtual							~OGLCamera();
 
 		void							InitCamera();
-		void							SetCameraPosition(const glm::vec3* position);
-		inline const glm::vec3*			GetCameraPosition() const 
+		void							SetCameraPosition(const glm::vec3 &position);
+		inline const glm::vec3&			GetCameraPosition() const 
 		{
-			return &m_position;
+			return m_position;
 		}
 
-		void							SetLookAtPoint(const glm::vec3* lookAt);
-		inline const glm::vec3*			GetCameraDirection() const
+		void							SetLookAtPoint(const glm::vec3 &lookAt);
+		inline const glm::vec3&			GetCameraDirection() const
 		{
-			return &m_direction;
+			return m_viewVector;
 		}
-		void							SetUpVector(const glm::vec3* up);
-		inline const glm::vec3*			GetCameraUpVector() const
+		void							SetUpVector(const glm::vec3 &up);
+		inline const glm::vec3&			GetCameraUpVector() const
 		{
-			return &m_upVector;
+			return m_upVector;
 		}
 		inline ECameraType				GetCameraType()
 		{
 			return m_cameratype;
 		}
 
+		inline void						SetCameraFOV(float fov)
+		{
+			m_fov = fov;
+		}
+
 		inline float					GetCameraFOV()
 		{
 			return m_fov;
+		}
+
+		inline void						SetCameraAspectRatio(float ar)
+		{
+			m_aspectRatio = ar;
 		}
 
 		inline float					GetCameraAspectRatio()
@@ -76,39 +82,31 @@ class Camera
 
 		void							UpdateViewMatrix();
 
-		inline const glm::mat4*			GetViewMatrix() const
+		inline const glm::mat4&			GetViewMatrixMat4() const
 		{
-			return &m_viewMatrix;
+			return m_viewMatrix;
 		}
 
-		inline const glm::mat4*			GetProjectionMatrix() const
+		inline const void				GetViewMatrixArray(float *viewMatrix) const
 		{
-			return &m_projectionMatrix;
-		}
-
-		inline void GetModelViewProjection(float *modelViewProjection) const
-		{
-			glm::mat4 MVP = (m_projectionMatrix * m_viewMatrix);
-
 			for (int x = 0; x < 4; x++)
 			{
 				for (int y = 0; y < 4; y++)
 				{
-					*modelViewProjection = MVP[x][y];
-					modelViewProjection++;
+					*viewMatrix = m_viewMatrix[x][y];
+					viewMatrix++;
 				}
 			}
 		}
-	
-		void							SetProjectionMatrix(float fov, float aspectRatio, float nPlane, float fPlane);
 
+		void							Update();
+
+		//TODO: Implement the following OGLCamera movement
 		void							StrafeCamera(float amount);
 		void							DollyCamera(float amount);
 		void							PedCamera(float amount);
 		void							RotateCamera(float yaw, float pitch, float roll);
 		void							ZoomCamera(float amount);
-
-		void							Update();
 };
 
 #endif

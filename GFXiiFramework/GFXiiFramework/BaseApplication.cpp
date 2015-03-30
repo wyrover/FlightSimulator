@@ -1,17 +1,8 @@
 #include "BaseApplication.h"
 #include "OpenGL/OGLWindow.h"
 #include "Resource.h"
-#include <Windowsx.h>
 #include "Input.h"
-
-#define KEY_CODE_W 0x57
-#define KEY_CODE_A 0x41
-#define KEY_CODE_S 0x53
-#define KEY_CODE_D 0x44
-#define KEY_CODE_X 0x58
-#define KEY_CODE_Z 0x5A
-#define KEY_CODE_Q 0x51
-#define KEY_CODE_E 0x45
+#include <Windowsx.h>
 
 BaseApplication* BaseApplication::s_oglapp = NULL;
 
@@ -52,7 +43,7 @@ BOOL BaseApplication::MyRegisterClass(HINSTANCE hinst)
 	return TRUE;
 }
 
-BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst)
+BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst, ERenderSystemType type)
 {
 	if ( ! s_oglapp )
 	{
@@ -62,7 +53,7 @@ BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst)
 		s_oglapp->MyRegisterClass(hinst);
 
 		//Now create an OGLWindow for this application
-		s_oglapp->CreateApplicationWindow(1280, 720);
+		s_oglapp->CreateApplicationWindow(1280,720, type);
 	}
 
 	return s_oglapp;
@@ -70,7 +61,7 @@ BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst)
 
 void BaseApplication::DestroyApplication()
 {
-	if (s_oglapp)
+	if ( s_oglapp )
 		delete s_oglapp;
 }
 
@@ -79,7 +70,7 @@ BaseApplication* BaseApplication::GetApplication()
 	return s_oglapp;
 }
 
-void BaseApplication::CreateApplicationWindow(int width, int height)
+void BaseApplication::CreateApplicationWindow( int width, int height, ERenderSystemType type )
 {
 	if (!m_appwnd)
 	{
@@ -93,19 +84,19 @@ int BaseApplication::Run()
 {
 	MSG msg;
 
-	while (!m_terminate)
+	while ( !m_terminate )
 	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
 		{
 			//peek for windows message
-			if (msg.message == WM_QUIT)
+			if ( msg.message == WM_QUIT )
 			{
 				Kill();
 			}
 			else
 			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				TranslateMessage ( &msg );
+				DispatchMessage ( &msg );
 			}
 		}
 		m_appwnd->Render();
@@ -113,7 +104,7 @@ int BaseApplication::Run()
 		Input::Get().Update();
 	}
 
-	return (int)msg.wParam;
+	return (int) msg.wParam;
 }
 
 void BaseApplication::Kill()
@@ -123,34 +114,36 @@ void BaseApplication::Kill()
 
 LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	switch (msg)
+	int wmId, wmEvent;
+
+	switch ( msg )
 	{
-	case WM_SIZE:
-		s_oglapp->GetApplicationWindow()->Resize(LOWORD(lparam), HIWORD(lparam));
-		break;
+		case WM_SIZE:
+			s_oglapp->GetApplicationWindow()->Resize( LOWORD(lparam), HIWORD(lparam) );
+			break;
 
-	case WM_CLOSE:
-		s_oglapp->GetApplicationWindow()->DestroyRenderWindow();
-		break;
+		case WM_CLOSE:
+			s_oglapp->GetApplicationWindow()->DestroyRenderWindow();
+			break;
 
-	case WM_LBUTTONUP:
-		Input::Get().LeftMouseButtonDown(false);
-		break;
+		case WM_LBUTTONUP:
+			Input::Get().LeftMouseButtonDown(false);
+			break;
 
-	case WM_LBUTTONDOWN:
-		Input::Get().LeftMouseButtonDown(true);
-		break;
+		case WM_LBUTTONDOWN:
+			Input::Get().LeftMouseButtonDown(true);
+			break;
 
-	case WM_MOUSEWHEEL:
-		Input::Get().SetZoom((short)HIWORD(wparam));
-		break;
+		case WM_MOUSEWHEEL:
+			Input::Get().SetZoom((short)HIWORD(wparam));
+			break;
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
 
-	default:
-		return DefWindowProc(hwnd, msg, wparam, lparam);
+		default:
+			return DefWindowProc( hwnd, msg, wparam, lparam );
 	}
 
 	return 0;

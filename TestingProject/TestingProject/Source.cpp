@@ -8,15 +8,13 @@ int main()
 {
 	glm::mat4 rotX, rotY, rotZ;
 
-	rotX[1][1] = cos(TO_RADIANS(90)); rotX[1][2] = -sin(TO_RADIANS(90));
-	rotX[2][1] = sin(TO_RADIANS(90)); rotX[2][2] = cos(TO_RADIANS(90));
+	rotX[1][1] = cos(TO_RADIANS(45)); rotX[1][2] = -sin(TO_RADIANS(45));
+	rotX[2][1] = sin(TO_RADIANS(45)); rotX[2][2] = cos(TO_RADIANS(45));
 
-	rotY[0][0] = cos(TO_RADIANS(90)); rotY[0][2] = sin(TO_RADIANS(90));
-	rotY[2][0] = -sin(TO_RADIANS(90)); rotY[2][2] = cos(TO_RADIANS(90));
+	rotY[0][0] = cos(TO_RADIANS(45)); rotY[0][2] = sin(TO_RADIANS(45));
+	rotY[2][0] = -sin(TO_RADIANS(45)); rotY[2][2] = cos(TO_RADIANS(45));
 
-	glm::vec4 point(0, 1, 0, 0);
-
-	glm::vec4 result = rotY * rotX * point;
+	glm::mat4 rotation = rotY * rotX;
 
 	return 0;
 }

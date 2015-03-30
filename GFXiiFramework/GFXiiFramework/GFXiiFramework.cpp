@@ -10,16 +10,13 @@
 
 #include "BaseApplication.h"
 
-#pragma comment (lib, "glew32.lib")
 #pragma comment (lib, "opengl32.lib")
 #pragma comment (lib, "glu32.lib")
+#pragma comment (lib, "glew32.lib")
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
-int APIENTRY WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR    lpCmdLine,
-                     int       nCmdShow)
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	int exitcode = 0;
 	//Allocate a console window
@@ -34,7 +31,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	//Create the application instance
 	//To Create a D3D11 render window: replace RenderSystemOGL with RenderSystemD3D11
-	BaseApplication* myapp = BaseApplication::CreateApplication(hInstance);
+	BaseApplication* myapp = BaseApplication::CreateApplication(hInstance, BaseApplication::RenderSystemOGL);
 	
 	exitcode = myapp->Run();
 	

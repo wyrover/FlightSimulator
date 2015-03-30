@@ -7,6 +7,13 @@ class RenderWindow;
 //Define BaseApplication as a singleton
 class BaseApplication
 {
+	public:
+		enum ERenderSystemType
+		{
+			RenderSystemD3D11,
+			RenderSystemOGL
+		};
+
 	private:
 		RenderWindow*				m_appwnd;
 		static BaseApplication*		s_oglapp;
@@ -14,16 +21,14 @@ class BaseApplication
 		
 									BaseApplication();
 		virtual						~BaseApplication();
-		void						CreateApplicationWindow(int width, int height);
+		void						CreateApplicationWindow(int width, int height, ERenderSystemType type );
 		BOOL						MyRegisterClass(HINSTANCE hinst);
-
-		void						KeyboardInput();
 
 	public:
 
 		HINSTANCE					m_hInst;
 
-		static BaseApplication*		CreateApplication(HINSTANCE hInst);
+		static BaseApplication*		CreateApplication(HINSTANCE hInst, ERenderSystemType type);
 		static void					DestroyApplication();
 		static BaseApplication*		GetApplication();
 

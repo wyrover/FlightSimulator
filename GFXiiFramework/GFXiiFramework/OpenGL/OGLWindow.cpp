@@ -1,11 +1,10 @@
 #include "OGLWindow.h"
 #include "Resource.h"
 #include "GLEW/include/glew.h"
-#include <iostream>
+
 
 OGLWindow::OGLWindow()
 {
-	m_euler[0] = m_euler[1] = m_euler[2] = 0.0f;
 }
 
 OGLWindow::~OGLWindow()
@@ -15,11 +14,6 @@ OGLWindow::~OGLWindow()
 	delete m_shader;
 
 	DestroyOGLContext();
-}
-
-OGLWindow::OGLWindow(HINSTANCE hInstance, int width, int height)
-{
-	m_euler[0] = m_euler[1] = m_euler[2] = 0.0f;
 }
 
 HGLRC OGLWindow::CreateOGLContext(HDC hdc)
@@ -82,7 +76,6 @@ void OGLWindow::DestroyRenderWindow()
 
 BOOL OGLWindow::DestroyOGLContext()
 {
-
 	glDeleteSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
 
 	if ( m_hglrc )
@@ -100,7 +93,9 @@ BOOL OGLWindow::DestroyOGLContext()
 
 BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 {
-	m_hwnd = CreateWindowEx( WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, L"RenderWindow", L"OGLWindow", WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|WS_CLIPCHILDREN, 0, 0, width, height, NULL, NULL, hInstance, NULL);
+	m_hwnd = CreateWindowEx( WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
+		L"RenderWindow", L"OGLWindow", WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|WS_CLIPCHILDREN,
+		0, 0, width, height, NULL, NULL, hInstance, NULL);
 
 	if ( ! m_hwnd )
 		return FALSE;
@@ -116,6 +111,8 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 	m_width = width;
 	m_height = height;
+
+	m_camera.SetCameraPosition(glm::vec3(0.0f, 0.0f, 10.0f));
 	
 	m_mesh = new OGLMesh(L"../asset/models/house.obj");
 
@@ -129,18 +126,22 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 void OGLWindow::Render()
 {
-	float modelViewProjection[16] = { 0 };
+	float modelview[16] = { 0 };
+	float projection[16] = { 0 };
 
 	Renderable* prenderable = static_cast<Renderable*>(m_mesh);
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-
+	
 	m_camera.Update();
-	m_camera.GetModelViewProjection(modelViewProjection);
+	m_camera.GetViewMatrixArray(modelview);
+	
+	glGetFloatv( GL_PROJECTION_MATRIX, projection);
 
-	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, modelViewProjection);
+	glUniformMatrix4fv( m_uniform_modelview, 1, GL_FALSE, modelview );
+	glUniformMatrix4fv( m_uniform_projection, 1, GL_FALSE, projection );
 	
 	glBindSampler(0, m_texDefaultSampler);
 
@@ -153,9 +154,16 @@ void OGLWindow::Render()
 
 void OGLWindow::Resize( int width, int height )
 {
-	glViewport(0, 0, width, height);
+	float aspect_ratio = (float)width/(float)height;
 
-	m_camera.SetProjectionMatrix(60.f, (float)width / (float)height, 1.f, 1000.f);
+	glViewport( 0, 0, width, height );
+	
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+	gluPerspective(60.0, aspect_ratio, 1.0, 1000.0);
+	
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity();
 
 	return;
 }
@@ -174,14 +182,18 @@ void OGLWindow::InitOGLState()
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.vert", SHADER_VERTEX);
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.frag", SHADER_FRAGMENT);
 
+	m_shader->BindAttributeLocation( 0, "position" );
+	m_shader->BindAttributeLocation( 1, "inNormal" );
+	m_shader->BindAttributeLocation( 2, "inUV" );
+
 	glBindFragDataLocation( m_shader->GetProgramHandle(), 0, "outFrag" );
 
 	m_shader->BuildShaderProgram();
 	m_shader->ActivateShaderProgram();
 
-	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "MVP");
-	//m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
-	//m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
+	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "modelview");
+	m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
+	m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
 
 	glUniform1i( m_uniform_texture, 0 );
 
@@ -192,8 +204,4 @@ void OGLWindow::InitOGLState()
 	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
 	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MIN_FILTER , GL_LINEAR);  
 	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MAG_FILTER , GL_LINEAR);
-
-
-	m_camera.SetCameraPosition(&glm::vec3(0, 0, 10));
-	m_camera.SetLookAtPoint(&glm::vec3(0, 0, -1));
 }
