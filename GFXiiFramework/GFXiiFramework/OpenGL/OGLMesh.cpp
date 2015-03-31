@@ -15,6 +15,14 @@ OGLMesh::OGLMesh(LPCWSTR filename)
 	LoadAndBuildMeshFromOBJFile(filename);
 }
 
+OGLMesh::OGLMesh(LPCWSTR mesh, const char* texture)
+{
+	LoadAndBuildMeshFromOBJFile(mesh);
+
+	m_texture.CreateTextureFromFile(texture);
+	SetTexture(&m_texture);
+}
+
 OGLMesh::~OGLMesh()
 {
 	glDeleteVertexArrays(1, &m_vao);
@@ -57,8 +65,11 @@ void OGLMesh::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(NULL + offset));
 	glEnableVertexAttribArray(1);
 
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(NULL + 2*offset));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(NULL + 2 * offset));
 	glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(NULL + 3 * offset));
+	glEnableVertexAttribArray(3);
 			
 	glBindVertexArray(0);
 

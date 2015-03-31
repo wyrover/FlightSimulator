@@ -4,10 +4,10 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
-#include "..\GLM\glm.hpp"
+#include "..\Object.h"
 #include "..\GLM\gtc\matrix_transform.hpp"
 
-class OGLCamera
+class OGLCamera : public Object
 {
 	public:
 		enum ECameraType
@@ -17,45 +17,26 @@ class OGLCamera
 		};
 
 	private:
-		glm::mat4						m_viewMatrix;				//View Matrix
-		glm::mat4						m_projectionMatrix;			//Projection Matrix
-		glm::vec3						m_position;					//Position
-		glm::vec3						m_upVector;					//up vector
-		glm::vec3						m_rightVector;				//right vector
-		glm::vec3						m_viewVector;				//view vector
-		glm::vec3						m_lookAt;					//look at position
-		ECameraType						m_cameratype;				//Projection time
-		float							m_fov;						//vertical field of view in degree
+		glm::mat4						m_viewMatrix;
+		glm::mat4						m_projectionMatrix;
+		ECameraType						m_cameratype;
+		float							m_fov;
 		float							m_aspectRatio;
 		float							m_width;
 		float							m_height;
 		float							m_near;
 		float							m_far;
 
-		glm::mat4						m_rotation;
-
 	public:
 	
-										OGLCamera();
-		virtual							~OGLCamera();
+										OGLCamera() { ; }
+		virtual							~OGLCamera() { ; }
 
-		void							InitCamera();
-		void							SetCameraPosition(const glm::vec3 &position);
-		inline const glm::vec3&			GetCameraPosition() const 
+		inline void						UpdateViewMatrix()
 		{
-			return m_position;
+			m_viewMatrix = glm::lookAt(GetPosition(), GetPosition() + GetViewVector(), GetUpVector());
 		}
 
-		void							SetLookAtPoint(const glm::vec3 &lookAt);
-		inline const glm::vec3&			GetCameraDirection() const
-		{
-			return m_viewVector;
-		}
-		void							SetUpVector(const glm::vec3 &up);
-		inline const glm::vec3&			GetCameraUpVector() const
-		{
-			return m_upVector;
-		}
 		inline ECameraType				GetCameraType()
 		{
 			return m_cameratype;
@@ -80,8 +61,6 @@ class OGLCamera
 		{
 			return m_aspectRatio;
 		}
-
-		void							UpdateViewMatrix();
 
 		inline const glm::mat4&			GetViewMatrixMat4() const
 		{
@@ -125,11 +104,6 @@ class OGLCamera
 		}
 
 		void							Update();
-
-		void							StrafeCamera(float amount);
-		void							DollyCamera(float amount);
-		void							PedCamera(float amount);
-		void							RotateCamera(float yaw, float pitch, float roll);
 		void							ZoomCamera(float amount);
 };
 

@@ -9,8 +9,8 @@ OGLWindow::OGLWindow()
 
 OGLWindow::~OGLWindow()
 {
-	//Clean up the renderable
-	delete m_mesh;
+	//Clean up the GameObject
+	delete m_house;
 	delete m_shader;
 
 	DestroyOGLContext();
@@ -112,14 +112,9 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_width = width;
 	m_height = height;
 
-	m_camera.SetCameraPosition(glm::vec3(0.0f, 0.0f, 10.0f));
+	m_camera.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	
-	m_mesh = new OGLMesh(L"../asset/models/house.obj");
-
-	m_texture = new OGLTexture();
-	m_texture->CreateTextureFromFile( "../asset/texture/house_diffuse.tga");
-
-	m_mesh->SetTexture( m_texture );
+	m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga");
 
 	return TRUE;
 }
@@ -128,8 +123,6 @@ void OGLWindow::Render()
 {
 	float viewMatrix[16] = { 0 };
 	float projectionMatrix[16] = { 0 };
-
-	Renderable* prenderable = static_cast<Renderable*>(m_mesh);
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
@@ -144,7 +137,7 @@ void OGLWindow::Render()
 	
 	glBindSampler(0, m_texDefaultSampler);
 
-	prenderable->Render();
+	m_house->Render();
 
 	SwapBuffers(m_hdc);
 
@@ -170,10 +163,6 @@ void OGLWindow::InitOGLState()
 	m_shader->CreateShaderProgram();
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.vert", SHADER_VERTEX);
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.frag", SHADER_FRAGMENT);
-
-	//m_shader->BindAttributeLocation( 0, "position" );
-	//m_shader->BindAttributeLocation( 1, "inNormal" );
-	//m_shader->BindAttributeLocation( 2, "inUV" );
 
 	glBindFragDataLocation( m_shader->GetProgramHandle(), 0, "outFrag" );
 

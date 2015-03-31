@@ -17,8 +17,7 @@ class OGLWindow : public RenderWindow
 		int			m_height;
 		
 		//This is not an ideal place to hold geometry data
-		Renderable		*m_mesh;
-		OGLTexture		*m_texture;
+		GameObject		*m_house;
 
 		//Declear an OGL shader program
 		OGLShaderProgram		*m_shader;

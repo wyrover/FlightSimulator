@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Renderable.h"
+#include "GameObject.h"
 #include "Listener.h"
 #include "OGLTexture.h"
 
-class OGLCube : public Renderable
+class OGLCube : public GameObject
 {
 	private:
 		struct SimpleVertex

@@ -11,60 +11,69 @@
 
 Input::Input()
 {
+	m_yaw = m_roll = m_pitch = 0.0f;
 }
 
 Input::~Input()
 {
 }
 
-float Input::Forward()
+float& Input::Forward()
 {
+	float result = 0.0f;
+
 	if ((unsigned short)GetKeyState(KEY_CODE_W) >> 15)
 	{
-		return 1.f;
+		result = 1.0f;
 	}
 	else if ((unsigned short)GetKeyState(KEY_CODE_S) >> 15)
 	{
-		return -1.f;
+		result = -1.0f;
 	}
-	return 0.f;
+	return result;
 }
 
-float Input::Horizontal()
+float& Input::Horizontal()
 {
+	float result = 0.0f;
+
 	if ((unsigned short)GetKeyState(KEY_CODE_D) >> 15)
 	{
-		return 1.f;
+		result = 1.0f;
 	}
 	else if ((unsigned short)GetKeyState(KEY_CODE_A) >> 15)
 	{
-		return -1.f;
+		result = -1.0f;
 	}
-	return 0.f;
+	return result;
 }
 
-float Input::Vertical()
+float& Input::Vertical()
 {
+	float result = 0.0f;
+
 	if ((unsigned short)GetKeyState(KEY_CODE_X) >> 15)
 	{
-		return 1.f;
+		result = 1.f;
 	}
 	else if ((unsigned short)GetKeyState(KEY_CODE_Z) >> 15)
 	{
-		return -1.f;
+		result = -1.f;
 	}
-	return 0.f;
+	return result;
 }
 
-float Input::Roll()
+float& Input::Roll()
 {
+	float result = 0.0f;
+
 	if ((unsigned short)GetKeyState(KEY_CODE_E) >> 15)
 	{
-		return 1.f;
+		result = 1.0f;
 	}
 	else if ((unsigned short)GetKeyState(KEY_CODE_Q) >> 15)
 	{
-		return -1.f;
+		result = -1.0f;
 	}
-	return 0.f;
+	return result;
 }

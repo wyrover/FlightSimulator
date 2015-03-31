@@ -1,18 +1,21 @@
-﻿Build started 30/03/2015 18:52:16.
-     1>Project "D:\Downloads\GFXiiFramework(1)\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
+﻿Build started 31/03/2015 12:03:53.
+     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Input.cpp OpenGL\OGLCamera.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp OpenGL\OGLCamera.cpp OpenGL\OGLWindow.cpp
          OGLCamera.cpp
-     1>d:\downloads\gfxiiframework(1)\gfxiiframework\gfxiiframework\input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-         Input.cpp
-     1>d:\downloads\gfxiiframework(1)\gfxiiframework\gfxiiframework\input.h(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\input.h(61): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\github\flightsimulator\gfxiiframework\gfxiiframework\input.h(70): warning C4172: returning address of local variable or temporary
          Generating Code...
+         Skipping... (no relevant changes detected)
+         OGLWindow.cpp
+         BaseApplication.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Downloads\GFXiiFramework(1)\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Downloads\GFXiiFramework(1)\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Downloads\GFXiiFramework(1)\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
          Debug\BaseApplication.obj
          Debug\GFXiiFramework.obj
          Debug\ImageIO.obj
          Debug\Input.obj
+         Debug\Object.obj
          Debug\OBJFileReader.obj
          Debug\OGLCamera.obj
          Debug\OGLCube.obj
@@ -20,12 +23,13 @@
          Debug\OGLShader.obj
          Debug\OGLTexture.obj
          Debug\OGLWindow.obj
+         Debug\Transform.obj
          Debug\Triangle.obj
          Debug\Vector3.obj
          GLEW\lib\glew32.lib
-         GFXiiFramework.vcxproj -> D:\Downloads\GFXiiFramework(1)\GFXiiFramework\Debug\GFXiiFramework.exe
-     1>Done Building Project "D:\Downloads\GFXiiFramework(1)\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
+         GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe
+     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.38
+Time Elapsed 00:00:01.76
