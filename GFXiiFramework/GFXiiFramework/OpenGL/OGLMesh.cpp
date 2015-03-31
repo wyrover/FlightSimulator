@@ -67,9 +67,6 @@ void OGLMesh::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)
 
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(NULL + 2 * offset));
 	glEnableVertexAttribArray(2);
-
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(NULL + 3 * offset));
-	glEnableVertexAttribArray(3);
 			
 	glBindVertexArray(0);
 
