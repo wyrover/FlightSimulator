@@ -11,8 +11,8 @@ void OGLCamera::Update()
 	MoveForward(Input::Get().Forward());
 	MoveHorizontal(Input::Get().Horizontal());
 	MoveVertical(Input::Get().Vertical());
-	ZoomCamera(Input::Get().GetZoom());
 
+	ZoomCamera(Input::Get().GetZoom());
 	UpdateViewMatrix();
 }
 

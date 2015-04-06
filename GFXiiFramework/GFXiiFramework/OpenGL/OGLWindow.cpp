@@ -2,6 +2,7 @@
 #include "Resource.h"
 #include "GLEW/include/glew.h"
 #include "..\Input.h"
+#include "..\GLM\gtc\type_ptr.hpp"
 
 OGLWindow::OGLWindow()
 {
@@ -11,6 +12,8 @@ OGLWindow::~OGLWindow()
 {
 	//Clean up the GameObject
 	delete m_house;
+	delete m_aircraft;
+	delete m_camera;
 	delete m_shader;
 
 	DestroyOGLContext();
@@ -76,7 +79,7 @@ void OGLWindow::DestroyRenderWindow()
 
 BOOL OGLWindow::DestroyOGLContext()
 {
-	glDeleteSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
+	//glDeleteSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
 
 	if ( m_hglrc )
 	{
@@ -112,32 +115,45 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_width = width;
 	m_height = height;
 
-	m_camera.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	
-	m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga");
+	m_camera = new OGLCamera();
+	m_skyBox = new OGLSkyBox();
+	m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga", "../asset/texture/house_spec.tga");
+	//m_aircraft = new OGLMesh(L"../asset/models/ARC170.obj", "../asset/texture/ARC170_diffuse.tga");
 
+	m_camera->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 5, 0));
+	m_house->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 2, -20));
+	//m_aircraft->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 0, -10));
+
+	m_skyBox->Init("..asset/texture/sky_ft.tga", "...asset/texture/sky_bk.tga", "..asset/texture/sky_lf.tga", "..asset/texture/sky_rt", "..asset/texture/sky_tp.tga", "..asset/texture/sky_bt.tga");
+
+	//m_aircraft->Rotation(180.0f, 0.0f, 0.0f);
+	//m_aircraft->SetUniformScale(0.01f);
+
+	Player::Get().SetCamera(m_camera);
+	//Player::Get().SetCurrentGameObject(m_aircraft);
+	
 	return TRUE;
 }
 
 void OGLWindow::Render()
 {
-	float viewMatrix[16] = { 0 };
-	float projectionMatrix[16] = { 0 };
-
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	glLoadIdentity();
+	//Player::Get().Update();
+
+	m_camera->Update();
+	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
+	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_house->GetTransformation()));
+	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
 	
-	m_camera.Update();
-	m_camera.GetViewMatrixArray(viewMatrix);
-	m_camera.GetProjectionArray(projectionMatrix);
-	
-	glUniformMatrix4fv( m_uniform_modelview, 1, GL_FALSE, viewMatrix );
-	glUniformMatrix4fv( m_uniform_projection, 1, GL_FALSE, projectionMatrix );
-	
-	glBindSampler(0, m_texDefaultSampler);
+	//glBindSampler(0, m_texDefaultSampler); ??
 
 	m_house->Render();
+
+	//glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_aircraft->GetTransformation()));
+	
+	//m_aircraft->Render();
 
 	SwapBuffers(m_hdc);
 
@@ -147,7 +163,7 @@ void OGLWindow::Render()
 void OGLWindow::Resize( int width, int height )
 {
 	glViewport( 0, 0, width, height );
-	m_camera.SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+	m_camera->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
 }
 
 void OGLWindow::InitOGLState()
@@ -164,22 +180,26 @@ void OGLWindow::InitOGLState()
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.vert", SHADER_VERTEX);
 	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.frag", SHADER_FRAGMENT);
 
-	glBindFragDataLocation( m_shader->GetProgramHandle(), 0, "outFrag" );
+	glBindFragDataLocation(m_shader->GetProgramHandle(), 0, "outFrag");
 
 	m_shader->BuildShaderProgram();
 	m_shader->ActivateShaderProgram();
 
 	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "modelview");
 	m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
-	m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
+	m_uniform_local_to_world = glGetUniformLocation(m_shader->GetProgramHandle(), "localToWorld");
+	m_uniform_camera_position = glGetUniformLocation(m_shader->GetProgramHandle(), "cameraPosition");
 
-	glUniform1i( m_uniform_texture, 0 );
+	// ========== ???? ========== \\
+	//m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
+
+	//glUniform1i( m_uniform_texture, 0 );
 
 	//Create a texture sampler
-	glGenSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
+	//glGenSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
 	
-	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  
-	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
-	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MIN_FILTER , GL_LINEAR);  
-	glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MAG_FILTER , GL_LINEAR);
+	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  
+	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
+	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MIN_FILTER , GL_LINEAR);  
+	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MAG_FILTER , GL_LINEAR);
 }

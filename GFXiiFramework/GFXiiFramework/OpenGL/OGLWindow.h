@@ -6,27 +6,35 @@
 #include "OGLShader.h"
 #include "OGLTexture.h"
 #include "OGLCamera.h"
+#include "..\Player.h"
+#include "..\OGLSkyBox.h"
 
 class OGLWindow : public RenderWindow
 {
 	private:
-		HDC			m_hdc;				//handle to a device context
-		HGLRC		m_hglrc;			//handle to a gl rendering context
+		HDC						m_hdc;				//handle to a device context
+		HGLRC					m_hglrc;			//handle to a gl rendering context
 
-		int			m_width;
-		int			m_height;
+		int						m_width;
+		int						m_height;
 		
-		//This is not an ideal place to hold geometry data
-		GameObject		*m_house;
+		float					m_rotY;
+
+		// TODO: Store in a container
+		OGLSkyBox				*m_skyBox;
+		GameObject				*m_house;
+		GameObject				*m_aircraft;
 
 		//Declear an OGL shader program
 		OGLShaderProgram		*m_shader;
 		int						m_uniform_modelview;
 		int						m_uniform_projection;
-		int                     m_uniform_texture;
-		int						m_texDefaultSampler;
+		int						m_uniform_local_to_world;
+		int						m_uniform_camera_position;
 
-		OGLCamera				m_camera;
+		//int						m_texDefaultSampler;
+
+		OGLCamera				*m_camera;
 
 protected:
 

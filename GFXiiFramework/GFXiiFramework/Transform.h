@@ -12,17 +12,36 @@ private:
 	glm::vec3					m_viewVector;
 
 	glm::mat4					m_orientation;
-	glm::fquat					m_pitch;
-	glm::fquat					m_yaw;
-	glm::fquat					m_roll;
+	float						m_pitch;
+	float						m_yaw;
+	float						m_roll;
+
+	glm::mat4					m_scale;
 
 public:
 	Transform();
 	~Transform();
 
+	// ------------------ INLINES ------------------ \\
+
 	inline void					SetPosition(glm::vec3 &position)
 	{
 		m_position = position;
+	}
+
+	inline void					SetUniformScale(float scale)
+	{
+		m_scale = glm::scale(glm::mat4(), glm::vec3(scale, scale, scale));
+	}
+
+	inline void					SetScale(float x, float y, float z)
+	{
+		m_scale = glm::scale(glm::mat4(), glm::vec3(x, y, z));
+	}
+
+	inline glm::mat4			GetTransformation()
+	{
+		return glm::translate(glm::mat4(), m_position) * m_scale * m_orientation;
 	}
 
 	inline const glm::vec3&		GetPosition() const
@@ -65,6 +84,19 @@ public:
 		m_position += (m_upVector * amount);
 	}
 
+	inline void					Set(glm::vec3 up, glm::vec3 right, glm::vec3 view, glm::vec3 position)
+	{
+		m_upVector = up;
+		m_rightVector = right;
+		m_viewVector = view;
+		m_position = position;
+	}
+
+	inline float				GetYaw() const { return m_yaw; }
+	inline float				GetPitch() const { return m_pitch; }
+	inline float				GetRoll() const { return m_roll; }
+
+	// ------------------ DECLARATIONS ------------------ \\
+
 	void						Rotation(float yaw, float pitch, float roll);
 };
-

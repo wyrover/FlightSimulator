@@ -67,16 +67,9 @@ class OGLCamera : public Object
 			return m_viewMatrix;
 		}
 
-		inline const void				GetViewMatrixArray(float *viewMatrix) const
+		inline const glm::mat4&			GetProjectionMat4() const
 		{
-			for (int x = 0; x < 4; x++)
-			{
-				for (int y = 0; y < 4; y++)
-				{
-					*viewMatrix = m_viewMatrix[x][y];
-					viewMatrix++;
-				}
-			}
+			return m_projectionMatrix;
 		}
 
 		inline void							SetProjection(float fov, float width, float height, float nPlane, float fPlane)
@@ -89,18 +82,6 @@ class OGLCamera : public Object
 			m_height = height;
 			m_near = nPlane;
 			m_far = fPlane;
-		}
-
-		inline const void				GetProjectionArray(float *projection) const
-		{
-			for (int x = 0; x < 4; x++)
-			{
-				for (int y = 0; y < 4; y++)
-				{
-					*projection = m_projectionMatrix[x][y];
-					projection++;
-				}
-			}
 		}
 
 		void							Update();

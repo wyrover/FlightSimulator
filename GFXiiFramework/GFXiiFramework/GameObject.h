@@ -8,16 +8,22 @@
 class GameObject : public Object
 {
 	protected:
-		BaseTexture				*m_tex;
+		BaseTexture				*m_dif;
+		BaseTexture				*m_spec;
 		
 	public:
 
 		//this is a pure virtual function
-								GameObject() { m_tex = 0; }
+								GameObject() { m_dif = m_spec = 0; }
 		virtual void			Render() = 0;
 		
-		inline void				SetTexture( BaseTexture* tex )
+		inline void				SetDiffuse( BaseTexture* dif )
 		{
-			m_tex = tex;
+			m_dif = dif;
+		}
+
+		inline void				SetSpecular(BaseTexture* spec)
+		{
+			m_spec = spec;
 		}
 };

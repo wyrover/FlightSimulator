@@ -15,12 +15,16 @@ OGLMesh::OGLMesh(LPCWSTR filename)
 	LoadAndBuildMeshFromOBJFile(filename);
 }
 
-OGLMesh::OGLMesh(LPCWSTR mesh, const char* texture)
+OGLMesh::OGLMesh(LPCWSTR mesh, const char* diffuse) : OGLMesh(mesh)
 {
-	LoadAndBuildMeshFromOBJFile(mesh);
+	m_diffuse.CreateTextureFromFile(diffuse);
+	SetDiffuse(&m_diffuse);
+}
 
-	m_texture.CreateTextureFromFile(texture);
-	SetTexture(&m_texture);
+OGLMesh::OGLMesh(LPCWSTR mesh, const char* diffuse, const char* specular) : OGLMesh(mesh, diffuse)
+{
+	m_specular.CreateTextureFromFile(specular);
+	SetSpecular(&m_specular);
 }
 
 OGLMesh::~OGLMesh()
@@ -31,10 +35,15 @@ OGLMesh::~OGLMesh()
 
 void OGLMesh::Render()
 {
-	unsigned int texHandle = dynamic_cast<OGLTexture*>(m_tex)->m_syshandle;
+	unsigned int difHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texHandle);
+	glBindTexture(GL_TEXTURE_2D, difHandle);
+
+	unsigned int specHandle = dynamic_cast<OGLTexture*>(m_spec)->m_syshandle;
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, specHandle);
 
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo_verts);

@@ -99,7 +99,7 @@ void OGLCube::InitUnitCube()
 
 void OGLCube::Render()
 {
-	unsigned int texHandle = dynamic_cast<OGLTexture*>(m_tex)->m_syshandle;
+	unsigned int texHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
 
 	glActiveTexture( GL_TEXTURE0 );
 	glBindTexture( GL_TEXTURE_2D, texHandle );
