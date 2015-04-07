@@ -124,7 +124,8 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_house->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 2, -20));
 	//m_aircraft->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 0, -10));
 
-	m_skyBox->Init("..asset/texture/sky_ft.tga", "...asset/texture/sky_bk.tga", "..asset/texture/sky_lf.tga", "..asset/texture/sky_rt", "..asset/texture/sky_tp.tga", "..asset/texture/sky_bt.tga");
+	m_skyBox->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
+	m_skyBox->SetUniformScale(100.0f);
 
 	//m_aircraft->Rotation(180.0f, 0.0f, 0.0f);
 	//m_aircraft->SetUniformScale(0.01f);
@@ -142,18 +143,37 @@ void OGLWindow::Render()
 	//Player::Get().Update();
 
 	m_camera->Update();
+
+	m_shader->ActivateShaderProgram();
+
 	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
 	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
 	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_house->GetTransformation()));
 	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
+	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_house->GetOrientation()));
 	
 	//glBindSampler(0, m_texDefaultSampler); ??
 
 	m_house->Render();
 
-	//glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_aircraft->GetTransformation()));
-	
+	m_house->Rotation(0.2f, 0.0f, 0.0f);
+
+
+	m_shader->DeactivateShaderProgram();
+
+	m_skyBoxShader->ActivateShaderProgram();
+
+	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
+	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetTransformation()));
+	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
+	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetOrientation()));
+
+	m_skyBox->Render();
+
 	//m_aircraft->Render();
+
+	m_skyBoxShader->DeactivateShaderProgram();
 
 	SwapBuffers(m_hdc);
 
@@ -173,31 +193,47 @@ void OGLWindow::InitOGLState()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	//Initialise OGL shader
+	// ========== Standard shader ========== \\
+
 	m_shader = new OGLShaderProgram();
 
 	m_shader->CreateShaderProgram();
-	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.vert", SHADER_VERTEX);
-	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/basic.frag", SHADER_FRAGMENT);
+	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/standard.vert", SHADER_VERTEX);
+	m_shader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/standard.frag", SHADER_FRAGMENT);
 
 	glBindFragDataLocation(m_shader->GetProgramHandle(), 0, "outFrag");
 
 	m_shader->BuildShaderProgram();
-	m_shader->ActivateShaderProgram();
+	//m_shader->ActivateShaderProgram();
 
 	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "modelview");
 	m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
 	m_uniform_local_to_world = glGetUniformLocation(m_shader->GetProgramHandle(), "localToWorld");
 	m_uniform_camera_position = glGetUniformLocation(m_shader->GetProgramHandle(), "cameraPosition");
+	m_uniform_rotation = glGetUniformLocation(m_shader->GetProgramHandle(), "rotation");
+
+	// ========== Sky box shader ========== \\
+
+	m_skyBoxShader = new OGLShaderProgram();
+
+	m_skyBoxShader->CreateShaderProgram();
+	m_skyBoxShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/skybox.vert", SHADER_VERTEX);
+	m_skyBoxShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/skybox.frag", SHADER_FRAGMENT);
+
+	glBindFragDataLocation(m_skyBoxShader->GetProgramHandle(), 0, "outFrag");
+
+	m_skyBoxShader->BuildShaderProgram();
+	//m_skyBoxShader->ActivateShaderProgram();
 
 	// ========== ???? ========== \\
+
 	//m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
 
 	//glUniform1i( m_uniform_texture, 0 );
 
-	//Create a texture sampler
+	////Create a texture sampler
 	//glGenSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
-	
+	//
 	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  
 	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
 	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MIN_FILTER , GL_LINEAR);  

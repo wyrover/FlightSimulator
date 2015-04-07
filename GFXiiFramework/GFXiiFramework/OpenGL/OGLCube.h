@@ -6,7 +6,7 @@
 
 class OGLCube : public GameObject
 {
-	private:
+	protected:
 		struct SimpleVertex
 		{
 				float position[3];
@@ -14,7 +14,6 @@ class OGLCube : public GameObject
 				float uv[2];
 		};
 
-	private:
 		unsigned int	m_vao;
 		unsigned int	m_vbo_verts;
 		unsigned int	m_vbo_colours;

@@ -66,8 +66,10 @@
     <ResourceCompile Include="GFXiiFramework.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\asset\shader\glsl\basic.frag" />
-    <None Include="..\asset\shader\glsl\basic.vert" />
+    <None Include="..\asset\shader\glsl\skybox.frag" />
+    <None Include="..\asset\shader\glsl\skybox.vert" />
+    <None Include="..\asset\shader\glsl\standard.frag" />
+    <None Include="..\asset\shader\glsl\standard.vert" />
     <None Include="GLEW\glew32.dll" />
   </ItemGroup>
   <ItemGroup>

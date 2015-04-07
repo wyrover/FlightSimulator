@@ -5,7 +5,7 @@
 class OGLSkyBox : public OGLCube
 {
 private:
-	BaseTexture				*m_textures[6];
+	OGLTexture				m_textures[6];
 
 public:
 	OGLSkyBox();

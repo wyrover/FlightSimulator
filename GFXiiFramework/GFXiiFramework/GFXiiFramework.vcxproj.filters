@@ -184,14 +184,20 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\asset\shader\glsl\basic.frag">
-      <Filter>Asset\Shaders\GLSL</Filter>
-    </None>
-    <None Include="..\asset\shader\glsl\basic.vert">
-      <Filter>Asset\Shaders\GLSL</Filter>
-    </None>
     <None Include="GLEW\glew32.dll">
       <Filter>GLEW</Filter>
+    </None>
+    <None Include="..\asset\shader\glsl\standard.frag">
+      <Filter>Asset\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\asset\shader\glsl\standard.vert">
+      <Filter>Asset\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\asset\shader\glsl\skybox.frag">
+      <Filter>Asset\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\asset\shader\glsl\skybox.vert">
+      <Filter>Asset\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
