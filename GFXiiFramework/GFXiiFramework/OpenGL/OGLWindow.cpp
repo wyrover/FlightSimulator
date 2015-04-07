@@ -143,6 +143,21 @@ void OGLWindow::Render()
 	//Player::Get().Update();
 
 	m_camera->Update();
+	m_skyBox->SetPosition(m_camera->GetPosition());
+
+	m_skyBoxShader->ActivateShaderProgram();
+
+	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
+	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetTransformation()));
+	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
+	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetOrientation()));
+
+	m_skyBox->Render();
+
+	//m_aircraft->Render();
+
+	m_skyBoxShader->DeactivateShaderProgram();
 
 	m_shader->ActivateShaderProgram();
 
@@ -160,20 +175,6 @@ void OGLWindow::Render()
 
 
 	m_shader->DeactivateShaderProgram();
-
-	m_skyBoxShader->ActivateShaderProgram();
-
-	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
-	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
-	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetTransformation()));
-	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
-	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetOrientation()));
-
-	m_skyBox->Render();
-
-	//m_aircraft->Render();
-
-	m_skyBoxShader->DeactivateShaderProgram();
 
 	SwapBuffers(m_hdc);
 

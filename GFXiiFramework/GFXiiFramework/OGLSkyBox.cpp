@@ -34,12 +34,37 @@ void OGLSkyBox::Init(const char* front, const char* back, const char* left, cons
 
 void OGLSkyBox::Render() const
 {
+	glDisable(GL_DEPTH_TEST);
+
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_textures[0].m_syshandle);
 
 	glBindVertexArray(m_vao);
 
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	// Back face
+	glBindTexture(GL_TEXTURE_2D, m_textures[1].m_syshandle);
+	glDrawRangeElements(GL_TRIANGLES, 0, 0, 6, GL_UNSIGNED_INT, (void*)0);
+
+	// Left face
+	glBindTexture(GL_TEXTURE_2D, m_textures[2].m_syshandle);
+	glDrawRangeElements(GL_TRIANGLES, 0, 0, 6, GL_UNSIGNED_INT, (void*)24);
+
+	// Front face
+	glBindTexture(GL_TEXTURE_2D, m_textures[0].m_syshandle);
+	glDrawRangeElements(GL_TRIANGLES, 0, 0, 6, GL_UNSIGNED_INT, (void*)48);
+
+	// Right face
+	glBindTexture(GL_TEXTURE_2D, m_textures[3].m_syshandle);
+	glDrawRangeElements(GL_TRIANGLES, 0, 0, 6, GL_UNSIGNED_INT, (void*)72);
+
+	// Bottom face
+	glBindTexture(GL_TEXTURE_2D, m_textures[5].m_syshandle);
+	glDrawRangeElements(GL_TRIANGLES, 0, 0, 6, GL_UNSIGNED_INT, (void*)96);
+
+	// Top face
+	glBindTexture(GL_TEXTURE_2D, m_textures[4].m_syshandle);
+	glDrawRangeElements(GL_TRIANGLES, 0, 0, 6, GL_UNSIGNED_INT, (void*)120);
 
 	glBindVertexArray(0);
+
+	glEnable(GL_DEPTH_TEST);
 }

@@ -24,7 +24,7 @@ public:
 
 	// ------------------ INLINES ------------------ \\
 
-	inline void					SetPosition(glm::vec3 &position)
+	inline void					SetPosition(glm::vec3 position)
 	{
 		m_position = position;
 	}
