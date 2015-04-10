@@ -8,6 +8,7 @@
 #include "OGLCamera.h"
 #include "..\Player.h"
 #include "..\OGLSkyBox.h"
+#include "../Actor.h"
 
 class OGLWindow : public RenderWindow
 {
@@ -24,6 +25,8 @@ class OGLWindow : public RenderWindow
 		OGLSkyBox				*m_skyBox;
 		GameObject				*m_house;
 		GameObject				*m_aircraft;
+
+		std::shared_ptr<Actor>	m_pHouse;
 
 		//Declear an OGL shader program
 		OGLShaderProgram		*m_shader;

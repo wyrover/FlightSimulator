@@ -5,15 +5,14 @@
 #include "../GameObject.h"
 #include "../Triangle.h"
 
-
-class OGLMesh : public GameObject
+class OGLMesh
 {
 private:
 	unsigned int	m_vao;
 	unsigned int	m_vbo_verts;
 	int				m_numtriangles;
-	OGLTexture		m_diffuse;
-	OGLTexture		m_specular;
+	//OGLTexture		m_diffuse;
+	//OGLTexture		m_specular;
 
 public:
 	OGLMesh();

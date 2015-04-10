@@ -23,6 +23,7 @@
     <ClInclude Include="Listener.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="MaterialComponent.h" />
+    <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="OGLSkyBox.h" />
     <ClInclude Include="OpenGL\OGLCamera.h" />
@@ -43,12 +44,12 @@
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BaseApplication.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="ImageIO.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MaterialComponent.cpp" />
+    <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="OGLSkyBox.cpp" />
     <ClCompile Include="OpenGL\OGLCamera.cpp" />

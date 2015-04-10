@@ -34,7 +34,7 @@ class OGLCamera : public Actor
 
 		inline void						UpdateViewMatrix()
 		{
-			m_viewMatrix = glm::lookAt(GetPosition(), GetPosition() + GetViewVector(), GetUpVector());
+			//m_viewMatrix = glm::lookAt(GetPosition(), GetPosition() + GetViewVector(), GetUpVector());
 		}
 
 		inline ECameraType				GetCameraType()

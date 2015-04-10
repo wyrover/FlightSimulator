@@ -125,6 +125,9 @@
     <ClInclude Include="MaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL\OGLWindow.cpp">
@@ -178,10 +181,10 @@
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actor.cpp">
+    <ClCompile Include="MaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialComponent.cpp">
+    <ClCompile Include="MeshComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

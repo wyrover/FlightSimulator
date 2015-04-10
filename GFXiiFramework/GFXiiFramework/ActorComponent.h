@@ -18,5 +18,5 @@ public:
 
 	inline void									SetOwner(ActorPtr owner) { m_pOwner = owner; }
 
-	virtual ActorComponentID					GetComponentID() = 0;
+	inline virtual ActorComponentID				GetComponentID() = 0;
 };

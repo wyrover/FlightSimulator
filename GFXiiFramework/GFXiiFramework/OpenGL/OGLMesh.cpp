@@ -17,14 +17,14 @@ OGLMesh::OGLMesh(LPCWSTR filename)
 
 OGLMesh::OGLMesh(LPCWSTR mesh, const char* diffuse) : OGLMesh(mesh)
 {
-	m_diffuse.CreateTextureFromFile(diffuse);
-	SetDiffuse(&m_diffuse);
+	//m_diffuse.CreateTextureFromFile(diffuse);
+	//SetDiffuse(&m_diffuse);
 }
 
 OGLMesh::OGLMesh(LPCWSTR mesh, const char* diffuse, const char* specular) : OGLMesh(mesh, diffuse)
 {
-	m_specular.CreateTextureFromFile(specular);
-	SetSpecular(&m_specular);
+	//m_specular.CreateTextureFromFile(specular);
+	//SetSpecular(&m_specular);
 }
 
 OGLMesh::~OGLMesh()
@@ -35,18 +35,20 @@ OGLMesh::~OGLMesh()
 
 void OGLMesh::Render()
 {
-	unsigned int difHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
+	//unsigned int difHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, difHandle);
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, difHandle);
 
-	if (m_spec != nullptr)
-	{
-		unsigned int specHandle = dynamic_cast<OGLTexture*>(m_spec)->m_syshandle;
+	//if (m_spec != nullptr)
+	//{
+	//	unsigned int specHandle = dynamic_cast<OGLTexture*>(m_spec)->m_syshandle;
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, specHandle);
-	}
+	//	glActiveTexture(GL_TEXTURE1);
+	//	glBindTexture(GL_TEXTURE_2D, specHandle);
+	//}
+
+	
 
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo_verts);

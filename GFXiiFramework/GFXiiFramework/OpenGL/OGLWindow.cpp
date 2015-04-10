@@ -3,6 +3,10 @@
 #include "GLEW/include/glew.h"
 #include "..\Input.h"
 #include "..\GLM\gtc\type_ptr.hpp"
+#include "../ActorComponent.h"
+#include "../TransformComponent.h"
+#include "../MaterialComponent.h"
+#include "../MeshComponent.h"
 
 OGLWindow::OGLWindow()
 {
@@ -115,7 +119,26 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_width = width;
 	m_height = height;
 
-	//m_camera = new OGLCamera();
+	m_pHouse = std::make_shared<Actor>();
+
+	std::shared_ptr<TransformComponent> transformation = std::make_shared<TransformComponent>();
+	std::shared_ptr<MeshComponent> mesh = std::make_shared<MeshComponent>();
+	std::shared_ptr<MaterialComponent> material = std::make_shared<MaterialComponent>(); 
+
+	transformation->SetOwner(m_pHouse);
+	mesh->SetOwner(m_pHouse);
+	material->SetOwner(m_pHouse);
+
+	m_pHouse->AddComponent(transformation);
+	m_pHouse->AddComponent(mesh);
+	m_pHouse->AddComponent(material);
+
+	m_pHouse->GetComponent<TransformComponent>(TransformComponent::COMPONENT_ID).lock().get()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 5, 0));
+	m_pHouse->GetComponent<MeshComponent>(MeshComponent::COMPONENT_ID).lock().get()->LoadAndBuildMeshFromOBJFile(L"../asset/models/house.obj");
+	m_pHouse->GetComponent<MaterialComponent>(MaterialComponent::COMPONENT_ID).lock().get()->SetDiffuse("../asset/texture/house_diffuse.tga");
+	m_pHouse->GetComponent<MaterialComponent>(MaterialComponent::COMPONENT_ID).lock().get()->SetSpecular("../asset/texture/house_spec.tga");
+
+	m_camera = new OGLCamera();
 	//m_skyBox = new OGLSkyBox();
 	//m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga", "../asset/texture/house_spec.tga");
 	//m_aircraft = new OGLMesh(L"../asset/models/ARC170.obj", "../asset/texture/ARC170_diffuse.tga");
@@ -169,6 +192,7 @@ void OGLWindow::Render()
 	
 	//glBindSampler(0, m_texDefaultSampler); ??
 
+	m_pHouse->GetComponent<MeshComponent>(MeshComponent::COMPONENT_ID).lock().get()->Render();
 	//m_house->Render();
 
 	//m_house->Rotation(0.2f, 0.0f, 0.0f);
@@ -183,8 +207,20 @@ void OGLWindow::Render()
 
 void OGLWindow::Resize( int width, int height )
 {
-	glViewport( 0, 0, width, height );
+	//glViewport( 0, 0, width, height );
+	//gluPerspective(60.0f, (float)width / (float)height, 1.0f, 1000.0f);
 	//m_camera->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+
+	float aspect_ratio = (float)width / (float)height;
+
+	glViewport(0, 0, width, height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0, aspect_ratio, 1.0, 1000.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void OGLWindow::InitOGLState()
