@@ -1,11 +1,9 @@
 #pragma once
 
 #include "BaseTexture.h"
-#include "Object.h"
+#include "Actor.h"
 
-//This is an abstract class
-//It cannot be instantiated without being inherited by a concrete class
-class GameObject : public Object
+class GameObject : public Actor
 {
 	protected:
 		BaseTexture				*m_dif;
@@ -15,7 +13,7 @@ class GameObject : public Object
 
 		//this is a pure virtual function
 								GameObject() { m_dif = m_spec = 0; }
-		virtual void			Render() = 0;
+		virtual void			Render() = 0; 
 		
 		inline void				SetDiffuse( BaseTexture* dif )
 		{

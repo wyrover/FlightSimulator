@@ -24,6 +24,8 @@ public:
 
 	// ------------------ INLINES ------------------ \\
 
+#pragma region INLINES
+
 	inline void					SetPosition(glm::vec3 position)
 	{
 		m_position = position;
@@ -92,6 +94,8 @@ public:
 		m_position = position;
 	}
 
+#pragma endregion INLINES
+	
 	inline float				GetYaw() const { return m_yaw; }
 	inline float				GetPitch() const { return m_pitch; }
 	inline float				GetRoll() const { return m_roll; }

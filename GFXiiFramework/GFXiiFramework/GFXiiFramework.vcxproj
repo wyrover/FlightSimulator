@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="BaseApplication.h" />
     <ClInclude Include="BaseTexture.h" />
     <ClInclude Include="GFXiiFramework.h" />
@@ -20,7 +21,8 @@
     <ClInclude Include="ImageIO.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Listener.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="MaterialComponent.h" />
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="OGLSkyBox.h" />
     <ClInclude Include="OpenGL\OGLCamera.h" />
@@ -36,15 +38,17 @@
     <ClInclude Include="ShaderBase.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BaseApplication.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="ImageIO.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="MaterialComponent.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="OGLSkyBox.cpp" />
     <ClCompile Include="OpenGL\OGLCamera.cpp" />
@@ -55,6 +59,7 @@
     <ClCompile Include="OpenGL\OGLWindow.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>

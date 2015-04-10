@@ -4,10 +4,10 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
-#include "..\Object.h"
+#include "..\Actor.h"
 #include "..\GLM\gtc\matrix_transform.hpp"
 
-class OGLCamera : public Object
+class OGLCamera : public Actor
 {
 	public:
 		enum ECameraType

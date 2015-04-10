@@ -115,22 +115,22 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_width = width;
 	m_height = height;
 
-	m_camera = new OGLCamera();
-	m_skyBox = new OGLSkyBox();
-	m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga", "../asset/texture/house_spec.tga");
+	//m_camera = new OGLCamera();
+	//m_skyBox = new OGLSkyBox();
+	//m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga", "../asset/texture/house_spec.tga");
 	//m_aircraft = new OGLMesh(L"../asset/models/ARC170.obj", "../asset/texture/ARC170_diffuse.tga");
 
-	m_camera->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 5, 0));
-	m_house->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 2, -20));
+	//m_camera->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 5, 0));
+	//m_house->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 2, -20));
 	//m_aircraft->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 0, -10));
 
-	m_skyBox->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
-	m_skyBox->SetUniformScale(100.0f);
+	//m_skyBox->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
+	//m_skyBox->SetUniformScale(100.0f);
 
 	//m_aircraft->Rotation(180.0f, 0.0f, 0.0f);
 	//m_aircraft->SetUniformScale(0.01f);
 
-	Player::Get().SetCamera(m_camera);
+	//Player::Get().SetCamera(m_camera);
 	//Player::Get().SetCurrentGameObject(m_aircraft);
 	
 	return TRUE;
@@ -142,18 +142,18 @@ void OGLWindow::Render()
 
 	//Player::Get().Update();
 
-	m_camera->Update();
-	m_skyBox->SetPosition(m_camera->GetPosition());
+	//m_camera->Update();
+	//m_skyBox->SetPosition(m_camera->GetPosition());
 
-	m_skyBoxShader->ActivateShaderProgram();
+	//m_skyBoxShader->ActivateShaderProgram();
 
-	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
-	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
-	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetTransformation()));
-	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
-	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetOrientation()));
+	//glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
+	//glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
+	//glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetTransformation()));
+	//glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
+	//glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetOrientation()));
 
-	m_skyBox->Render();
+	//m_skyBox->Render();
 
 	//m_aircraft->Render();
 
@@ -161,17 +161,17 @@ void OGLWindow::Render()
 
 	m_shader->ActivateShaderProgram();
 
-	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
-	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
-	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_house->GetTransformation()));
-	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
-	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_house->GetOrientation()));
+	//glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
+	//glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
+	//glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_house->GetTransformation()));
+	//glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
+	//glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_house->GetOrientation()));
 	
 	//glBindSampler(0, m_texDefaultSampler); ??
 
-	m_house->Render();
+	//m_house->Render();
 
-	m_house->Rotation(0.2f, 0.0f, 0.0f);
+	//m_house->Rotation(0.2f, 0.0f, 0.0f);
 
 
 	m_shader->DeactivateShaderProgram();
@@ -184,7 +184,7 @@ void OGLWindow::Render()
 void OGLWindow::Resize( int width, int height )
 {
 	glViewport( 0, 0, width, height );
-	m_camera->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+	//m_camera->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
 }
 
 void OGLWindow::InitOGLState()
