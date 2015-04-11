@@ -16,7 +16,7 @@ public:
 
 	static const ActorComponentID			COMPONENT_ID = 5;
 
-	inline virtual ActorComponentID			GetComponentID() override
+	inline virtual ActorComponentID			GetComponentID() const override
 	{
 		return COMPONENT_ID;
 	}

@@ -12,8 +12,6 @@ typedef std::map<ActorComponentID, ActorComponentPtr> ActorComponents;
 
 class Actor
 {
-	friend class ActorFactory;
-
 private:
 	ActorID							m_ID;
 	ActorComponents					m_actorComponents;

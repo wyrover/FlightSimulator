@@ -16,7 +16,7 @@ class GLSLShader : public ShaderBase
 		virtual void				SetShaderOwnerProgram(ShaderProgramHandle handle);
 };
 
-class OGLShaderProgram
+class GLSLShaderProgram
 {
 
 	private:
@@ -25,7 +25,7 @@ class OGLShaderProgram
 		int							m_shaderCount;
 
 	public:
-									OGLShaderProgram()
+									GLSLShaderProgram()
 									{
 										m_systemHandle = INVALID_SHADER_PROGRAM_HANDLE;
 										for(int i = 0; i < MAX_NUM_SHADER_PER_PROGRAM; i++)
@@ -34,7 +34,7 @@ class OGLShaderProgram
 										}
 										m_shaderCount = 0;
 									}
-		virtual						~OGLShaderProgram();
+		virtual						~GLSLShaderProgram();
 
 		inline ShaderProgramHandle	GetProgramHandle()
 		{

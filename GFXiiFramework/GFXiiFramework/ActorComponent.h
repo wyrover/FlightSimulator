@@ -18,5 +18,10 @@ public:
 
 	inline void									SetOwner(ActorPtr owner) { m_pOwner = owner; }
 
-	inline virtual ActorComponentID				GetComponentID() = 0;
+	inline const ActorPtr						GetOwner() const
+	{
+		return m_pOwner;
+	}
+
+	inline virtual ActorComponentID				GetComponentID() const = 0;
 };

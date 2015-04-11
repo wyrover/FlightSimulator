@@ -4,6 +4,11 @@
 #include "Actor.h"
 #include "glm\gtc\matrix_transform.hpp"
 
+class CameraComponent;
+
+typedef std::shared_ptr<CameraComponent> CameraPtr;
+typedef std::weak_ptr<CameraComponent> WeakCameraPtr;
+
 class CameraComponent : public ActorComponent
 {
 private:
@@ -22,7 +27,7 @@ public:
 
 	static const ActorComponentID			COMPONENT_ID = 4;
 
-	inline virtual ActorComponentID			GetComponentID() override
+	inline virtual ActorComponentID			GetComponentID() const override
 	{
 		return COMPONENT_ID;
 	}

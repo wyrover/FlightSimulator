@@ -1,5 +1,6 @@
 #include "SkyBoxComponent.h"
 #include "GLEW\include\glew.h"
+#include "ShaderComponent.h"
 
 SkyBoxComponent::SkyBoxComponent()
 {
@@ -26,6 +27,10 @@ void SkyBoxComponent::Init(const char* front, const char* back, const char* left
 
 void SkyBoxComponent::Render() const
 {
+	m_pOwner->GetComponent<ShaderComponent>()->PreRender();
+
+
+
 	glDisable(GL_DEPTH_TEST);
 
 	glActiveTexture(GL_TEXTURE0);
@@ -59,4 +64,6 @@ void SkyBoxComponent::Render() const
 	glBindVertexArray(0);
 
 	glEnable(GL_DEPTH_TEST);
+
+	m_pOwner->GetComponent<ShaderComponent>()->PostRender();
 }

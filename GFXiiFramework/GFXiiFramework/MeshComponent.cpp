@@ -2,6 +2,7 @@
 #include "GLEW\include\glew.h"
 #include "OBJFileReader.h"
 #include "MaterialComponent.h"
+#include "ShaderComponent.h"
 #include "Actor.h"
 
 MeshComponent::MeshComponent()
@@ -14,6 +15,8 @@ MeshComponent::~MeshComponent()
 
 void MeshComponent::Render()
 {
+	m_pOwner->GetComponent<ShaderComponent>()->PreRender();
+
 	unsigned int difHandle = m_pOwner->GetComponent<MaterialComponent>()->GetDiffuse().m_syshandle;
 	unsigned int specHandle = m_pOwner->GetComponent<MaterialComponent>()->GetSpecular().m_syshandle;
 	
@@ -28,6 +31,8 @@ void MeshComponent::Render()
 	glDrawArrays(GL_TRIANGLES, 0, m_numtriangles * 3);
 
 	glBindVertexArray(0);
+
+	m_pOwner->GetComponent<ShaderComponent>()->PostRender();
 }
 
 void MeshComponent::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)

@@ -5,17 +5,17 @@
 class MeshComponent : public ActorComponent
 {
 private:
-	unsigned int	m_vao;
-	unsigned int	m_vbo_verts;
-	int				m_numtriangles;
+	unsigned int							m_vao;
+	unsigned int							m_vbo_verts;
+	int										m_numtriangles;
 
 public:
-	MeshComponent();
-	virtual ~MeshComponent();
+											MeshComponent();
+	virtual									~MeshComponent();
 
 	static const ActorComponentID			COMPONENT_ID = 3;
 
-	inline virtual ActorComponentID			GetComponentID() override
+	inline virtual ActorComponentID			GetComponentID() const override
 	{
 		return COMPONENT_ID;
 	}

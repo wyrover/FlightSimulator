@@ -9,9 +9,11 @@ d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\imageio.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\input.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\materialcomponent.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\meshcomponent.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\meshnode.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\objfilereader.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\player.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\skyboxcomponent.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\skyboxnode.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\texture.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\transform.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\transformcomponent.obj

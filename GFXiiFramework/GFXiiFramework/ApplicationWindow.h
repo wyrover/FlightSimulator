@@ -1,12 +1,13 @@
 #pragma once
 
+#include <Windows.h>
 #include "Cube.h"
-#include "GLSLShader.h"
 #include "Texture.h"
 #include "Player.h"
 #include "Actor.h"
+#include "Scene.h"
 
-typedef std::unique_ptr<OGLShaderProgram> ShaderProgramPtr;
+//typedef std::unique_ptr<GLSLShaderProgram> ShaderProgramPtr;
 
 class ApplicationWindow
 {
@@ -26,9 +27,11 @@ class ApplicationWindow
 		ActorPtr				m_pSkyBox;
 		ActorPtr				m_pArc170;
 
+		Scene					m_scene;
+
 		//Declear an OGL shader program
-		ShaderProgramPtr		m_pShader;
-		ShaderProgramPtr		m_pSkyBoxShader;
+		//ShaderProgramPtr		m_pShader;
+		//ShaderProgramPtr		m_pSkyBoxShader;
 
 		int						m_uniform_modelview;
 		int						m_uniform_projection;

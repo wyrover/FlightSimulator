@@ -124,12 +124,12 @@ void GLSLShader::SetShaderOwnerProgram(ShaderProgramHandle handle)
 // END_OF ShaderGL
 //
 // BEGINNING_OF ShaderProgramGL
-OGLShaderProgram::~OGLShaderProgram()
+GLSLShaderProgram::~GLSLShaderProgram()
 {
 	DeleteShaderProgram();
 }
 
-void OGLShaderProgram::CreateShaderProgram()
+void GLSLShaderProgram::CreateShaderProgram()
 {
 	if(m_systemHandle != INVALID_SHADER_PROGRAM_HANDLE) //A shader program has already been created.
 		return;
@@ -138,7 +138,7 @@ void OGLShaderProgram::CreateShaderProgram()
 	m_systemHandle = glCreateProgram();
 }
 
-void OGLShaderProgram::AttachShader(ShaderBase* shader)
+void GLSLShaderProgram::AttachShader(ShaderBase* shader)
 {
 	if(m_systemHandle != INVALID_SHADER_PROGRAM_HANDLE && shader->GetShaderSysHandle() != INVALID_SHADER_HANDLE)
 	{
@@ -150,7 +150,7 @@ void OGLShaderProgram::AttachShader(ShaderBase* shader)
 	}
 }
 
-void OGLShaderProgram::BuildShaderProgram()
+void GLSLShaderProgram::BuildShaderProgram()
 {
 	GLint result = 0;
 
@@ -172,7 +172,7 @@ void OGLShaderProgram::BuildShaderProgram()
 	}
 }
 
-void OGLShaderProgram::DeleteShaderProgram()
+void GLSLShaderProgram::DeleteShaderProgram()
 {
 	int numAttached = m_shaderCount;
 
@@ -189,7 +189,7 @@ void OGLShaderProgram::DeleteShaderProgram()
 	}
 }
 
-void OGLShaderProgram::AttachAndCompileShaderFromFile(LPCWSTR filename, EShaderType type)
+void GLSLShaderProgram::AttachAndCompileShaderFromFile(LPCWSTR filename, EShaderType type)
 {
 	if(m_shaderCount == MAX_NUM_SHADER_PER_PROGRAM)
 		return;
@@ -208,33 +208,33 @@ void OGLShaderProgram::AttachAndCompileShaderFromFile(LPCWSTR filename, EShaderT
 		}
 	}
 }
-void OGLShaderProgram::ActivateShaderProgram() 
+void GLSLShaderProgram::ActivateShaderProgram() 
 { 
 	if(m_systemHandle!=INVALID_SHADER_PROGRAM_HANDLE) 
 		glUseProgram(m_systemHandle); 
 }
 
-void OGLShaderProgram::DeactivateShaderProgram()
+void GLSLShaderProgram::DeactivateShaderProgram()
 {
 	if(m_systemHandle != INVALID_SHADER_PROGRAM_HANDLE)
 		glUseProgram(0);
 }
 
-void OGLShaderProgram::SetUniform1UInt(unsigned int value, const char* param)
+void GLSLShaderProgram::SetUniform1UInt(unsigned int value, const char* param)
 {
 	int param_loc = glGetUniformLocationARB(m_systemHandle, param);
 
 	glUniform1iARB(param_loc, value);
 }
 
-void OGLShaderProgram::SetAttrib4Float(float f1, float f2, float f3, float f4, const char* param)
+void GLSLShaderProgram::SetAttrib4Float(float f1, float f2, float f3, float f4, const char* param)
 {
 	int param_loc = glGetAttribLocationARB(m_systemHandle, param);
 
 	glVertexAttrib4fARB(param_loc, f1, f2, f3, f4);
 }
 
-void OGLShaderProgram::BindAttributeLocation( int index, const char* param_name )
+void GLSLShaderProgram::BindAttributeLocation( int index, const char* param_name )
 {
 	glBindAttribLocation( m_systemHandle, index, param_name );
 }

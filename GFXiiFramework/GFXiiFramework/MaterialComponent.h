@@ -16,7 +16,7 @@ public:
 
 	static const ActorComponentID		 COMPONENT_ID = 2;
 
-	inline virtual ActorComponentID		GetComponentID() override { return COMPONENT_ID; }
+	inline virtual ActorComponentID		GetComponentID() const override { return COMPONENT_ID; }
 
 	inline const Texture&			GetDiffuse() { return *m_pDiffuse; }
 	inline const Texture&			GetSpecular() { return *m_pSpecular; }

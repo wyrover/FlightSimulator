@@ -9,6 +9,9 @@
 #include "MeshComponent.h"
 #include "CameraComponent.h"
 #include "SkyBoxComponent.h"
+#include "RootNode.h"
+#include "ShaderComponent.h"
+#include "SkyBoxNode.h"
 
 typedef std::shared_ptr<TransformComponent> TransformComponentPtr;
 typedef std::shared_ptr<MeshComponent> MeshComponentPtr;
@@ -118,12 +121,46 @@ BOOL ApplicationWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 	m_width = width;
 	m_height = height;
+	
+	return TRUE;
+}
+
+void ApplicationWindow::Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	m_pCamera->GetComponent<CameraComponent>()->Update();
+	m_pSkyBox->GetComponent<TransformComponent>()->SetPosition(m_pCamera->GetComponent<TransformComponent>()->GetPosition());
+
+	m_scene.Render();
+
+	m_pHouse->GetComponent<TransformComponent>()->Rotation(0.2f, 0.0f, 0.0f);
+
+	SwapBuffers(m_hdc);
+
+	return;
+}
+
+void ApplicationWindow::Resize( int width, int height )
+{
+	glViewport( 0, 0, width, height );
+
+	m_pCamera->GetComponent<CameraComponent>()._Get()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+}
+
+void ApplicationWindow::InitOGLState()
+{
+	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	MeshComponentPtr pMesh;
 	CameraComponentPtr pCamera;
 	SkyBoxComponenetPtr pSkyBox;
 	MaterialComponentPtr pMaterial;
 	TransformComponentPtr pTransform;
+	ShaderComponentPtr pShader;
 
 	// ========== CAMERA START ========== \\
 
@@ -148,20 +185,28 @@ BOOL ApplicationWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 	pTransform = std::make_shared<TransformComponent>();
 	pMesh = std::make_shared<MeshComponent>();
-	pMaterial = std::make_shared<MaterialComponent>(); 
+	pMaterial = std::make_shared<MaterialComponent>();
+	pShader = std::make_shared<ShaderComponent>();
 
 	pTransform->SetOwner(m_pHouse);
 	pMesh->SetOwner(m_pHouse);
 	pMaterial->SetOwner(m_pHouse);
+	pShader->SetOwner(m_pHouse);
 
 	m_pHouse->AddComponent(pTransform);
 	m_pHouse->AddComponent(pMesh);
 	m_pHouse->AddComponent(pMaterial);
+	m_pHouse->AddComponent(pShader);
 
 	m_pHouse->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 0, -20));
 	m_pHouse->GetComponent<MeshComponent>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/house.obj");
 	m_pHouse->GetComponent<MaterialComponent>()->SetDiffuse("../asset/texture/house_diffuse.tga");
 	m_pHouse->GetComponent<MaterialComponent>()->SetSpecular("../asset/texture/house_spec.tga");
+
+	m_pHouse->GetComponent<ShaderComponent>()->SetCamera(pCamera);
+	m_pHouse->GetComponent<ShaderComponent>()->AddFragmentShader(L"../asset/shader/glsl/standard.frag");
+	m_pHouse->GetComponent<ShaderComponent>()->AddVertexShader(L"../asset/shader/glsl/standard.vert");
+	m_pHouse->GetComponent<ShaderComponent>()->BuildShaderProgram();
 
 	// ========== HOUSE END ========== \\
 
@@ -171,15 +216,23 @@ BOOL ApplicationWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 
 	pTransform = std::make_shared<TransformComponent>();
 	pSkyBox = std::make_shared<SkyBoxComponent>();
+	pShader = std::make_shared<ShaderComponent>();
 
 	pTransform->SetOwner(m_pSkyBox);
 	pSkyBox->SetOwner(m_pSkyBox);
+	pShader->SetOwner(m_pSkyBox);
 
 	m_pSkyBox->AddComponent(pTransform);
 	m_pSkyBox->AddComponent(pSkyBox);
+	m_pSkyBox->AddComponent(pShader);
 
 	m_pSkyBox->GetComponent<SkyBoxComponent>()->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
 	m_pSkyBox->GetComponent<TransformComponent>()->SetUniformScale(100.0f);
+
+	m_pSkyBox->GetComponent<ShaderComponent>()->SetCamera(pCamera);
+	m_pSkyBox->GetComponent<ShaderComponent>()->AddFragmentShader(L"../asset/shader/glsl/skybox.frag");
+	m_pSkyBox->GetComponent<ShaderComponent>()->AddVertexShader(L"../asset/shader/glsl/skybox.vert");
+	m_pSkyBox->GetComponent<ShaderComponent>()->BuildShaderProgram();
 
 	// ========== SKY BOX END ========== \\
 
@@ -190,14 +243,17 @@ BOOL ApplicationWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	pTransform = std::make_shared<TransformComponent>();
 	pMesh = std::make_shared<MeshComponent>();
 	pMaterial = std::make_shared<MaterialComponent>();
+	pShader = std::make_shared<ShaderComponent>();
 
 	pTransform->SetOwner(m_pArc170);
 	pMesh->SetOwner(m_pArc170);
 	pMaterial->SetOwner(m_pArc170);
+	pShader->SetOwner(m_pArc170);
 
 	m_pArc170->AddComponent(pTransform);
 	m_pArc170->AddComponent(pMaterial);
 	m_pArc170->AddComponent(pMesh);
+	m_pArc170->AddComponent(pShader);
 
 	m_pArc170->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 10, -20));
 	m_pArc170->GetComponent<TransformComponent>()->SetUniformScale(0.01f);
@@ -206,95 +262,21 @@ BOOL ApplicationWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_pArc170->GetComponent<MeshComponent>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/ARC170.obj");
 	m_pArc170->GetComponent<MaterialComponent>()->SetDiffuse("../asset/texture/ARC170_diffuse.tga");
 
+	m_pArc170->GetComponent<ShaderComponent>()->SetCamera(pCamera);
+	m_pArc170->GetComponent<ShaderComponent>()->AddFragmentShader(L"../asset/shader/glsl/skybox.frag");
+	m_pArc170->GetComponent<ShaderComponent>()->AddVertexShader(L"../asset/shader/glsl/skybox.vert");
+	m_pArc170->GetComponent<ShaderComponent>()->BuildShaderProgram();
+
 	// ========== ARC 170 END ========== \\
-	
-	return TRUE;
-}
 
-void ApplicationWindow::Render()
-{
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	SceneNodePtr pRoot = std::make_shared<RootNode>();
+	SceneNodePtr pHouseNode = std::make_shared<MeshNode>(m_pHouse);
+	SceneNodePtr pArc170 = std::make_shared<MeshNode>(m_pArc170);
+	SceneNodePtr pSky = std::make_shared<SkyBoxNode>(m_pSkyBox);
 
-	m_pCamera->GetComponent<CameraComponent>()->Update();
+	pRoot->AddChild(pSky);
+	pRoot->AddChild(pHouseNode);
+	pRoot->AddChild(pArc170);
 
-	m_pSkyBox->GetComponent<TransformComponent>()->SetPosition(m_pCamera->GetComponent<TransformComponent>()->GetPosition());
-
-	m_pSkyBoxShader->ActivateShaderProgram();
-
-	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetViewMatrixMat4()));
-	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetProjectionMat4()));
-	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_pSkyBox->GetComponent<TransformComponent>()->GetTransformation()));
-	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(m_pCamera->GetComponent<TransformComponent>()->GetPosition()));
-	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_pSkyBox->GetComponent<TransformComponent>()->GetOrientation()));
-
-	m_pSkyBox->GetComponent<SkyBoxComponent>()->Render();
-
-	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_pArc170->GetComponent<TransformComponent>()->GetTransformation()));
-	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_pArc170->GetComponent<TransformComponent>()->GetOrientation()));
-
-	m_pArc170->GetComponent<MeshComponent>()->Render();
-
-	m_pSkyBoxShader->DeactivateShaderProgram();
-
-	m_pShader->ActivateShaderProgram();
-
-	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetViewMatrixMat4()));
-	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetProjectionMat4()));
-	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_pHouse->GetComponent<TransformComponent>()->GetTransformation()));
-	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(m_pCamera->GetComponent<TransformComponent>()->GetPosition()));
-	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_pHouse->GetComponent<TransformComponent>()->GetOrientation()));
-
-	m_pHouse->GetComponent<MeshComponent>()->Render();
-	m_pHouse->GetComponent<TransformComponent>()->Rotation(0.2f, 0.0f, 0.0f);
-
-	m_pShader->DeactivateShaderProgram();
-
-	SwapBuffers(m_hdc);
-
-	return;
-}
-
-void ApplicationWindow::Resize( int width, int height )
-{
-	glViewport( 0, 0, width, height );
-
-	m_pCamera->GetComponent<CameraComponent>()._Get()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
-}
-
-void ApplicationWindow::InitOGLState()
-{
-	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-
-	// ========== Standard shader ========== \\
-
-	m_pShader = std::make_unique<OGLShaderProgram>();
-
-	m_pShader->CreateShaderProgram();
-	m_pShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/standard.vert", SHADER_VERTEX);
-	m_pShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/standard.frag", SHADER_FRAGMENT);
-
-	glBindFragDataLocation(m_pShader->GetProgramHandle(), 0, "outFrag");
-
-	m_pShader->BuildShaderProgram();
-
-	m_uniform_modelview = glGetUniformLocation(m_pShader->GetProgramHandle(), "modelview");
-	m_uniform_projection = glGetUniformLocation(m_pShader->GetProgramHandle(), "projection");
-	m_uniform_local_to_world = glGetUniformLocation(m_pShader->GetProgramHandle(), "localToWorld");
-	m_uniform_camera_position = glGetUniformLocation(m_pShader->GetProgramHandle(), "cameraPosition");
-	m_uniform_rotation = glGetUniformLocation(m_pShader->GetProgramHandle(), "rotation");
-
-	// ========== Sky box shader ========== \\
-
-	m_pSkyBoxShader = std::make_unique<OGLShaderProgram>();
-
-	m_pSkyBoxShader->CreateShaderProgram();
-	m_pSkyBoxShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/skybox.vert", SHADER_VERTEX);
-	m_pSkyBoxShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/skybox.frag", SHADER_FRAGMENT);
-
-	glBindFragDataLocation(m_pSkyBoxShader->GetProgramHandle(), 0, "outFrag");
-
-	m_pSkyBoxShader->BuildShaderProgram();
+	m_scene.SetRoot(pRoot);
 }
