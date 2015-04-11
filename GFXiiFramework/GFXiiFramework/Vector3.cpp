@@ -109,7 +109,7 @@ Vector3 Vector3::Reflect(const Vector3& n) const
 
 	r.SetVector(m_element[0], m_element[1], m_element[2]);
 
-	result = r + n*2.0*IndotN;
+	result = r + n*2.0f*IndotN;
 	
 	return result;
 }
@@ -122,15 +122,15 @@ Vector3 Vector3::Refract(const Vector3& n, float r_index) const
 
 	if (IndotN > 0.0)
 	{
-		Vector3 nn = n*(-1.0);
+		Vector3 nn = n*(-1.0f);
 		IndotN = -this->DotProduct(nn);
 	}
 	else
 		IndotN = -IndotN;
 
-	float k = 1.0 - r_index*r_index*(1.0 - IndotN*IndotN);
+	float k = 1.0f - r_index*r_index*(1.0f - IndotN*IndotN);
 	
-	if ( k >= 0.0 )
+	if (k >= 0.0f)
 		result = (*this)*r_index + n*(r_index*IndotN - sqrt(k));
 
 	return result;

@@ -39,29 +39,29 @@ public:
 	}
 	
 	// Translations
-	float& Forward();
-	float& Horizontal();
-	float& Vertical();
+	float Forward();
+	float Horizontal();
+	float Vertical();
 
 	// Rotations
-	float& Roll();
+	float Roll();
 
 	inline float& Pitch()
 	{
 		return m_pitch;
 	}
 
-	inline float& Yaw()
+	inline float Yaw()
 	{
 		return m_yaw;
 	}
 
 	void SetZoom(int zoomDirection)
 	{
-		m_zoomDirection = zoomDirection > 0.f ? -1.f : 1.f;
+		m_zoomDirection = zoomDirection > 0 ? -1 : 1;
 	}
 
-	inline float& GetZoom()
+	inline float GetZoom()
 	{
 		float result = (float)m_zoomDirection;
 

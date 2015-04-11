@@ -284,7 +284,7 @@ typedef GLXFBConfig* ( * PFNGLXCHOOSEFBCONFIGPROC) (Display *dpy, int screen, co
 typedef GLXContext ( * PFNGLXCREATENEWCONTEXTPROC) (Display *dpy, GLXFBConfig config, int render_type, GLXContext share_list, Bool direct);
 typedef GLXPbuffer ( * PFNGLXCREATEPBUFFERPROC) (Display *dpy, GLXFBConfig config, const int *attrib_list);
 typedef GLXPixmap ( * PFNGLXCREATEPIXMAPPROC) (Display *dpy, GLXFBConfig config, Pixmap pixmap, const int *attrib_list);
-typedef GLXWindow ( * PFNGLXCREATEWINDOWPROC) (Display *dpy, GLXFBConfig config, Window win, const int *attrib_list);
+typedef GLXWindow ( * PFNGLXCREATEWINDOWPROC) (Display *dpy, GLXFBConfig config, ApplicationWindow win, const int *attrib_list);
 typedef void ( * PFNGLXDESTROYPBUFFERPROC) (Display *dpy, GLXPbuffer pbuf);
 typedef void ( * PFNGLXDESTROYPIXMAPPROC) (Display *dpy, GLXPixmap pixmap);
 typedef void ( * PFNGLXDESTROYWINDOWPROC) (Display *dpy, GLXWindow win);
@@ -1297,7 +1297,7 @@ typedef void ( * PFNGLXJOINSWAPGROUPSGIXPROC) (Display *dpy, GLXDrawable drawabl
 #define GLX_SYNC_FRAME_SGIX 0x00000000
 #define GLX_SYNC_SWAP_SGIX 0x00000001
 
-typedef int ( * PFNGLXBINDCHANNELTOWINDOWSGIXPROC) (Display* display, int screen, int channel, Window window);
+typedef int ( * PFNGLXBINDCHANNELTOWINDOWSGIXPROC) (Display* display, int screen, int channel, ApplicationWindow ApplicationWindow);
 typedef int ( * PFNGLXCHANNELRECTSGIXPROC) (Display* display, int screen, int channel, int x, int y, int w, int h);
 typedef int ( * PFNGLXCHANNELRECTSYNCSGIXPROC) (Display* display, int screen, int channel, GLenum synctype);
 typedef int ( * PFNGLXQUERYCHANNELDELTASSGIXPROC) (Display* display, int screen, int channel, int *x, int *y, int *w, int *h);
@@ -1329,7 +1329,7 @@ typedef int ( * PFNGLXQUERYCHANNELRECTSGIXPROC) (Display* display, int screen, i
 #ifndef GLX_SGI_cushion
 #define GLX_SGI_cushion 1
 
-typedef void ( * PFNGLXCUSHIONSGIPROC) (Display* dpy, Window window, float cushion);
+typedef void ( * PFNGLXCUSHIONSGIPROC) (Display* dpy, ApplicationWindow ApplicationWindow, float cushion);
 
 #define glXCushionSGI GLXEW_GET_FUN(__glewXCushionSGI)
 
@@ -1385,7 +1385,7 @@ typedef int ( * PFNGLXWAITVIDEOSYNCSGIPROC) (int divisor, int remainder, unsigne
 #ifndef GLX_SUN_get_transparent_index
 #define GLX_SUN_get_transparent_index 1
 
-typedef Status ( * PFNGLXGETTRANSPARENTINDEXSUNPROC) (Display* dpy, Window overlay, Window underlay, unsigned long *pTransparentIndex);
+typedef Status ( * PFNGLXGETTRANSPARENTINDEXSUNPROC) (Display* dpy, ApplicationWindow overlay, ApplicationWindow underlay, unsigned long *pTransparentIndex);
 
 #define glXGetTransparentIndexSUN GLXEW_GET_FUN(__glewXGetTransparentIndexSUN)
 
@@ -1401,8 +1401,8 @@ typedef Status ( * PFNGLXGETTRANSPARENTINDEXSUNPROC) (Display* dpy, Window overl
 #define GLX_VIDEO_RESIZE_SUN 0x8171
 #define GL_VIDEO_RESIZE_COMPENSATION_SUN 0x85CD
 
-typedef int ( * PFNGLXGETVIDEORESIZESUNPROC) (Display* display, GLXDrawable window, float* factor);
-typedef int ( * PFNGLXVIDEORESIZESUNPROC) (Display* display, GLXDrawable window, float factor);
+typedef int ( * PFNGLXGETVIDEORESIZESUNPROC) (Display* display, GLXDrawable ApplicationWindow, float* factor);
+typedef int ( * PFNGLXVIDEORESIZESUNPROC) (Display* display, GLXDrawable ApplicationWindow, float factor);
 
 #define glXGetVideoResizeSUN GLXEW_GET_FUN(__glewXGetVideoResizeSUN)
 #define glXVideoResizeSUN GLXEW_GET_FUN(__glewXVideoResizeSUN)

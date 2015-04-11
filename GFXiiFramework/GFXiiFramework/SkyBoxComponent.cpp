@@ -13,7 +13,7 @@ void SkyBoxComponent::Init(const char* front, const char* back, const char* left
 {
 	for (TexturePtr &pTexture : m_textures)
 	{
-		pTexture = std::make_shared<OGLTexture>();
+		pTexture = std::make_shared<Texture>();
 	}
 
 	m_textures[0]->CreateTextureFromFile(front);

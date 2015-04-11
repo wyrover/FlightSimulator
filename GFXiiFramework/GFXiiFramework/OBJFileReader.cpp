@@ -107,15 +107,13 @@ static int secondPassOBJRead(LPCWSTR filename, int nVerts, int nNormals, int nTe
 		}
 		else if (*v == 'f')
 		{
-			int dummy;
 			int index1;
 			int index2;
 			int index3;
-			int index4;
 
-			int nidx1, nidx2, nidx3, nidx4;
+			int nidx1, nidx2, nidx3;
 
-			int tidx1, tidx2, tidx3, tidx4;
+			int tidx1, tidx2, tidx3;
 
 			if (sscanf_s(v, "%*s %d/%d/%d %d/%d/%d %d/%d/%d", &index1, &tidx1, &nidx1,
 				&index2, &tidx2, &nidx2,

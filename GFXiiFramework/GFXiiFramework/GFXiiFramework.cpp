@@ -19,7 +19,7 @@
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	int exitcode = 0;
-	//Allocate a console window
+	//Allocate a console ApplicationWindow
 	//so that messages can be redirected to stdout
 	AllocConsole();
 
@@ -30,12 +30,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	*stdout = *hf_out;
 
 	//Create the application instance
-	//To Create a D3D11 render window: replace RenderSystemOGL with RenderSystemD3D11
-	BaseApplication* myapp = BaseApplication::CreateApplication(hInstance, BaseApplication::RenderSystemOGL);
+	//To Create a D3D11 render ApplicationWindow: replace RenderSystemOGL with RenderSystemD3D11
+	BaseApplication myapp = BaseApplication::CreateApplication(hInstance);
 	
-	exitcode = myapp->Run();
+	exitcode = myapp.Run();
 	
-	myapp->DestroyApplication();
+	myapp.DestroyApplication();
 	
 	ExitProcess(0);
 

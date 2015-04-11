@@ -18,7 +18,7 @@ Input::~Input()
 {
 }
 
-float& Input::Forward()
+float Input::Forward()
 {
 	float result = 0.0f;
 
@@ -33,7 +33,7 @@ float& Input::Forward()
 	return result;
 }
 
-float& Input::Horizontal()
+float Input::Horizontal()
 {
 	float result = 0.0f;
 
@@ -48,7 +48,7 @@ float& Input::Horizontal()
 	return result;
 }
 
-float& Input::Vertical()
+float Input::Vertical()
 {
 	float result = 0.0f;
 
@@ -63,7 +63,7 @@ float& Input::Vertical()
 	return result;
 }
 
-float& Input::Roll()
+float Input::Roll()
 {
 	float result = 0.0f;
 

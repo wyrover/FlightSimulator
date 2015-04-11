@@ -1,11 +1,11 @@
 #pragma once
 #include "ActorComponent.h"
-#include "OpenGL\OGLTexture.h"
-#include "OpenGL\OGLCube.h"
+#include "Texture.h"
+#include "Cube.h"
 
-typedef std::shared_ptr<OGLTexture> TexturePtr;
+typedef std::shared_ptr<Texture> TexturePtr;
 
-class SkyBoxComponent : public ActorComponent, public OGLCube
+class SkyBoxComponent : public ActorComponent, public Cube
 {
 private:
 	TexturePtr								m_textures[6];

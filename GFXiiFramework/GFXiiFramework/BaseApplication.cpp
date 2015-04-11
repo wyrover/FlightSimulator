@@ -1,22 +1,19 @@
 #include "BaseApplication.h"
-#include "OpenGL/OGLWindow.h"
 #include "Resource.h"
 #include "Input.h"
 #include <Windowsx.h>
 
-BaseApplication* BaseApplication::s_oglapp = NULL;
+BaseApplication BaseApplication::m_pApplication;
+BOOL BaseApplication::m_registered = FALSE;
 
 BaseApplication::BaseApplication()
 {
-	m_appwnd = NULL;
 	m_hInst = 0;
-	m_terminate = FALSE;
+	m_registered = m_terminate = FALSE;
 }
 
 BaseApplication::~BaseApplication()
 {
-	if ( m_appwnd )
-		delete m_appwnd;
 }
 
 BOOL BaseApplication::MyRegisterClass(HINSTANCE hinst)
@@ -43,40 +40,35 @@ BOOL BaseApplication::MyRegisterClass(HINSTANCE hinst)
 	return TRUE;
 }
 
-BaseApplication* BaseApplication::CreateApplication(HINSTANCE hinst, ERenderSystemType type)
+BaseApplication BaseApplication::CreateApplication(HINSTANCE hinst)
 {
-	if ( ! s_oglapp )
+	if (!m_registered)
 	{
-		s_oglapp = new BaseApplication();
+		m_pApplication.m_hInst = hinst;
+		m_pApplication.MyRegisterClass(hinst);
 
-		s_oglapp->m_hInst = hinst;
-		s_oglapp->MyRegisterClass(hinst);
-
-		//Now create an OGLWindow for this application
-		s_oglapp->CreateApplicationWindow(1280,720, type);
+		m_pApplication.CreateApplicationWindow(1280, 720);
 	}
 
-	return s_oglapp;
+	return m_pApplication;
 }
 
 void BaseApplication::DestroyApplication()
 {
-	if ( s_oglapp )
-		delete s_oglapp;
 }
 
-BaseApplication* BaseApplication::GetApplication()
+BaseApplication BaseApplication::GetApplication()
 {
-	return s_oglapp;
+	return m_pApplication;
 }
 
-void BaseApplication::CreateApplicationWindow( int width, int height, ERenderSystemType type )
+void BaseApplication::CreateApplicationWindow(int width, int height)
 {
-	if (!m_appwnd)
+	if (!m_pWindow)
 	{
-		m_appwnd = new OGLWindow();
-		m_appwnd->InitWindow(m_hInst, width, height);
-		m_appwnd->SetVisible(TRUE);
+		m_pWindow = std::make_unique<ApplicationWindow>();
+		m_pWindow->InitWindow(m_hInst, width, height);
+		m_pWindow->SetVisible(TRUE);
 	}
 }
 
@@ -99,7 +91,7 @@ int BaseApplication::Run()
 				DispatchMessage ( &msg );
 			}
 		}
-		m_appwnd->Render();
+		m_pWindow->Render();
 
 		Input::Get().Update();
 	}
@@ -114,16 +106,14 @@ void BaseApplication::Kill()
 
 LRESULT CALLBACK BaseApplication::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	int wmId, wmEvent;
-
 	switch ( msg )
 	{
 		case WM_SIZE:
-			s_oglapp->GetApplicationWindow()->Resize( LOWORD(lparam), HIWORD(lparam) );
+			m_pApplication.GetApplicationWindow()->Resize(LOWORD(lparam), HIWORD(lparam));
 			break;
 
 		case WM_CLOSE:
-			s_oglapp->GetApplicationWindow()->DestroyRenderWindow();
+			m_pApplication.GetApplicationWindow()->DestroyRenderWindow();
 			break;
 
 		case WM_LBUTTONUP:

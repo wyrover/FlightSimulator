@@ -1,8 +1,8 @@
 #pragma once
 #include "ActorComponent.h"
-#include "OpenGL\OGLTexture.h"
+#include "Texture.h"
 
-typedef std::shared_ptr<OGLTexture> TexturePtr;
+typedef std::shared_ptr<Texture> TexturePtr;
 
 class MaterialComponent : public ActorComponent
 {
@@ -18,8 +18,8 @@ public:
 
 	inline virtual ActorComponentID		GetComponentID() override { return COMPONENT_ID; }
 
-	inline const OGLTexture&			GetDiffuse() { return *m_pDiffuse; }
-	inline const OGLTexture&			GetSpecular() { return *m_pSpecular; }
+	inline const Texture&			GetDiffuse() { return *m_pDiffuse; }
+	inline const Texture&			GetSpecular() { return *m_pSpecular; }
 
 	inline void							SetDiffuse(const char* file)
 	{
