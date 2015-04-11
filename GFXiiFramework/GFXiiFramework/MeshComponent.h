@@ -1,9 +1,6 @@
 #pragma once
+#include <Windows.h>
 #include "ActorComponent.h"
-#include "OpenGL\OGLMesh.h"
-
-typedef std::shared_ptr<OGLMesh> MeshPtr;
-typedef std::weak_ptr<OGLMesh> WeakMeshPtr;
 
 class MeshComponent : public ActorComponent
 {
@@ -25,14 +22,5 @@ public:
 
 	void									LoadAndBuildMeshFromOBJFile(LPCWSTR file);
 	void									Render();
-
-	//inline WeakMeshPtr						GetMesh() 
-	//{ 
-	//	return WeakMeshPtr(m_pMesh); 
-	//}
-	//inline void								SetMesh(const LPWSTR file)
-	//{
-	//	m_pMesh->LoadAndBuildMeshFromOBJFile(file);
-	//}
 };
 

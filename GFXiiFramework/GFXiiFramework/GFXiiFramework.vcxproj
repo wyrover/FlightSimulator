@@ -14,6 +14,7 @@
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="BaseApplication.h" />
     <ClInclude Include="BaseTexture.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="GFXiiFramework.h" />
     <ClInclude Include="GLEW\include\glew.h" />
     <ClInclude Include="GLEW\include\glxew.h" />
@@ -25,18 +26,15 @@
     <ClInclude Include="MaterialComponent.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="OBJFileReader.h" />
-    <ClInclude Include="OGLSkyBox.h" />
-    <ClInclude Include="OpenGL\OGLCamera.h" />
     <ClInclude Include="OpenGL\OGLCube.h" />
-    <ClInclude Include="OpenGL\OGLMesh.h" />
     <ClInclude Include="OpenGL\OGLShader.h" />
     <ClInclude Include="OpenGL\OGLTexture.h" />
     <ClInclude Include="OpenGL\OGLWindow.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderWindow.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ShaderBase.h" />
+    <ClInclude Include="SkyBoxComponent.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformComponent.h" />
@@ -45,20 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApplication.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="ImageIO.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MaterialComponent.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
-    <ClCompile Include="OGLSkyBox.cpp" />
-    <ClCompile Include="OpenGL\OGLCamera.cpp" />
     <ClCompile Include="OpenGL\OGLCube.cpp" />
-    <ClCompile Include="OpenGL\OGLMesh.cpp" />
     <ClCompile Include="OpenGL\OGLShader.cpp" />
     <ClCompile Include="OpenGL\OGLTexture.cpp" />
     <ClCompile Include="OpenGL\OGLWindow.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SkyBoxComponent.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Triangle.cpp" />

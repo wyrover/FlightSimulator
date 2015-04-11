@@ -99,14 +99,14 @@ void OGLCube::InitUnitCube()
 
 void OGLCube::Render()
 {
-	unsigned int texHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
+	//unsigned int texHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
 
-	glActiveTexture( GL_TEXTURE0 );
-	glBindTexture( GL_TEXTURE_2D, texHandle );
+	//glActiveTexture( GL_TEXTURE0 );
+	//glBindTexture( GL_TEXTURE_2D, texHandle );
 
-	glBindVertexArray( m_vao );
-		
-	glDrawElements( GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0 );
-	
-	glBindVertexArray( 0 );
+	//glBindVertexArray( m_vao );
+	//	
+	//glDrawElements( GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0 );
+	//
+	//glBindVertexArray( 0 );
 }

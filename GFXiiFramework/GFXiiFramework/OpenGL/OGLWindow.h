@@ -2,12 +2,9 @@
 
 #include "RenderWindow.h"
 #include "OGLCube.h"
-#include "OGLMesh.h"
 #include "OGLShader.h"
 #include "OGLTexture.h"
-#include "OGLCamera.h"
 #include "..\Player.h"
-#include "..\OGLSkyBox.h"
 #include "../Actor.h"
 
 class OGLWindow : public RenderWindow
@@ -21,12 +18,11 @@ class OGLWindow : public RenderWindow
 		
 		float					m_rotY;
 
-		// TODO: Store in a container
-		OGLSkyBox				*m_skyBox;
-		GameObject				*m_house;
-		GameObject				*m_aircraft;
-
-		std::shared_ptr<Actor>	m_pHouse;
+		// NEW FANCY STUFF YEAH!?
+		ActorPtr				m_pHouse;
+		ActorPtr				m_pCamera;
+		ActorPtr				m_pSkyBox;
+		ActorPtr				m_pArc170;
 
 		//Declear an OGL shader program
 		OGLShaderProgram		*m_shader;
@@ -41,8 +37,6 @@ class OGLWindow : public RenderWindow
 		//int						m_uniform_texture;
 
 		int						m_texDefaultSampler;
-
-		OGLCamera				*m_camera;
 
 protected:
 

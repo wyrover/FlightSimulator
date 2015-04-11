@@ -92,26 +92,14 @@
     <ClInclude Include="OBJFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL\OGLMesh.h">
-      <Filter>Header Files\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL\OGLCamera.h">
-      <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OGLSkyBox.h">
-      <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Actor.h">
       <Filter>Header Files</Filter>
@@ -126,6 +114,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBoxComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -160,23 +154,14 @@
     <ClCompile Include="OBJFileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\OGLMesh.cpp">
-      <Filter>Source Files\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenGL\OGLCamera.cpp">
-      <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OGLSkyBox.cpp">
-      <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source Files</Filter>
@@ -185,6 +170,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBoxComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

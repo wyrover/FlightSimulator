@@ -7,6 +7,14 @@
 #include "../TransformComponent.h"
 #include "../MaterialComponent.h"
 #include "../MeshComponent.h"
+#include "../CameraComponent.h"
+#include "../SkyBoxComponent.h"
+
+typedef std::shared_ptr<TransformComponent> TransformComponentPtr;
+typedef std::shared_ptr<MeshComponent> MeshComponentPtr;
+typedef std::shared_ptr<MaterialComponent> MaterialComponentPtr;
+typedef std::shared_ptr<CameraComponent> CameraComponentPtr;
+typedef std::shared_ptr<SkyBoxComponent> SkyBoxComponenetPtr;
 
 OGLWindow::OGLWindow()
 {
@@ -14,10 +22,6 @@ OGLWindow::OGLWindow()
 
 OGLWindow::~OGLWindow()
 {
-	//Clean up the GameObject
-	delete m_house;
-	delete m_aircraft;
-	delete m_camera;
 	delete m_shader;
 
 	DestroyOGLContext();
@@ -83,8 +87,6 @@ void OGLWindow::DestroyRenderWindow()
 
 BOOL OGLWindow::DestroyOGLContext()
 {
-	//glDeleteSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
-
 	if ( m_hglrc )
 	{
 		wglMakeCurrent( NULL, NULL );
@@ -119,42 +121,94 @@ BOOL OGLWindow::InitWindow(HINSTANCE hInstance, int width, int height)
 	m_width = width;
 	m_height = height;
 
+	MeshComponentPtr pMesh;
+	CameraComponentPtr pCamera;
+	SkyBoxComponenetPtr pSkyBox;
+	MaterialComponentPtr pMaterial;
+	TransformComponentPtr pTransform;
+
+	// ========== CAMERA START ========== \\
+
+	m_pCamera = std::make_shared<Actor>();
+
+	pTransform = std::make_shared<TransformComponent>();
+	pCamera = std::make_shared<CameraComponent>();
+
+	pTransform->SetOwner(m_pCamera);
+	pCamera->SetOwner(m_pCamera);
+
+	m_pCamera->AddComponent(pCamera);
+	m_pCamera->AddComponent(pTransform);
+
+	m_pCamera->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 0, 0));
+
+	// ========== CAMERA END ========== \\
+
+	// ========== HOUSE START ========== \\
+
 	m_pHouse = std::make_shared<Actor>();
 
-	std::shared_ptr<TransformComponent> transformation = std::make_shared<TransformComponent>();
-	std::shared_ptr<MeshComponent> mesh = std::make_shared<MeshComponent>();
-	std::shared_ptr<MaterialComponent> material = std::make_shared<MaterialComponent>(); 
+	pTransform = std::make_shared<TransformComponent>();
+	pMesh = std::make_shared<MeshComponent>();
+	pMaterial = std::make_shared<MaterialComponent>(); 
 
-	transformation->SetOwner(m_pHouse);
-	mesh->SetOwner(m_pHouse);
-	material->SetOwner(m_pHouse);
+	pTransform->SetOwner(m_pHouse);
+	pMesh->SetOwner(m_pHouse);
+	pMaterial->SetOwner(m_pHouse);
 
-	m_pHouse->AddComponent(transformation);
-	m_pHouse->AddComponent(mesh);
-	m_pHouse->AddComponent(material);
+	m_pHouse->AddComponent(pTransform);
+	m_pHouse->AddComponent(pMesh);
+	m_pHouse->AddComponent(pMaterial);
 
-	m_pHouse->GetComponent<TransformComponent>(TransformComponent::COMPONENT_ID).lock().get()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 5, 0));
-	m_pHouse->GetComponent<MeshComponent>(MeshComponent::COMPONENT_ID).lock().get()->LoadAndBuildMeshFromOBJFile(L"../asset/models/house.obj");
-	m_pHouse->GetComponent<MaterialComponent>(MaterialComponent::COMPONENT_ID).lock().get()->SetDiffuse("../asset/texture/house_diffuse.tga");
-	m_pHouse->GetComponent<MaterialComponent>(MaterialComponent::COMPONENT_ID).lock().get()->SetSpecular("../asset/texture/house_spec.tga");
+	m_pHouse->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 0, -20));
+	m_pHouse->GetComponent<MeshComponent>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/house.obj");
+	m_pHouse->GetComponent<MaterialComponent>()->SetDiffuse("../asset/texture/house_diffuse.tga");
+	m_pHouse->GetComponent<MaterialComponent>()->SetSpecular("../asset/texture/house_spec.tga");
 
-	m_camera = new OGLCamera();
-	//m_skyBox = new OGLSkyBox();
-	//m_house = new OGLMesh(L"../asset/models/house.obj", "../asset/texture/house_diffuse.tga", "../asset/texture/house_spec.tga");
-	//m_aircraft = new OGLMesh(L"../asset/models/ARC170.obj", "../asset/texture/ARC170_diffuse.tga");
+	// ========== HOUSE END ========== \\
 
-	//m_camera->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 5, 0));
-	//m_house->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 2, -20));
-	//m_aircraft->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 0, -10));
+	// ========== SKY BOX START ========== \\
 
-	//m_skyBox->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
-	//m_skyBox->SetUniformScale(100.0f);
+	m_pSkyBox = std::make_shared<Actor>();
 
-	//m_aircraft->Rotation(180.0f, 0.0f, 0.0f);
-	//m_aircraft->SetUniformScale(0.01f);
+	pTransform = std::make_shared<TransformComponent>();
+	pSkyBox = std::make_shared<SkyBoxComponent>();
 
-	//Player::Get().SetCamera(m_camera);
-	//Player::Get().SetCurrentGameObject(m_aircraft);
+	pTransform->SetOwner(m_pSkyBox);
+	pSkyBox->SetOwner(m_pSkyBox);
+
+	m_pSkyBox->AddComponent(pTransform);
+	m_pSkyBox->AddComponent(pSkyBox);
+
+	m_pSkyBox->GetComponent<SkyBoxComponent>()->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
+	m_pSkyBox->GetComponent<TransformComponent>()->SetUniformScale(100.0f);
+
+	// ========== SKY BOX END ========== \\
+
+	// ========== ARC 170 START ========== \\
+
+	m_pArc170 = std::make_shared<Actor>();
+
+	pTransform = std::make_shared<TransformComponent>();
+	pMesh = std::make_shared<MeshComponent>();
+	pMaterial = std::make_shared<MaterialComponent>();
+
+	pTransform->SetOwner(m_pArc170);
+	pMesh->SetOwner(m_pArc170);
+	pMaterial->SetOwner(m_pArc170);
+
+	m_pArc170->AddComponent(pTransform);
+	m_pArc170->AddComponent(pMaterial);
+	m_pArc170->AddComponent(pMesh);
+
+	m_pArc170->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 10, -20));
+	m_pArc170->GetComponent<TransformComponent>()->SetUniformScale(0.01f);
+	m_pArc170->GetComponent<TransformComponent>()->Rotation(180.0f, 0.0f, 0.0f);
+
+	m_pArc170->GetComponent<MeshComponent>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/ARC170.obj");
+	m_pArc170->GetComponent<MaterialComponent>()->SetDiffuse("../asset/texture/ARC170_diffuse.tga");
+
+	// ========== ARC 170 END ========== \\
 	
 	return TRUE;
 }
@@ -163,40 +217,37 @@ void OGLWindow::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	//Player::Get().Update();
+	m_pCamera->GetComponent<CameraComponent>()->Update();
 
-	//m_camera->Update();
-	//m_skyBox->SetPosition(m_camera->GetPosition());
+	m_pSkyBox->GetComponent<TransformComponent>()->SetPosition(m_pCamera->GetComponent<TransformComponent>()->GetPosition());
 
-	//m_skyBoxShader->ActivateShaderProgram();
+	m_skyBoxShader->ActivateShaderProgram();
 
-	//glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
-	//glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
-	//glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetTransformation()));
-	//glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
-	//glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_skyBox->GetOrientation()));
+	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetProjectionMat4()));
+	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_pSkyBox->GetComponent<TransformComponent>()->GetTransformation()));
+	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(m_pCamera->GetComponent<TransformComponent>()->GetPosition()));
+	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_pSkyBox->GetComponent<TransformComponent>()->GetOrientation()));
 
-	//m_skyBox->Render();
+	m_pSkyBox->GetComponent<SkyBoxComponent>()->Render();
 
-	//m_aircraft->Render();
+	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_pArc170->GetComponent<TransformComponent>()->GetTransformation()));
+	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_pArc170->GetComponent<TransformComponent>()->GetOrientation()));
+
+	m_pArc170->GetComponent<MeshComponent>()->Render();
 
 	m_skyBoxShader->DeactivateShaderProgram();
 
 	m_shader->ActivateShaderProgram();
 
-	//glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetViewMatrixMat4()));
-	//glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(Player::Get().GetCamera()->GetProjectionMat4()));
-	//glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_house->GetTransformation()));
-	//glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(Player::Get().GetCamera()->GetPosition()));
-	//glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_house->GetOrientation()));
-	
-	//glBindSampler(0, m_texDefaultSampler); ??
+	glUniformMatrix4fv(m_uniform_modelview, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniform_projection, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetComponent<CameraComponent>()->GetProjectionMat4()));
+	glUniformMatrix4fv(m_uniform_local_to_world, 1, GL_FALSE, glm::value_ptr(m_pHouse->GetComponent<TransformComponent>()->GetTransformation()));
+	glUniform3f(m_uniform_camera_position, 1, GL_FALSE, *glm::value_ptr(m_pCamera->GetComponent<TransformComponent>()->GetPosition()));
+	glUniformMatrix4fv(m_uniform_rotation, 1, GL_FALSE, glm::value_ptr(m_pHouse->GetComponent<TransformComponent>()->GetOrientation()));
 
-	m_pHouse->GetComponent<MeshComponent>(MeshComponent::COMPONENT_ID).lock().get()->Render();
-	//m_house->Render();
-
-	//m_house->Rotation(0.2f, 0.0f, 0.0f);
-
+	m_pHouse->GetComponent<MeshComponent>()->Render();
+	m_pHouse->GetComponent<TransformComponent>()->Rotation(0.2f, 0.0f, 0.0f);
 
 	m_shader->DeactivateShaderProgram();
 
@@ -207,20 +258,9 @@ void OGLWindow::Render()
 
 void OGLWindow::Resize( int width, int height )
 {
-	//glViewport( 0, 0, width, height );
-	//gluPerspective(60.0f, (float)width / (float)height, 1.0f, 1000.0f);
-	//m_camera->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+	glViewport( 0, 0, width, height );
 
-	float aspect_ratio = (float)width / (float)height;
-
-	glViewport(0, 0, width, height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0, aspect_ratio, 1.0, 1000.0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	m_pCamera->GetComponent<CameraComponent>()._Get()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
 }
 
 void OGLWindow::InitOGLState()
@@ -241,7 +281,6 @@ void OGLWindow::InitOGLState()
 	glBindFragDataLocation(m_shader->GetProgramHandle(), 0, "outFrag");
 
 	m_shader->BuildShaderProgram();
-	//m_shader->ActivateShaderProgram();
 
 	m_uniform_modelview = glGetUniformLocation(m_shader->GetProgramHandle(), "modelview");
 	m_uniform_projection = glGetUniformLocation(m_shader->GetProgramHandle(), "projection");
@@ -260,19 +299,4 @@ void OGLWindow::InitOGLState()
 	glBindFragDataLocation(m_skyBoxShader->GetProgramHandle(), 0, "outFrag");
 
 	m_skyBoxShader->BuildShaderProgram();
-	//m_skyBoxShader->ActivateShaderProgram();
-
-	// ========== ???? ========== \\
-
-	//m_uniform_texture = glGetUniformLocation(m_shader->GetProgramHandle(), "texColour");
-
-	//glUniform1i( m_uniform_texture, 0 );
-
-	////Create a texture sampler
-	//glGenSamplers( 1, (GLuint*)(&m_texDefaultSampler) );
-	//
-	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  
-	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
-	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MIN_FILTER , GL_LINEAR);  
-	//glSamplerParameteri(m_texDefaultSampler , GL_TEXTURE_MAG_FILTER , GL_LINEAR);
 }

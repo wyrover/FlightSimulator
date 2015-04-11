@@ -2,10 +2,10 @@
 #include "GLEW\include\glew.h"
 #include "OBJFileReader.h"
 #include "MaterialComponent.h"
+#include "Actor.h"
 
 MeshComponent::MeshComponent()
 {
-	//m_pMesh = std::make_shared<OGLMesh>();
 }
 
 MeshComponent::~MeshComponent()
@@ -14,22 +14,9 @@ MeshComponent::~MeshComponent()
 
 void MeshComponent::Render()
 {
-	//unsigned int difHandle = dynamic_cast<OGLTexture*>(m_dif)->m_syshandle;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, difHandle);
-
-	//if (m_spec != nullptr)
-	//{
-	//	unsigned int specHandle = dynamic_cast<OGLTexture*>(m_spec)->m_syshandle;
-
-	//	glActiveTexture(GL_TEXTURE1);
-	//	glBindTexture(GL_TEXTURE_2D, specHandle);
-	//}
-
-	unsigned int difHandle = m_pOwner->GetComponent<MaterialComponent>(MaterialComponent::COMPONENT_ID).lock().get()->GetDiffuse().m_syshandle;
-	unsigned int specHandle = m_pOwner->GetComponent<MaterialComponent>(MaterialComponent::COMPONENT_ID).lock().get()->GetSpecular().m_syshandle;
-
+	unsigned int difHandle = m_pOwner->GetComponent<MaterialComponent>()->GetDiffuse().m_syshandle;
+	unsigned int specHandle = m_pOwner->GetComponent<MaterialComponent>()->GetSpecular().m_syshandle;
+	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, difHandle);
 

@@ -23,21 +23,19 @@ public:
 	virtual ~Actor() { }
 
 	template <class ComponentType>
-	std::weak_ptr<ComponentType>	GetComponent(ActorComponentID id)
+	std::shared_ptr<ComponentType>	GetComponent()
 	{
-		ActorComponents::iterator iter = m_actorComponents.find(id);
+		ActorComponentPtr pActorComponent = std::make_shared<ComponentType>();
 
+		ActorComponents::iterator iter = m_actorComponents.find(pActorComponent->GetComponentID());
+		
 		if (iter != m_actorComponents.end())
 		{
-			ActorComponentPtr pBase(iter->second);
-			std::shared_ptr<ComponentType> pSub(std::tr1::static_pointer_cast<ComponentType>(pBase));
-			std::weak_ptr<ComponentType> pWeakSub(pSub);
-
-			return pWeakSub;
+			return std::shared_ptr<ComponentType>(std::tr1::static_pointer_cast<ComponentType>(iter->second));
 		}
 		else
 		{
-			return std::weak_ptr<ComponentType>();
+			return std::shared_ptr<ComponentType>();
 		}
 	}
 

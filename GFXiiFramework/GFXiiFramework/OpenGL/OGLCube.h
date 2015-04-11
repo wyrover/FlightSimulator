@@ -1,10 +1,9 @@
 #pragma once
 
-#include "GameObject.h"
 #include "Listener.h"
 #include "OGLTexture.h"
 
-class OGLCube : public GameObject
+class OGLCube
 {
 	protected:
 		struct SimpleVertex
