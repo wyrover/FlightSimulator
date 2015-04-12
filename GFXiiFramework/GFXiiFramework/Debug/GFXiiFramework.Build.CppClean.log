@@ -1,7 +1,7 @@
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\vc120.pdb
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\vc120.idb
-d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\baseapplication.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\cameracomponent.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\charactercontrollercomponent.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\cube.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\gfxiiframework.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\glslshader.obj
@@ -20,6 +20,12 @@ d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\transformcomponent
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\triangle.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\vector3.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\applicationwindow.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\baseapplication.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\camera.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\material.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\mesh.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\charactercontroller.obj
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\debug\skybox.obj
 d:\github\flightsimulator\gfxiiframework\debug\gfxiiframework.ilk
 d:\github\flightsimulator\gfxiiframework\debug\gfxiiframework.exe
 d:\github\flightsimulator\gfxiiframework\debug\gfxiiframework.pdb

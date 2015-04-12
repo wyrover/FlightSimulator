@@ -4,20 +4,15 @@
 #include "Input.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "ActorComponent.h"
-#include "TransformComponent.h"
-#include "MaterialComponent.h"
-#include "MeshComponent.h"
-#include "CameraComponent.h"
-#include "SkyBoxComponent.h"
+#include "Transform.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "Camera.h"
+#include "SkyBox.h"
 #include "RootNode.h"
-#include "ShaderComponent.h"
+#include "Shader.h"
 #include "SkyBoxNode.h"
-
-typedef std::shared_ptr<TransformComponent> TransformComponentPtr;
-typedef std::shared_ptr<MeshComponent> MeshComponentPtr;
-typedef std::shared_ptr<MaterialComponent> MaterialComponentPtr;
-typedef std::shared_ptr<CameraComponent> CameraComponentPtr;
-typedef std::shared_ptr<SkyBoxComponent> SkyBoxComponenetPtr;
+#include "CharacterController.h"
 
 ApplicationWindow::ApplicationWindow()
 {
@@ -129,12 +124,9 @@ void ApplicationWindow::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	m_pCamera->GetComponent<CameraComponent>()->Update();
-	m_pSkyBox->GetComponent<TransformComponent>()->SetPosition(m_pCamera->GetComponent<TransformComponent>()->GetPosition());
-
 	m_scene.Render();
 
-	m_pHouse->GetComponent<TransformComponent>()->Rotation(0.2f, 0.0f, 0.0f);
+	m_pHouse->GetComponent<Transform>()->Rotation(0.2f, 0.0f, 0.0f);
 
 	SwapBuffers(m_hdc);
 
@@ -145,7 +137,7 @@ void ApplicationWindow::Resize( int width, int height )
 {
 	glViewport( 0, 0, width, height );
 
-	m_pCamera->GetComponent<CameraComponent>()._Get()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+	m_scene.GetCamera()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
 }
 
 void ApplicationWindow::InitOGLState()
@@ -155,38 +147,83 @@ void ApplicationWindow::InitOGLState()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	MeshComponentPtr pMesh;
-	CameraComponentPtr pCamera;
-	SkyBoxComponenetPtr pSkyBox;
-	MaterialComponentPtr pMaterial;
-	TransformComponentPtr pTransform;
-	ShaderComponentPtr pShader;
+	MeshPtr pMesh;
+	CameraPtr pCamera;
+	SkyBoxPtr pSkyBox;
+	MaterialPtr pMaterial;
+	TransformPtr pTransform;
+	ShaderPtr pShader;
+	CharacterControllerPtr pCharacter;
 
-	// ========== CAMERA START ========== \\
+	// ========== SHADER START ========== \\
 
-	m_pCamera = std::make_shared<Actor>();
+	ShaderProgramPtr pStandardShader, pSkyBoxShader;
 
-	pTransform = std::make_shared<TransformComponent>();
-	pCamera = std::make_shared<CameraComponent>();
+	pStandardShader = std::make_shared<GLSLShaderProgram>();
 
-	pTransform->SetOwner(m_pCamera);
-	pCamera->SetOwner(m_pCamera);
+	pStandardShader->CreateShaderProgram();
+	pStandardShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/standard.frag", EShaderType::SHADER_FRAGMENT);
+	pStandardShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/standard.vert", EShaderType::SHADER_VERTEX);
+	
+	glBindFragDataLocation(pStandardShader->GetProgramHandle(), 0, "outfrag");
 
-	m_pCamera->AddComponent(pCamera);
-	m_pCamera->AddComponent(pTransform);
+	pStandardShader->BuildShaderProgram();
 
-	m_pCamera->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 0, 0));
+	pSkyBoxShader = std::make_shared<GLSLShaderProgram>();
 
-	// ========== CAMERA END ========== \\
+	pSkyBoxShader->CreateShaderProgram();
+	pSkyBoxShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/skybox.frag", EShaderType::SHADER_FRAGMENT);
+	pSkyBoxShader->AttachAndCompileShaderFromFile(L"../asset/shader/glsl/skybox.vert", EShaderType::SHADER_VERTEX);
+
+	glBindFragDataLocation(pSkyBoxShader->GetProgramHandle(), 0, "outfrag");
+
+	pSkyBoxShader->BuildShaderProgram();
+
+	// ========== SHADER END ========== \\
+
+	// ========== ARC 170 START ========== \\
+
+	m_pArc170 = std::make_shared<Actor>();
+
+	pCharacter = std::make_shared<CharacterController>();
+	pCamera = std::make_shared<Camera>();
+	pTransform = std::make_shared<Transform>();
+	pMesh = std::make_shared<Mesh>();
+	pMaterial = std::make_shared<Material>();
+	pShader = std::make_shared<Shader>(pStandardShader);
+
+	pTransform->SetOwner(m_pArc170);
+	pMesh->SetOwner(m_pArc170);
+	pMaterial->SetOwner(m_pArc170);
+	pShader->SetOwner(m_pArc170);
+	pCharacter->SetOwner(m_pArc170);
+	pCamera->SetOwner(m_pArc170);
+
+	m_pArc170->AddComponent(pTransform);
+	m_pArc170->AddComponent(pMaterial);
+	m_pArc170->AddComponent(pMesh);
+	m_pArc170->AddComponent(pShader);
+	m_pArc170->AddComponent(pCharacter);
+	m_pArc170->AddComponent(pCamera);
+
+	m_pArc170->GetComponent<Transform>()->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, -10, -20));
+	m_pArc170->GetComponent<Transform>()->SetUniformScale(0.01f);
+	m_pArc170->GetComponent<Transform>()->Rotation(180.0f, 0.0f, 0.0f);
+
+	m_pArc170->GetComponent<Mesh>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/ARC170.obj");
+	m_pArc170->GetComponent<Material>()->SetDiffuse("../asset/texture/ARC170_diffuse.tga");
+	m_pArc170->GetComponent<Shader>()->SetCamera(pCamera);
+
+	// ========== ARC 170 END ========== \\
 
 	// ========== HOUSE START ========== \\
 
 	m_pHouse = std::make_shared<Actor>();
 
-	pTransform = std::make_shared<TransformComponent>();
-	pMesh = std::make_shared<MeshComponent>();
-	pMaterial = std::make_shared<MaterialComponent>();
-	pShader = std::make_shared<ShaderComponent>();
+	pTransform = std::make_shared<Transform>();
+	pMesh = std::make_shared<Mesh>();
+	pMaterial = std::make_shared<Material>();
+	pShader = std::make_shared<Shader>(pStandardShader);
 
 	pTransform->SetOwner(m_pHouse);
 	pMesh->SetOwner(m_pHouse);
@@ -198,15 +235,12 @@ void ApplicationWindow::InitOGLState()
 	m_pHouse->AddComponent(pMaterial);
 	m_pHouse->AddComponent(pShader);
 
-	m_pHouse->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 0, -20));
-	m_pHouse->GetComponent<MeshComponent>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/house.obj");
-	m_pHouse->GetComponent<MaterialComponent>()->SetDiffuse("../asset/texture/house_diffuse.tga");
-	m_pHouse->GetComponent<MaterialComponent>()->SetSpecular("../asset/texture/house_spec.tga");
-
-	m_pHouse->GetComponent<ShaderComponent>()->SetCamera(pCamera);
-	m_pHouse->GetComponent<ShaderComponent>()->AddFragmentShader(L"../asset/shader/glsl/standard.frag");
-	m_pHouse->GetComponent<ShaderComponent>()->AddVertexShader(L"../asset/shader/glsl/standard.vert");
-	m_pHouse->GetComponent<ShaderComponent>()->BuildShaderProgram();
+	m_pHouse->GetComponent<Transform>()->Set(glm::vec3(0, 1, 0), glm::vec3(1, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 0, -20));
+	m_pHouse->GetComponent<Mesh>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/house.obj");
+	m_pHouse->GetComponent<Material>()->SetDiffuse("../asset/texture/house_diffuse.tga");
+	m_pHouse->GetComponent<Material>()->SetSpecular("../asset/texture/house_spec.tga");
+	m_pHouse->GetComponent<Shader>()->SetCamera(pCamera);
+	m_pHouse->GetComponent<Shader>()->SetCalculateSpecular(true);
 
 	// ========== HOUSE END ========== \\
 
@@ -214,9 +248,9 @@ void ApplicationWindow::InitOGLState()
 
 	m_pSkyBox = std::make_shared<Actor>();
 
-	pTransform = std::make_shared<TransformComponent>();
-	pSkyBox = std::make_shared<SkyBoxComponent>();
-	pShader = std::make_shared<ShaderComponent>();
+	pTransform = std::make_shared<Transform>();
+	pSkyBox = std::make_shared<SkyBox>();
+	pShader = std::make_shared<Shader>(pSkyBoxShader);
 
 	pTransform->SetOwner(m_pSkyBox);
 	pSkyBox->SetOwner(m_pSkyBox);
@@ -226,57 +260,22 @@ void ApplicationWindow::InitOGLState()
 	m_pSkyBox->AddComponent(pSkyBox);
 	m_pSkyBox->AddComponent(pShader);
 
-	m_pSkyBox->GetComponent<SkyBoxComponent>()->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
-	m_pSkyBox->GetComponent<TransformComponent>()->SetUniformScale(100.0f);
-
-	m_pSkyBox->GetComponent<ShaderComponent>()->SetCamera(pCamera);
-	m_pSkyBox->GetComponent<ShaderComponent>()->AddFragmentShader(L"../asset/shader/glsl/skybox.frag");
-	m_pSkyBox->GetComponent<ShaderComponent>()->AddVertexShader(L"../asset/shader/glsl/skybox.vert");
-	m_pSkyBox->GetComponent<ShaderComponent>()->BuildShaderProgram();
+	m_pSkyBox->GetComponent<SkyBox>()->Init("../asset/texture/sky_ft.tga", "../asset/texture/sky_bk.tga", "../asset/texture/sky_lt.tga", "../asset/texture/sky_rt.tga", "../asset/texture/sky_tp.tga", "../asset/texture/sky_bt.tga");
+	m_pSkyBox->GetComponent<Transform>()->SetUniformScale(100.0f);
+	m_pSkyBox->GetComponent<Shader>()->SetCamera(pCamera);
 
 	// ========== SKY BOX END ========== \\
-
-	// ========== ARC 170 START ========== \\
-
-	m_pArc170 = std::make_shared<Actor>();
-
-	pTransform = std::make_shared<TransformComponent>();
-	pMesh = std::make_shared<MeshComponent>();
-	pMaterial = std::make_shared<MaterialComponent>();
-	pShader = std::make_shared<ShaderComponent>();
-
-	pTransform->SetOwner(m_pArc170);
-	pMesh->SetOwner(m_pArc170);
-	pMaterial->SetOwner(m_pArc170);
-	pShader->SetOwner(m_pArc170);
-
-	m_pArc170->AddComponent(pTransform);
-	m_pArc170->AddComponent(pMaterial);
-	m_pArc170->AddComponent(pMesh);
-	m_pArc170->AddComponent(pShader);
-
-	m_pArc170->GetComponent<TransformComponent>()->Set(glm::vec3(0, 1, 0), glm::vec3(-1, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 10, -20));
-	m_pArc170->GetComponent<TransformComponent>()->SetUniformScale(0.01f);
-	m_pArc170->GetComponent<TransformComponent>()->Rotation(180.0f, 0.0f, 0.0f);
-
-	m_pArc170->GetComponent<MeshComponent>()->LoadAndBuildMeshFromOBJFile(L"../asset/models/ARC170.obj");
-	m_pArc170->GetComponent<MaterialComponent>()->SetDiffuse("../asset/texture/ARC170_diffuse.tga");
-
-	m_pArc170->GetComponent<ShaderComponent>()->SetCamera(pCamera);
-	m_pArc170->GetComponent<ShaderComponent>()->AddFragmentShader(L"../asset/shader/glsl/skybox.frag");
-	m_pArc170->GetComponent<ShaderComponent>()->AddVertexShader(L"../asset/shader/glsl/skybox.vert");
-	m_pArc170->GetComponent<ShaderComponent>()->BuildShaderProgram();
-
-	// ========== ARC 170 END ========== \\
 
 	SceneNodePtr pRoot = std::make_shared<RootNode>();
 	SceneNodePtr pHouseNode = std::make_shared<MeshNode>(m_pHouse);
 	SceneNodePtr pArc170 = std::make_shared<MeshNode>(m_pArc170);
 	SceneNodePtr pSky = std::make_shared<SkyBoxNode>(m_pSkyBox);
 
-	pRoot->AddChild(pSky);
 	pRoot->AddChild(pHouseNode);
 	pRoot->AddChild(pArc170);
 
 	m_scene.SetRoot(pRoot);
+	m_scene.SetCamera(m_pArc170->GetComponent<Camera>());
+	m_scene.SetSkyBox(pSkyBox);
+	m_scene.SetCharacterController(m_pArc170->GetComponent<CharacterController>());
 }

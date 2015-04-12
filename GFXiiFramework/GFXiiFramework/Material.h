@@ -2,17 +2,20 @@
 #include "ActorComponent.h"
 #include "Texture.h"
 
+class Material;
+
+typedef std::shared_ptr<Material> MaterialPtr;
 typedef std::shared_ptr<Texture> TexturePtr;
 
-class MaterialComponent : public ActorComponent
+class Material : public ActorComponent
 {
 private:
 	TexturePtr							m_pDiffuse;
 	TexturePtr							m_pSpecular;
 
 public:
-	MaterialComponent();
-	virtual ~MaterialComponent();
+	Material();
+	virtual ~Material();
 
 	static const ActorComponentID		 COMPONENT_ID = 2;
 

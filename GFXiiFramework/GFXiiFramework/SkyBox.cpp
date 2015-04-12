@@ -1,16 +1,16 @@
-#include "SkyBoxComponent.h"
+#include "SkyBox.h"
 #include "GLEW\include\glew.h"
-#include "ShaderComponent.h"
+#include "Shader.h"
 
-SkyBoxComponent::SkyBoxComponent()
+SkyBox::SkyBox()
 {
 }
 
-SkyBoxComponent::~SkyBoxComponent()
+SkyBox::~SkyBox()
 {
 }
 
-void SkyBoxComponent::Init(const char* front, const char* back, const char* left, const char* right, const char* top, const char* bottom)
+void SkyBox::Init(const char* front, const char* back, const char* left, const char* right, const char* top, const char* bottom)
 {
 	for (TexturePtr &pTexture : m_textures)
 	{
@@ -25,11 +25,9 @@ void SkyBoxComponent::Init(const char* front, const char* back, const char* left
 	m_textures[5]->CreateTextureFromFile(bottom);
 }
 
-void SkyBoxComponent::Render() const
+void SkyBox::Render() const
 {
-	m_pOwner->GetComponent<ShaderComponent>()->PreRender();
-
-
+	m_pOwner->GetComponent<Shader>()->PreRender();
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -65,5 +63,5 @@ void SkyBoxComponent::Render() const
 
 	glEnable(GL_DEPTH_TEST);
 
-	m_pOwner->GetComponent<ShaderComponent>()->PostRender();
+	m_pOwner->GetComponent<Shader>()->PostRender();
 }

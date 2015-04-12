@@ -13,7 +13,8 @@
   <ItemGroup>
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="BaseApplication.h" />
-    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="GFXiiFramework.h" />
     <ClInclude Include="GLEW\include\glew.h" />
@@ -25,8 +26,8 @@
     <ClInclude Include="ISceneNode.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="MaterialComponent.h" />
-    <ClInclude Include="MeshComponent.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshNode.h" />
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="Player.h" />
@@ -34,35 +35,34 @@
     <ClInclude Include="RootNode.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderBase.h" />
-    <ClInclude Include="ShaderComponent.h" />
-    <ClInclude Include="SkyBoxComponent.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SkyBoxNode.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="ApplicationWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApplication.cpp" />
-    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="GLSLShader.cpp" />
     <ClCompile Include="ImageIO.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="MaterialComponent.cpp" />
-    <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshNode.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SkyBoxComponent.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SkyBoxNode.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="ApplicationWindow.cpp" />

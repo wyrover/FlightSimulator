@@ -7,8 +7,6 @@
 #include "Actor.h"
 #include "Scene.h"
 
-//typedef std::unique_ptr<GLSLShaderProgram> ShaderProgramPtr;
-
 class ApplicationWindow
 {
 	private:
@@ -23,15 +21,11 @@ class ApplicationWindow
 
 		// NEW FANCY STUFF YEAH!?
 		ActorPtr				m_pHouse;
-		ActorPtr				m_pCamera;
 		ActorPtr				m_pSkyBox;
 		ActorPtr				m_pArc170;
 
+		// Store the scene nodes
 		Scene					m_scene;
-
-		//Declear an OGL shader program
-		//ShaderProgramPtr		m_pShader;
-		//ShaderProgramPtr		m_pSkyBoxShader;
 
 		int						m_uniform_modelview;
 		int						m_uniform_projection;

@@ -1,15 +1,15 @@
 #pragma once
 #include "ActorComponent.h"
-#include "TransformComponent.h"
+#include "Transform.h"
 #include "Actor.h"
 #include "glm\gtc\matrix_transform.hpp"
 
-class CameraComponent;
+class Camera;
 
-typedef std::shared_ptr<CameraComponent> CameraPtr;
-typedef std::weak_ptr<CameraComponent> WeakCameraPtr;
+typedef std::shared_ptr<Camera> CameraPtr;
+typedef std::weak_ptr<Camera> WeakCameraPtr;
 
-class CameraComponent : public ActorComponent
+class Camera : public ActorComponent
 {
 private:
 	glm::mat4						m_viewMatrix;
@@ -22,8 +22,8 @@ private:
 	float							m_far;
 
 public:
-	CameraComponent();
-	virtual ~CameraComponent();
+	Camera();
+	virtual ~Camera();
 
 	static const ActorComponentID			COMPONENT_ID = 4;
 
@@ -35,9 +35,11 @@ public:
 	void									UpdateViewMatrix()
 	{
 		
-		std::shared_ptr<TransformComponent> pTransformComponent(m_pOwner->GetComponent<TransformComponent>());
+		TransformPtr pTransform = m_pOwner->GetComponent<Transform>();
 
-		m_viewMatrix = glm::lookAt(pTransformComponent->GetPosition(), pTransformComponent->GetPosition() + pTransformComponent->GetViewVector(), pTransformComponent->GetUpVector());
+		glm::vec3 offsetPosition = (pTransform->GetPosition() - pTransform->GetViewVector() * 12.0f) + (pTransform->GetUpVector() * 5.0f);
+
+		m_viewMatrix = glm::lookAt(offsetPosition, offsetPosition + pTransform->GetViewVector(), pTransform->GetUpVector());
 	}
 
 	inline void						SetCameraFOV(float fov)

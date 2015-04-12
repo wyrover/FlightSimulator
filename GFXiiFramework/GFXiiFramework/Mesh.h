@@ -2,7 +2,11 @@
 #include <Windows.h>
 #include "ActorComponent.h"
 
-class MeshComponent : public ActorComponent
+class Mesh;
+
+typedef std::shared_ptr<Mesh> MeshPtr;
+
+class Mesh : public ActorComponent
 {
 private:
 	unsigned int							m_vao;
@@ -10,8 +14,8 @@ private:
 	int										m_numtriangles;
 
 public:
-											MeshComponent();
-	virtual									~MeshComponent();
+											Mesh();
+	virtual									~Mesh();
 
 	static const ActorComponentID			COMPONENT_ID = 3;
 

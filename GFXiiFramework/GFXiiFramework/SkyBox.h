@@ -3,16 +3,19 @@
 #include "Texture.h"
 #include "Cube.h"
 
+class SkyBox;
+
+typedef std::shared_ptr<SkyBox> SkyBoxPtr;
 typedef std::shared_ptr<Texture> TexturePtr;
 
-class SkyBoxComponent : public ActorComponent, public Cube
+class SkyBox : public ActorComponent, public Cube
 {
 private:
 	TexturePtr								m_textures[6];
 
 public:
-	SkyBoxComponent();
-	virtual ~SkyBoxComponent();
+	SkyBox();
+	virtual ~SkyBox();
 
 	static const ActorComponentID			COMPONENT_ID = 5;
 

@@ -1,11 +1,15 @@
 #pragma once
 #include "MeshNode.h"
-#include "CameraComponent.h"
+#include "Camera.h"
+#include "CharacterController.h"
+#include "SkyBox.h"
 
 class Scene final
 {
 private:
 	SceneNodePtr				m_pRoot;
+	CharacterControllerPtr		m_pCharacterController;
+	SkyBoxPtr					m_pSkyBox;
 	CameraPtr					m_pCamera;
 
 public:
@@ -14,12 +18,30 @@ public:
 
 	inline void					Render() const
 	{
+		// Update player
+		m_pCharacterController->Update();
+
+		// Render skyBox;
+		m_pSkyBox->GetOwner()->GetComponent<Transform>()->SetPosition(m_pCamera->GetOwner()->GetComponent<Transform>()->GetPosition());
+		m_pSkyBox->Render();
+
+		// Render meshes
 		m_pRoot->Render();
 	}
 
 	inline void					SetRoot(const SceneNodePtr pRoot)
 	{
 		m_pRoot = pRoot;
+	}
+
+	inline void					SetSkyBox(SkyBoxPtr pSkyBox)
+	{
+		m_pSkyBox = pSkyBox;
+	}
+
+	inline void					SetCharacterController(CharacterControllerPtr pCharacterController)
+	{
+		m_pCharacterController = pCharacterController;
 	}
 
 	inline void					SetCamera(const CameraPtr pCamera)

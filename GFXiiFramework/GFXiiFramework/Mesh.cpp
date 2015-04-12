@@ -1,24 +1,24 @@
-#include "MeshComponent.h"
+#include "Mesh.h"
 #include "GLEW\include\glew.h"
 #include "OBJFileReader.h"
-#include "MaterialComponent.h"
-#include "ShaderComponent.h"
+#include "Material.h"
+#include "Shader.h"
 #include "Actor.h"
 
-MeshComponent::MeshComponent()
+Mesh::Mesh()
 {
 }
 
-MeshComponent::~MeshComponent()
+Mesh::~Mesh()
 {
 }
 
-void MeshComponent::Render()
+void Mesh::Render()
 {
-	m_pOwner->GetComponent<ShaderComponent>()->PreRender();
+	m_pOwner->GetComponent<Shader>()->PreRender();
 
-	unsigned int difHandle = m_pOwner->GetComponent<MaterialComponent>()->GetDiffuse().m_syshandle;
-	unsigned int specHandle = m_pOwner->GetComponent<MaterialComponent>()->GetSpecular().m_syshandle;
+	unsigned int difHandle = m_pOwner->GetComponent<Material>()->GetDiffuse().m_syshandle;
+	unsigned int specHandle = m_pOwner->GetComponent<Material>()->GetSpecular().m_syshandle;
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, difHandle);
@@ -32,10 +32,10 @@ void MeshComponent::Render()
 
 	glBindVertexArray(0);
 
-	m_pOwner->GetComponent<ShaderComponent>()->PostRender();
+	m_pOwner->GetComponent<Shader>()->PostRender();
 }
 
-void MeshComponent::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)
+void Mesh::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)
 {
 	Triangle* mesh;
 

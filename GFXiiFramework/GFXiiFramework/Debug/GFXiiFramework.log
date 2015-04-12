@@ -1,56 +1,34 @@
-﻿Build started 11/04/2015 22:45:19.
-     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 12/04/2015 15:53:47.
+     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseApplication.cpp CameraComponent.cpp Cube.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp MaterialComponent.cpp MeshComponent.cpp MeshNode.cpp OBJFileReader.cpp Player.cpp SkyBoxComponent.cpp SkyBoxNode.cpp Texture.cpp Transform.cpp TransformComponent.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ApplicationWindow.cpp
          ApplicationWindow.cpp
-         Vector3.cpp
-         Triangle.cpp
-         TransformComponent.cpp
-         Transform.cpp
-         Texture.cpp
-         SkyBoxNode.cpp
-         SkyBoxComponent.cpp
-         Player.cpp
-         OBJFileReader.cpp
-         MeshNode.cpp
-         MeshComponent.cpp
-         MaterialComponent.cpp
-         Input.cpp
-         ImageIO.cpp
-         GLSLShader.cpp
-         GFXiiFramework.cpp
-         Cube.cpp
-         CameraComponent.cpp
-         BaseApplication.cpp
-         Generating Code...
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\GFXiiFramework.res" GFXiiFramework.rc 
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
          Debug\BaseApplication.obj
-         Debug\CameraComponent.obj
+         Debug\Camera.obj
+         Debug\CharacterController.obj
          Debug\Cube.obj
          Debug\GFXiiFramework.obj
          Debug\GLSLShader.obj
          Debug\ImageIO.obj
          Debug\Input.obj
-         Debug\MaterialComponent.obj
-         Debug\MeshComponent.obj
+         Debug\Material.obj
+         Debug\Mesh.obj
          Debug\MeshNode.obj
          Debug\OBJFileReader.obj
          Debug\Player.obj
-         Debug\SkyBoxComponent.obj
+         Debug\SkyBox.obj
          Debug\SkyBoxNode.obj
          Debug\Texture.obj
          Debug\Transform.obj
-         Debug\TransformComponent.obj
          Debug\Triangle.obj
          Debug\Vector3.obj
          Debug\ApplicationWindow.obj
          GLEW\lib\glew32.lib
          GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe
-     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:09.42
+Time Elapsed 00:00:02.01

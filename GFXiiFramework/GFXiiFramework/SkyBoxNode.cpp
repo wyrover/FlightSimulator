@@ -1,5 +1,5 @@
 #include "SkyBoxNode.h"
-#include "SkyBoxComponent.h"
+#include "SkyBox.h"
 
 SkyBoxNode::SkyBoxNode(ActorPtr pActor)
 {
@@ -12,7 +12,7 @@ void SkyBoxNode::Render() const
 
 	if (pActor = m_pWeakActorPtr.lock())
 	{
-		pActor->GetComponent<SkyBoxComponent>()->Render();
+		pActor->GetComponent<SkyBox>()->Render();
 
 		for (const SceneNodePtr &pSceneNode : m_children)
 		{

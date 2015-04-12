@@ -1,5 +1,4 @@
 #include "Transform.h"
-#include <iostream>
 
 Transform::Transform()
 {
@@ -33,6 +32,6 @@ void Transform::Rotation(float yaw, float pitch, float roll)
 	m_viewVector = glm::normalize(glm::cross(m_upVector, m_rightVector));
 	m_upVector = glm::normalize(glm::cross(m_rightVector, m_viewVector));
 	m_rightVector = glm::normalize(glm::cross(m_viewVector, m_upVector));
-	
+
 	m_orientation = rotation * m_orientation;
 }

@@ -1,5 +1,5 @@
 #include "MeshNode.h"
-#include "MeshComponent.h"
+#include "Mesh.h"
 
 MeshNode::MeshNode(ActorPtr pActor)
 {
@@ -12,7 +12,7 @@ void MeshNode::Render() const
 
 	if (pActor = m_pWeakActorPtr.lock())
 	{
-		pActor->GetComponent<MeshComponent>()->Render();
+		pActor->GetComponent<Mesh>()->Render();
 
 		for (const SceneNodePtr &pSceneNode : m_children)
 		{

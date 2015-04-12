@@ -30,7 +30,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	*stdout = *hf_out;
 
 	//Create the application instance
-	//To Create a D3D11 render ApplicationWindow: replace RenderSystemOGL with RenderSystemD3D11
 	BaseApplication myapp = BaseApplication::CreateApplication(hInstance);
 	
 	exitcode = myapp.Run();

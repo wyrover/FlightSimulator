@@ -25,13 +25,7 @@ protected:
 
 public:
 								ISceneNode() { }
-	virtual						~ISceneNode() 
-	{
-		if (m_pParent)
-		{
-			delete m_pParent;
-		}
-	}
+	virtual						~ISceneNode() { }
 
 	// NOTE: The node should render itself, then each of its children
 	virtual void				Render() const = 0;
