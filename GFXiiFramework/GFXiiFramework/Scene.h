@@ -38,6 +38,11 @@ public:
 		m_pRoot = pRoot;
 	}
 
+	inline SceneNodePtr			GetRoot() const
+	{
+		return m_pRoot;
+	}
+
 	inline void					SetSkyBox(SkyBoxPtr pSkyBox)
 	{
 		m_pSkyBox = pSkyBox;

@@ -1,20 +1,52 @@
-<ActorFactory>     
-    <Actor>
-		<ActorComponent>
-			<Position>
-				<X>100</X>
-				<Y>0</Y>
-				<Z>-10</Z>
-			</Position>
-		</ActorComponent>
+<ActorFactory>
+
+	<Actor renderer="mesh">
+		<TransformComponent>
+			<Position X="0" Y="-10" Z="-20" />
+			<Up X="0" Y="1" Z="0" />
+			<Right X="-1" Y="0" Z="0" />
+			<View X="0" Y="0" Z="1" />
+			<Scale uniform="0.01" />
+			<Rotation yaw="180" pitch="0" roll="0" />
+		</TransformComponent>
+		<MeshComponent>
+			<Model dir="../asset/models/ARC170.obj" />
+		</MeshComponent>
+		<MaterialComponent>
+			<Diffuse dir="../asset/texture/ARC170_diffuse.obj" />
+		</MaterialComponent>
+		<CharacterControllerComponent />
+		<CameraComponent />
 	</Actor>
-	<Actor>
-		<ActorComponent>
-			<Position>
-				<X>100</X>
-				<Y>0</Y>
-				<Z>-10</Z>
-			</Position>
-		</ActorComponent>
+	
+    <Actor renderer="mesh">
+		<TransformComponent>
+			<Position X="0" Y="0" Z="-20" />
+			<Up X="0" Y="1" Z="0" />
+			<Right X="1" Y="0" Z="0" />
+			<View X="0" Y="0" Z="-1" />
+		</TransformComponent>
+		<MeshComponent>
+			<Model dir="..asset/models/house.obj" />
+		</MeshComponent>
+		<MaterialComponent>
+			<Diffuse dir="../asset/texture/house_diffuse.tga" />
+			<Specular dir="../asset/texture/house_spec.tga" />
+		</MaterialComponent>
 	</Actor>
+	
+	<Actor renderer="skybox">
+		<TransformComponent>
+			<Scale uniform="100" />
+		</TransformComponent>
+		<SkyBoxComponent>
+			<Front dir="../asset/texture/sky_ft.tga" />
+			<Back dir="../asset/texture/sky_bk.tga" />
+			<Left dir="../asset/texture/sky_lf.tga" />
+			<Right dir="../asset/texture/sky_rt.tga" />
+			<Top dir="../asset/texture/sky_tp.tga" />
+			<Bottom dir="../asset/texture/sky_bt.tga" />
+		</SkyBoxComponent>
+	</Actor>
+	
 </ActorFactory>

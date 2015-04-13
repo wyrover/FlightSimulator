@@ -1,5 +1,11 @@
+#include <Windows.h>
 #include "ActorFactory.h"
 #include "Transform.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Camera.h"
+#include "CharacterController.h"
+#include "SkyBox.h"
 
 ActorFactory::ActorFactory()
 {
@@ -9,71 +15,169 @@ ActorFactory::~ActorFactory()
 {
 }
 
-void ActorFactory::CreateActors(const DocumentObjectModelPtr pDOM, ScenePtr pScene)
+void ActorFactory::CreateSceneFromDOM(ScenePtr pScene, const DocumentObjectModelPtr pDOM) const
 {
-	TagNodePtr pTagIndex = pDOM->GetRoot();
-
-	// Check root
-	if (pTagIndex && pTagIndex->name == "ActorFactory")
+	if (pDOM->GetRoot()->name == "ActorFactory")
 	{
-		for (const TagNodePtr pTag : pTagIndex->children)
+		for (const TagNodePtr &pTagNode : pDOM->GetRoot()->children)
 		{
-			if (pTag->name == "Actor")
-			{
-				CreateNewActor(pTag, pScene);
-			}
+			CreateNewActor(pScene, pTagNode);
 		}
 	}
+	else
+	{
+		assert(false);
+	}
 }
 
-void ActorFactory::CreateNewActor(const TagNodePtr pTag, ScenePtr pScene)
+void ActorFactory::CreateNewActor(ScenePtr pScene, const TagNodePtr pTagNode) const
 {
-	ActorPtr pNewActor = std::make_shared<Actor>();
-
-	for (const TagNodePtr pTagNode : pTag->children)
+	if (pTagNode->name == "Actor")
 	{
-		if (pTagNode->name == "ActorComponent")
+		// TODO: Add renderer
+		ActorPtr pActor = std::make_shared<Actor>();
+
+		// Add components
+		for (const TagNodePtr &pComponent : pTagNode->children)
 		{
-			// Actor components store one component only
-			CreateNewComponent(pTagNode->children.front(), pNewActor);
+			AddNewComponent(pActor, pComponent);
 		}
 	}
-
-	
-}
-
-void ActorFactory::CreateNewComponent(const TagNodePtr pTag, ActorPtr pActor)
-{
-	if (pTag->name == "Position")
+	else
 	{
-		CreateNewTransformComponent(pTag, pActor);
+		// something went wrong
+		assert(false);
 	}
 }
 
-void ActorFactory::CreateNewTransformComponent(const TagNodePtr pTag, ActorPtr pActor)
+void ActorFactory::AddNewComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	std::string component = pTagNode->name;
+
+	if (component == "TransformComponent")
+	{
+		AddNewTransformComponent(pActor, pTagNode);
+	}
+	else if (component == "MeshComponent")
+	{
+		AddNewMeshComponent(pActor, pTagNode);
+	}
+	else if (component == "MaterialComponent")
+	{
+
+	}
+	else if (component == "SkyBoxComponent")
+	{
+
+	}
+	else if (component == "CharacterControllerComponent")
+	{
+
+	}
+	else if (component == "CameraComponent")
+	{
+
+	}
+	else
+	{
+		// This shouldn't happen
+		assert(false);
+	}
+}
+
+const glm::vec3 ActorFactory::GetXYZ(std::map<std::string, std::string> data) const
+{
+	float x, y, z;
+
+	x = (float)atof(data["X"].c_str());
+	y = (float)atof(data["Y"].c_str());
+	z = (float)atof(data["Z"].c_str());
+
+	return glm::vec3(x, y, z);
+}
+
+void ActorFactory::AddNewTransformComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
 {
 	TransformPtr pTransform = std::make_shared<Transform>();
 
-	glm::vec3 position;
-
-	for (const TagNodePtr pComponent : pTag->children)
+	for (const TagNodePtr &pTag : pTagNode->children)
 	{
-		if (pComponent->name == "X")
+		std::string attribute = pTag->name;
+
+		if (attribute == "Position")
 		{
-			position.x = (float)atof(pComponent->data.c_str());
+			pTransform->SetPosition(GetXYZ(pTag->data));
 		}
-		else if (pComponent->name == "Y")
+		else if (attribute == "Up")
 		{
-			position.y = (float)atof(pComponent->data.c_str());
+			pTransform->SetUp(GetXYZ(pTag->data));
+		}
+		else if (attribute == "Right")
+		{
+			pTransform->SetRight(GetXYZ(pTag->data));
+		}
+		else if (attribute == "View")
+		{
+			pTransform->SetView(GetXYZ(pTag->data));
+		}
+		else if (attribute == "Scale")
+		{
+			std::string scaleType = pTag->data["uniform"];
+
+			if (scaleType != "")
+			{
+				pTransform->SetUniformScale((float)atof(pTag->data["uniform"].c_str()));
+			}
+			else
+			{
+				glm::vec3 scale = GetXYZ(pTag->data);
+				pTransform->SetScale(scale.x, scale.y, scale.z);
+			}
+		}
+		else if (attribute == "Rotation")
+		{
+			float yaw, pitch, roll;
+
+			yaw = (float)atof(pTag->data["yaw"].c_str());
+			pitch = (float)atof(pTag->data["pitch"].c_str());
+			roll = (float)atof(pTag->data["roll"].c_str());
+
+			pTransform->Rotation(yaw, pitch, roll);
 		}
 		else
 		{
-			position.z = (float)atof(pComponent->data.c_str());
+			// XML is wrong
+			assert(false);
 		}
 	}
 
-	pTransform->SetPosition(position);
 	pTransform->SetOwner(pActor);
-
 	pActor->AddComponent(pTransform);
+}
+
+void ActorFactory::AddNewMeshComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	MeshPtr pMesh = std::make_shared<Mesh>();
+
+	for (const TagNodePtr &pTag : pTagNode->children)
+	{
+		std::string attribute = pTag->name;
+
+		if (attribute == "Model")
+		{
+			std::string dir = pTag->data["dir"];
+			std::wstring wDir(dir.begin(), dir.end());
+
+			const wchar_t *directory = wDir.c_str();
+
+			pMesh->LoadAndBuildMeshFromOBJFile(directory);
+		}
+		else
+		{
+			assert(false);
+		}
+	}
+
+	pMesh->SetOwner(pActor);
+	pActor->AddComponent(pMesh);
 }

@@ -105,6 +105,21 @@ public:
 		m_position = position;
 	}
 
+	inline void							SetUp(const glm::vec3 up)
+	{
+		m_upVector = up;
+	}
+
+	inline void							SetRight(const glm::vec3 right)
+	{
+		m_rightVector = right;
+	}
+
+	inline void							SetView(const glm::vec3 view)
+	{
+		m_viewVector = view;
+	}
+
 #pragma endregion INLINES
 
 	inline float						GetYaw() const { return m_yaw; }

@@ -32,7 +32,7 @@ void DocumentObjectModel::EndTag()
 void DocumentObjectModel::AddNewTag(const std::string &tag)
 {
 	TagNodePtr newNode = CreateNewNode();
-	
+
 	newNode->name = tag;
 	newNode->pParent = m_pNodeIndex;
 
@@ -54,9 +54,9 @@ TagNodePtr DocumentObjectModel::CreateNewNode() const
 	return std::make_shared<TagNode>();
 }
 
-void DocumentObjectModel::AddTextToCurrentNode(const std::string &text)
+void DocumentObjectModel::AddDataToCurrentTag(const std::string &type, const std::string &value)
 {
-	m_pNodeIndex->data = text;
+	m_pNodeIndex->data[type] = value;
 }
 
 void DocumentObjectModel::PrintTags() const
@@ -66,7 +66,16 @@ void DocumentObjectModel::PrintTags() const
 
 void DocumentObjectModel::PrintTags(TagNodePtr tag) const
 {
-	std::cout << tag->name << std::endl;
+	std::cout << tag->name;
+
+	std::cout << " : ";
+
+	for (const auto type : tag->data)
+	{
+		std::cout << type.first << "; " << type.second << " ";
+	}
+
+	std::cout << std::endl;
 
 	for (TagNodePtr node : tag->children)
 	{

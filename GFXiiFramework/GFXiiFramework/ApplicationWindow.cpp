@@ -154,7 +154,7 @@ void ApplicationWindow::InitOGLState()
 	ActorFactory actorFactory;
 	ScenePtr pTestScene;
 
-	actorFactory.CreateActors(reader.GetDOM(), pTestScene);
+	actorFactory.CreateSceneFromDOM(pTestScene, reader.GetDOM());
 
 	MeshPtr pMesh;
 	CameraPtr pCamera;

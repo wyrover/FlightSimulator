@@ -7,6 +7,9 @@
 class XMLReader
 {
 private:
+
+	enum TagType { Start, End, SelfClosing };
+
 	DocumentObjectModel		m_documentObjectModel;
 
 	void					FindAndStoreTags(std::string &line);
@@ -16,8 +19,13 @@ private:
 	int						FindNextCharacter(const std::string &line) const;
 
 	bool					IsStartTag(const std::string &tag) const;
+	unsigned				AttributeCount(const std::string &tag) const;
 
-	std::string				GetTagName(const std::string &line, const unsigned start, const unsigned length) const;
+	TagType					GetTagType(const std::string &tag) const;
+
+	std::string				GetTagName(const std::string &line) const;
+
+	bool					FindNextAttribute(std::string &line, std::string &outName, std::string &outValue) const;
 
 public:
 	XMLReader();
