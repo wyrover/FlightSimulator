@@ -4,6 +4,10 @@
 #include "CharacterController.h"
 #include "SkyBox.h"
 
+class Scene;
+
+typedef std::shared_ptr<Scene> ScenePtr;
+
 class Scene final
 {
 private:

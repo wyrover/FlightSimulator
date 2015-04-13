@@ -9,7 +9,7 @@ DocumentObjectModel::~DocumentObjectModel()
 {
 }
 
-void DocumentObjectModel::StartTag(std::string &tag)
+void DocumentObjectModel::StartTag(const std::string &tag)
 {
 	if (m_pRoot)
 	{
@@ -29,7 +29,7 @@ void DocumentObjectModel::EndTag()
 	}
 }
 
-void DocumentObjectModel::AddNewTag(std::string &tag)
+void DocumentObjectModel::AddNewTag(const std::string &tag)
 {
 	TagNodePtr newNode = CreateNewNode();
 	
@@ -41,7 +41,7 @@ void DocumentObjectModel::AddNewTag(std::string &tag)
 	m_pNodeIndex = newNode;
 }
 
-void DocumentObjectModel::SetRootNode(std::string &tag)
+void DocumentObjectModel::SetRootNode(const std::string &tag)
 {
 	m_pRoot = CreateNewNode();
 	m_pRoot->name = tag;

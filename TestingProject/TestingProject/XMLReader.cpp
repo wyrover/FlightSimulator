@@ -67,7 +67,7 @@ void XMLReader::FindAndStoreTags(std::string &line)
 	}
 }
 
-int XMLReader::FindStartTag(std::string &line)
+int XMLReader::FindStartTag(const std::string &line) const
 {
 	for (unsigned index = 0; index < line.length(); index++)
 	{
@@ -79,7 +79,7 @@ int XMLReader::FindStartTag(std::string &line)
 	return -1;
 }
 
-int XMLReader::FindEndTag(std::string &line, int start)
+int XMLReader::FindEndTag(const std::string &line, int start) const
 {
 	for (unsigned index = start; index < line.length(); index++)
 	{
@@ -105,7 +105,7 @@ int XMLReader::FindNextCharacter(const std::string &line) const
 	return -1;
 }
 
-bool XMLReader::IsStartTag(const std::string &tag)
+bool XMLReader::IsStartTag(const std::string &tag) const
 {
 	if (tag[1] == '/')
 	{
@@ -117,7 +117,7 @@ bool XMLReader::IsStartTag(const std::string &tag)
 	}
 }
 
-std::string XMLReader::GetTagName(std::string &line, unsigned start, unsigned length) const
+std::string XMLReader::GetTagName(const std::string &line, const unsigned start, const unsigned length) const
 {
 	return line.substr(start + 1, length - 1);
 }

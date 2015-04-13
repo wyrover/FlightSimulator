@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Actor.h"
 #include "Scene.h"
+#include "XMLReader.h"
+#include "ActorFactory.h"
 
 class ApplicationWindow
 {
@@ -25,7 +27,7 @@ class ApplicationWindow
 		ActorPtr				m_pArc170;
 
 		// Store the scene nodes
-		Scene					m_scene;
+		ScenePtr				m_pScene;
 
 		int						m_uniform_modelview;
 		int						m_uniform_projection;

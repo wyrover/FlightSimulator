@@ -19,8 +19,8 @@ private:
 	TagNodePtr					m_pRoot;
 	TagNodePtr					m_pNodeIndex;
 
-	void						AddNewTag(std::string &tag);
-	void						SetRootNode(std::string &tag);
+	void						AddNewTag(const std::string &tag);
+	void						SetRootNode(const std::string &tag);
 
 	TagNodePtr					CreateNewNode() const;
 
@@ -30,7 +30,7 @@ public:
 	DocumentObjectModel();
 	~DocumentObjectModel();
 
-	void						StartTag(std::string &tag);
+	void						StartTag(const std::string &tag);
 	void						EndTag();
 
 	void						AddTextToCurrentNode(const std::string &text);

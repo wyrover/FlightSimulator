@@ -1,0 +1,20 @@
+<ActorFactory>     
+    <Actor>
+		<ActorComponent>
+			<Position>
+				<X>100</X>
+				<Y>0</Y>
+				<Z>-10</Z>
+			</Position>
+		</ActorComponent>
+	</Actor>
+	<Actor>
+		<ActorComponent>
+			<Position>
+				<X>100</X>
+				<Y>0</Y>
+				<Z>-10</Z>
+			</Position>
+		</ActorComponent>
+	</Actor>
+</ActorFactory>

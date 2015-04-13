@@ -12,10 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="BaseApplication.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="DocumentObjectModel.h" />
     <ClInclude Include="GFXiiFramework.h" />
     <ClInclude Include="GLEW\include\glew.h" />
     <ClInclude Include="GLEW\include\glxew.h" />
@@ -44,12 +46,15 @@
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="ApplicationWindow.h" />
+    <ClInclude Include="XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="BaseApplication.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="DocumentObjectModel.cpp" />
     <ClCompile Include="GFXiiFramework.cpp" />
     <ClCompile Include="GLSLShader.cpp" />
     <ClCompile Include="ImageIO.cpp" />
@@ -66,6 +71,7 @@
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="ApplicationWindow.cpp" />
+    <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="GFXiiFramework.ico" />

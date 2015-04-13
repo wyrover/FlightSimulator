@@ -124,7 +124,7 @@ void ApplicationWindow::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	m_scene.Render();
+	m_pScene->Render();
 
 	m_pHouse->GetComponent<Transform>()->Rotation(0.2f, 0.0f, 0.0f);
 
@@ -137,7 +137,7 @@ void ApplicationWindow::Resize( int width, int height )
 {
 	glViewport( 0, 0, width, height );
 
-	m_scene.GetCamera()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
+	m_pScene->GetCamera()->SetProjection(60.0f, (float)width, (float)height, 1.0f, 1000.0f);
 }
 
 void ApplicationWindow::InitOGLState()
@@ -146,6 +146,15 @@ void ApplicationWindow::InitOGLState()
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
+	XMLReader reader;
+
+	reader.ReadFile("testing.xml");
+
+	ActorFactory actorFactory;
+	ScenePtr pTestScene;
+
+	actorFactory.CreateActors(reader.GetDOM(), pTestScene);
 
 	MeshPtr pMesh;
 	CameraPtr pCamera;
@@ -274,8 +283,10 @@ void ApplicationWindow::InitOGLState()
 	pRoot->AddChild(pHouseNode);
 	pRoot->AddChild(pArc170);
 
-	m_scene.SetRoot(pRoot);
-	m_scene.SetCamera(m_pArc170->GetComponent<Camera>());
-	m_scene.SetSkyBox(pSkyBox);
-	m_scene.SetCharacterController(m_pArc170->GetComponent<CharacterController>());
+	m_pScene = std::make_shared<Scene>();
+
+	m_pScene->SetRoot(pRoot);
+	m_pScene->SetCamera(m_pArc170->GetComponent<Camera>());
+	m_pScene->SetSkyBox(pSkyBox);
+	m_pScene->SetCharacterController(m_pArc170->GetComponent<CharacterController>());
 }

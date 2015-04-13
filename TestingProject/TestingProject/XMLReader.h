@@ -10,14 +10,14 @@ private:
 	DocumentObjectModel		m_documentObjectModel;
 
 	void					FindAndStoreTags(std::string &line);
-	int						FindStartTag(std::string &line);
-	int						FindEndTag(std::string &line, int start = 0);
+	int						FindStartTag(const std::string &line) const;
+	int						FindEndTag(const std::string &line, const int start = 0) const;
 
 	int						FindNextCharacter(const std::string &line) const;
 
-	bool					IsStartTag(const std::string &tag);
+	bool					IsStartTag(const std::string &tag) const;
 
-	std::string				GetTagName(std::string &line, unsigned start, unsigned length) const;
+	std::string				GetTagName(const std::string &line, const unsigned start, const unsigned length) const;
 
 public:
 	XMLReader();
