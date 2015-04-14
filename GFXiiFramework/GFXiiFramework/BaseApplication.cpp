@@ -91,9 +91,9 @@ int BaseApplication::Run()
 				DispatchMessage ( &msg );
 			}
 		}
-		m_pWindow->Render();
-
 		Input::Get().Update();
+
+		m_pWindow->Render();
 	}
 
 	return (int) msg.wParam;

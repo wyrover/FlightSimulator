@@ -1,12 +1,23 @@
 #include "MeshNode.h"
 #include "Mesh.h"
+#include "Material.h"
+#include "Scene.h"
 
 MeshNode::MeshNode(ActorPtr pActor)
 {
 	m_pWeakActorPtr = pActor;
+
+	if (pActor->GetComponent<Material>()->GetSpecular())
+	{
+		m_bCalculateSpecular = true;
+	}
+	else
+	{
+		m_bCalculateSpecular = false;
+	}
 }
 
-void MeshNode::Render() const
+void MeshNode::Render()
 {
 	ActorPtr pActor;
 
@@ -19,4 +30,9 @@ void MeshNode::Render() const
 			pSceneNode->Render();
 		}
 	}
+}
+
+void MeshNode::PreRender()
+{
+	Scene::GetMeshShaderProgram().UpdateUniformValues(std::make_shared<MeshNode>(*this));
 }

@@ -28,13 +28,20 @@ public:
 	virtual						~ISceneNode() { }
 
 	// NOTE: The node should render itself, then each of its children
-	virtual void				Render() const = 0;
+	virtual void				Render() = 0;
 
-	virtual void				AddChild(const SceneNodePtr pNode)
+	inline virtual void			AddChild(const SceneNodePtr pNode)
 	{
 		pNode->m_pParent = this;
 
 		m_children.push_back(pNode);
 	}
+
+	inline virtual WeakActorPtr	GetActor() const
+	{
+		return m_pWeakActorPtr;
+	}
+
+	virtual void						PreRender() = 0;
 };
 

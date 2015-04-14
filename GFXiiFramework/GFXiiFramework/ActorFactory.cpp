@@ -9,13 +9,14 @@
 
 ActorFactory::ActorFactory() : m_currentActorID{ 0 }
 {
+	m_pActors = std::make_shared<std::map<ActorID, ActorPtr>>();
 }
 
 ActorFactory::~ActorFactory()
 {
 }
 
-const ActorMap& ActorFactory::CreateActorsFromDOM(const DocumentObjectModelPtr pDOM)
+const ActorMap ActorFactory::CreateActorsFromDOM(const DocumentObjectModelPtr pDOM)
 {
 	if (pDOM->GetRoot()->name == "ActorFactory")
 	{
@@ -28,38 +29,52 @@ const ActorMap& ActorFactory::CreateActorsFromDOM(const DocumentObjectModelPtr p
 	{
 		assert(false);
 	}
+
+	return m_pActors;
 }
 
 void ActorFactory::CreateNewActor(const TagNodePtr pTagNode)
 {
 	if (pTagNode->name == "Actor")
 	{
-		std::string renderer = pTagNode->name;
+		ActorPtr pActor = std::make_shared<Actor>(m_currentActorID, GetRenderer(pTagNode));
 
-		if (renderer == "mesh" || renderer == "skybox" || renderer == "pass")
+		// Add components
+		for (const TagNodePtr &pComponent : pTagNode->children)
 		{
-			ActorPtr pActor = std::make_shared<Actor>(m_currentActorID, renderer);
-
-			// Add components
-			for (const TagNodePtr &pComponent : pTagNode->children)
-			{
-				AddNewComponent(pActor, pComponent);
-			}
-
-			// Add to actor map
-			m_actors[m_currentActorID] = pActor;
+			AddNewComponent(pActor, pComponent);
 		}
-		else
-		{
-			// Something went wrong
-			assert(false);
-		}
+
+		// Add to actor map
+		(*m_pActors)[m_currentActorID++] = pActor;
 	}
 	else
 	{
 		// something went wrong
 		assert(false);
 	}
+}
+
+const Renderer ActorFactory::GetRenderer(const TagNodePtr pTagNode) const
+{
+	std::string attribute = pTagNode->data["renderer"];
+
+	if (attribute == "mesh")
+	{
+		return Renderer_Mesh;
+	}
+	else if (attribute== "skybox")
+	{
+		return Renderer_SkyBox;
+	}
+	else if (attribute == "pass")
+	{
+		return Renderer_Pass;
+	}
+	// Something went wrong
+	assert(false);
+	
+	return Renderer_Pass;
 }
 
 void ActorFactory::AddNewComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
@@ -76,19 +91,19 @@ void ActorFactory::AddNewComponent(ActorPtr pActor, const TagNodePtr pTagNode) c
 	}
 	else if (component == "MaterialComponent")
 	{
-
+		AddNewMaterialComponent(pActor, pTagNode);
 	}
 	else if (component == "SkyBoxComponent")
 	{
-
+		AddNewSkyBoxComponent(pActor, pTagNode);
 	}
 	else if (component == "CharacterControllerComponent")
 	{
-
+		AddNewCharacterControllerComponent(pActor, pTagNode);
 	}
 	else if (component == "CameraComponent")
 	{
-
+		AddNewCameraComponent(pActor, pTagNode);
 	}
 	else
 	{
@@ -192,4 +207,77 @@ void ActorFactory::AddNewMeshComponent(ActorPtr pActor, const TagNodePtr pTagNod
 
 	pMesh->SetOwner(pActor);
 	pActor->AddComponent(pMesh);
+}
+
+void ActorFactory::AddNewMaterialComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	MaterialPtr pMaterial = std::make_shared<Material>();
+
+	for (const TagNodePtr &pTag : pTagNode->children)
+	{
+		std::string attribute = pTag->name;
+
+		if (attribute == "Diffuse")
+		{
+			const char* directory = pTag->data["dir"].c_str();
+
+			pMaterial->SetDiffuse(directory);
+		}
+		else if (attribute == "Specular")
+		{
+			const char* directory = pTag->data["dir"].c_str();
+
+			pMaterial->SetSpecular(directory);
+		}
+		else
+		{
+			// Something went wrong
+			assert(false);
+		}
+	}
+
+	pMaterial->SetOwner(pActor);
+	pActor->AddComponent(pMaterial);
+}
+
+void ActorFactory::AddNewCharacterControllerComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	CharacterControllerPtr pController = std::make_shared<CharacterController>();
+
+	pController->SetOwner(pActor);
+	pActor->AddComponent(pController);
+}
+
+void ActorFactory::AddNewCameraComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	CameraPtr pCamera = std::make_shared<Camera>();
+
+	pCamera->SetOwner(pActor);
+	pActor->AddComponent(pCamera);
+}
+
+void ActorFactory::AddNewSkyBoxComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	SkyBoxPtr pSkyBox = std::make_shared<SkyBox>();
+
+	std::map<std::string, const char*> faces;
+
+	for (const TagNodePtr &pTag : pTagNode->children)
+	{
+		std::string attribute = pTag->name;
+
+		if (attribute == "Front" || attribute == "Back" || attribute == "Left" || attribute == "Right" || attribute == "Top" || attribute == "Bottom")
+		{
+			faces[pTag->name] = pTag->data["dir"].c_str();
+		}
+		else
+		{
+			// Something went wrong
+			assert(false);
+		}
+	}
+
+	pSkyBox->Init(faces["Front"], faces["Back"], faces["Left"], faces["Right"], faces["Top"], faces["Bottom"]);
+	pSkyBox->SetOwner(pActor);
+	pActor->AddComponent(pSkyBox);
 }

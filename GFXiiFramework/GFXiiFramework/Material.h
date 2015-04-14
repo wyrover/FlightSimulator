@@ -21,8 +21,8 @@ public:
 
 	inline virtual ActorComponentID		GetComponentID() const override { return COMPONENT_ID; }
 
-	inline const Texture&			GetDiffuse() { return *m_pDiffuse; }
-	inline const Texture&			GetSpecular() { return *m_pSpecular; }
+	inline const TexturePtr				GetDiffuse() { return m_pDiffuse; }
+	inline const TexturePtr				GetSpecular() { return m_pSpecular; }
 
 	inline void							SetDiffuse(const char* file)
 	{

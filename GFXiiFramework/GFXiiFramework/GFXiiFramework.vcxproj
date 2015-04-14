@@ -31,15 +31,16 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshNode.h" />
+    <ClInclude Include="MeshShader.h" />
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RootNode.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderBase.h" />
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SkyBoxNode.h" />
+    <ClInclude Include="SkyBoxShader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
@@ -62,10 +63,14 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshNode.cpp" />
+    <ClCompile Include="MeshShader.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RootNode.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SkyBoxNode.cpp" />
+    <ClCompile Include="SkyBoxShader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -83,8 +88,8 @@
   <ItemGroup>
     <None Include="..\asset\shader\glsl\skybox.frag" />
     <None Include="..\asset\shader\glsl\skybox.vert" />
-    <None Include="..\asset\shader\glsl\standard.frag" />
-    <None Include="..\asset\shader\glsl\standard.vert" />
+    <None Include="..\asset\shader\glsl\mesh.frag" />
+    <None Include="..\asset\shader\glsl\mesh.vert" />
     <None Include="GLEW\glew32.dll" />
   </ItemGroup>
   <ItemGroup>

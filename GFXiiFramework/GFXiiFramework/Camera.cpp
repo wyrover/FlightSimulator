@@ -11,14 +11,8 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	//std::shared_ptr<Transform> pTransform(m_pOwner->GetComponent<Transform>());
-
-	//pTransform->Rotation(Input::Get().Yaw(), Input::Get().Pitch(), Input::Get().Roll());
-	//pTransform->MoveForward(Input::Get().Forward());
-	//pTransform->MoveHorizontal(Input::Get().Horizontal());
-	//pTransform->MoveVertical(Input::Get().Vertical());
-
 	ZoomCamera(Input::Get().GetZoom());
+
 	UpdateViewMatrix();
 }
 

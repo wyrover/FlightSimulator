@@ -2,7 +2,6 @@
 #include "GLEW\include\glew.h"
 #include "OBJFileReader.h"
 #include "Material.h"
-#include "Shader.h"
 #include "Actor.h"
 
 Mesh::Mesh()
@@ -15,10 +14,8 @@ Mesh::~Mesh()
 
 void Mesh::Render()
 {
-	m_pOwner->GetComponent<Shader>()->PreRender();
-
-	unsigned int difHandle = m_pOwner->GetComponent<Material>()->GetDiffuse().m_syshandle;
-	unsigned int specHandle = m_pOwner->GetComponent<Material>()->GetSpecular().m_syshandle;
+	unsigned int difHandle = m_pOwner->GetComponent<Material>()->GetDiffuse()->m_syshandle;
+	unsigned int specHandle = m_pOwner->GetComponent<Material>()->GetSpecular()->m_syshandle;
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, difHandle);
@@ -31,8 +28,6 @@ void Mesh::Render()
 	glDrawArrays(GL_TRIANGLES, 0, m_numtriangles * 3);
 
 	glBindVertexArray(0);
-
-	m_pOwner->GetComponent<Shader>()->PostRender();
 }
 
 void Mesh::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)

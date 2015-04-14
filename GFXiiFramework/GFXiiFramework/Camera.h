@@ -12,14 +12,14 @@ typedef std::weak_ptr<Camera> WeakCameraPtr;
 class Camera : public ActorComponent
 {
 private:
-	glm::mat4						m_viewMatrix;
-	glm::mat4						m_projectionMatrix;
-	float							m_fov;
-	float							m_aspectRatio;
-	float							m_width;
-	float							m_height;
-	float							m_near;
-	float							m_far;
+	glm::mat4								m_viewMatrix;
+	glm::mat4								m_projectionMatrix;
+	float									m_fov;
+	float									m_aspectRatio;
+	float									m_width;
+	float									m_height;
+	float									m_near;
+	float									m_far;
 
 public:
 	Camera();

@@ -11,6 +11,9 @@ XMLReader::~XMLReader()
 {
 }
 
+/*
+	This does the job... Just about!
+*/
 void XMLReader::FindAndStoreTags(std::string &line)
 {
 	int end, next;
@@ -85,8 +88,7 @@ void XMLReader::FindAndStoreTags(std::string &line)
 }
 
 /*
-This function is coded awfully, but it does the job of finding xml attributes.
-
+	This function is coded awfully, but it does the job of finding xml attributes.
 */
 bool XMLReader::FindNextAttribute(std::string &line, std::string &outName, std::string &outValue) const
 {

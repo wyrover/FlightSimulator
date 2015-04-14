@@ -3,7 +3,7 @@
 layout (binding = 0) uniform sampler2D texColour;
 layout (binding = 1) uniform sampler2D specColour;
 
-in vec2 outUV;		//input: texcoords
+in vec2 outUV;
 in vec3 outNormal;
 in vec3 outPosition;
 in vec3 outCameraPosition;

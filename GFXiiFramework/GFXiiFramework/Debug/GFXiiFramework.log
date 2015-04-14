@@ -1,48 +1,72 @@
-﻿Build started 14/04/2015 10:21:20.
+﻿Build started 14/04/2015 21:00:03.
      1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp OBJFileReader.cpp Player.cpp SkyBox.cpp SkyBoxNode.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp RootNode.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
          XMLReader.cpp
          ApplicationWindow.cpp
          Vector3.cpp
          Triangle.cpp
          Transform.cpp
          Texture.cpp
+         SkyBoxShader.cpp
          SkyBoxNode.cpp
          SkyBox.cpp
+         Scene.cpp
+         RootNode.cpp
          Player.cpp
          OBJFileReader.cpp
+         MeshShader.cpp
          MeshNode.cpp
          Mesh.cpp
          Material.cpp
          Input.cpp
          ImageIO.cpp
          GLSLShader.cpp
+         Generating Code...
+         Compiling...
          GFXiiFramework.cpp
          DocumentObjectModel.cpp
          Cube.cpp
          CharacterController.cpp
-         Generating Code...
-         Compiling...
          Camera.cpp
          BaseApplication.cpp
          ActorFactory.cpp
-     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\memory(932): error C2664: 'Actor::Actor(const Actor &)' : cannot convert argument 2 from 'std::string' to 'const Renderer'
-                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\memory(1003) : see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<ActorID&,std::string&>(ActorID &,std::string &)' being compiled
-                 with
-                 [
-                     _Ty=Actor
-                 ]
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\memory(1003) : see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<ActorID&,std::string&>(ActorID &,std::string &)' being compiled
-                 with
-                 [
-                     _Ty=Actor
-                 ]
-                 d:\github\flightsimulator\gfxiiframework\gfxiiframework\actorfactory.cpp(41) : see reference to function template instantiation 'std::shared_ptr<Actor> std::make_shared<Actor,ActorID&,std::string&>(ActorID &,std::string &)' being compiled
          Generating Code...
-     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Rebuild target(s)) -- FAILED.
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\GFXiiFramework.res" GFXiiFramework.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
+         Debug\ActorFactory.obj
+         Debug\BaseApplication.obj
+         Debug\Camera.obj
+         Debug\CharacterController.obj
+         Debug\Cube.obj
+         Debug\DocumentObjectModel.obj
+         Debug\GFXiiFramework.obj
+         Debug\GLSLShader.obj
+         Debug\ImageIO.obj
+         Debug\Input.obj
+         Debug\Material.obj
+         Debug\Mesh.obj
+         Debug\MeshNode.obj
+         Debug\MeshShader.obj
+         Debug\OBJFileReader.obj
+         Debug\Player.obj
+         Debug\RootNode.obj
+         Debug\Scene.obj
+         Debug\SkyBox.obj
+         Debug\SkyBoxNode.obj
+         Debug\SkyBoxShader.obj
+         Debug\Texture.obj
+         Debug\Transform.obj
+         Debug\Triangle.obj
+         Debug\Vector3.obj
+         Debug\ApplicationWindow.obj
+         Debug\XMLReader.obj
+         GLEW\lib\glew32.lib
+         GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe
+     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Rebuild target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:10.38
+Time Elapsed 00:00:15.46

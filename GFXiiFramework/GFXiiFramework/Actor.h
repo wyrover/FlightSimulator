@@ -22,11 +22,6 @@ private:
 public:
 	Actor(const ActorID id, const Renderer renderer) : m_ID{ id }, m_renderer{ renderer } { }
 
-	Actor(const Actor& actor)
-	{
-
-	}
-
 	virtual ~Actor() { }
 
 	template <class ComponentType>
