@@ -10,14 +10,23 @@ typedef unsigned int ActorID, ActorComponentID;
 typedef std::shared_ptr<ActorComponent> ActorComponentPtr;
 typedef std::map<ActorComponentID, ActorComponentPtr> ActorComponents;
 
+enum Renderer { Renderer_Mesh, Renderer_SkyBox, Renderer_Pass };
+
 class Actor
 {
 private:
 	ActorID							m_ID;
 	ActorComponents					m_actorComponents;
+	Renderer						m_renderer;
 
 public:
-	Actor(){ }
+	Actor(const ActorID id, const Renderer renderer) : m_ID{ id }, m_renderer{ renderer } { }
+
+	Actor(const Actor& actor)
+	{
+
+	}
+
 	virtual ~Actor() { }
 
 	template <class ComponentType>
@@ -37,9 +46,10 @@ public:
 		}
 	}
 
-	inline ActorID					GetID() { return m_ID; }
+	inline const Renderer			GetRenderer() const { return m_renderer; }
+	inline const ActorID			GetID() const { return m_ID; }
 
-	inline void						AddComponent(ActorComponentPtr pComponent)
+	inline void						AddComponent(const ActorComponentPtr pComponent)
 	{
 		// TODO: Check only one component of each type is attached
 		m_actorComponents[pComponent->GetComponentID()] = pComponent;

@@ -7,7 +7,7 @@
 #include "CharacterController.h"
 #include "SkyBox.h"
 
-ActorFactory::ActorFactory()
+ActorFactory::ActorFactory() : m_currentActorID{ 0 }
 {
 }
 
@@ -15,13 +15,13 @@ ActorFactory::~ActorFactory()
 {
 }
 
-void ActorFactory::CreateSceneFromDOM(ScenePtr pScene, const DocumentObjectModelPtr pDOM) const
+const ActorMap& ActorFactory::CreateActorsFromDOM(const DocumentObjectModelPtr pDOM)
 {
 	if (pDOM->GetRoot()->name == "ActorFactory")
 	{
 		for (const TagNodePtr &pTagNode : pDOM->GetRoot()->children)
 		{
-			CreateNewActor(pScene, pTagNode);
+			CreateNewActor(pTagNode);
 		}
 	}
 	else
@@ -30,17 +30,29 @@ void ActorFactory::CreateSceneFromDOM(ScenePtr pScene, const DocumentObjectModel
 	}
 }
 
-void ActorFactory::CreateNewActor(ScenePtr pScene, const TagNodePtr pTagNode) const
+void ActorFactory::CreateNewActor(const TagNodePtr pTagNode)
 {
 	if (pTagNode->name == "Actor")
 	{
-		// TODO: Add renderer
-		ActorPtr pActor = std::make_shared<Actor>();
+		std::string renderer = pTagNode->name;
 
-		// Add components
-		for (const TagNodePtr &pComponent : pTagNode->children)
+		if (renderer == "mesh" || renderer == "skybox" || renderer == "pass")
 		{
-			AddNewComponent(pActor, pComponent);
+			ActorPtr pActor = std::make_shared<Actor>(m_currentActorID, renderer);
+
+			// Add components
+			for (const TagNodePtr &pComponent : pTagNode->children)
+			{
+				AddNewComponent(pActor, pComponent);
+			}
+
+			// Add to actor map
+			m_actors[m_currentActorID] = pActor;
+		}
+		else
+		{
+			// Something went wrong
+			assert(false);
 		}
 	}
 	else

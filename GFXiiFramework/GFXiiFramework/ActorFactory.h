@@ -2,10 +2,16 @@
 #include "DocumentObjectModel.h"
 #include "Scene.h"
 
+typedef std::map<ActorID, ActorPtr> ActorMap;
+
 class ActorFactory final
 {
 private:
-	void						CreateNewActor(ScenePtr pScene, const TagNodePtr pTagNode) const;
+	ActorID						m_currentActorID;
+
+	ActorMap					m_actors;
+
+	void						CreateNewActor(const TagNodePtr pTagNode);
 	void						AddNewComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 
 	void						AddNewTransformComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
@@ -21,6 +27,6 @@ public:
 	ActorFactory();
 	virtual						~ActorFactory();
 
-	void						CreateSceneFromDOM(ScenePtr pScene, const DocumentObjectModelPtr pDOM) const;
+	const ActorMap&				CreateActorsFromDOM(const DocumentObjectModelPtr pDOM);
 };
 
