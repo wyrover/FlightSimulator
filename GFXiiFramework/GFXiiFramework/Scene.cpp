@@ -1,12 +1,7 @@
 #include "Scene.h"
 #include "MeshNode.h"
 #include "SkyBoxNode.h"
-#include "RootNode.h"
-
-CameraPtr Scene::s_pCamera = nullptr;	
-MeshShader Scene::s_pMeshShader;
-SkyBoxShader Scene::s_pSkyBoxShader;
-
+	
 Scene::Scene()
 {
 	m_pActors = std::make_shared<std::map<ActorID, ActorPtr>>();
@@ -25,10 +20,11 @@ Scene::Scene(const ActorMap actors)
 
 void Scene::Init()
 {
-	m_pRoot = std::make_shared<RootNode>();
+	m_pMeshShader = std::make_shared<MeshShader>();
+	m_pSkyBoxShader = std::make_shared<SkyBoxShader>();
 
-	Scene::s_pMeshShader.AttachAndBuildProgram(L"../asset/shader/glsl/mesh.vert", L"../asset/shader/glsl/mesh.frag");
-	Scene::s_pSkyBoxShader.AttachAndBuildProgram(L"../asset/shader/glsl/skybox.vert", L"../asset/shader/glsl/skybox.frag");
+	m_pMeshShader->AttachAndBuildProgram(L"../asset/shader/glsl/mesh.vert", L"../asset/shader/glsl/mesh.frag");
+	m_pSkyBoxShader->AttachAndBuildProgram(L"../asset/shader/glsl/skybox.vert", L"../asset/shader/glsl/skybox.frag");
 }
 
 void Scene::CreateScene()
@@ -38,18 +34,21 @@ void Scene::CreateScene()
 		switch (actor.second->GetRenderer())
 		{
 		case Renderer_Mesh:
-			m_pRoot->AddMeshNode(std::make_shared<MeshNode>(actor.second));
+			AddMeshNode(std::make_shared<MeshNode>(actor.second));
 			break;
 		case Renderer_SkyBox:
-			m_pRoot->AddSkyBoxNode(std::make_shared<SkyBoxNode>(actor.second));
+			AddSkyBoxNode(std::make_shared<SkyBoxNode>(actor.second, m_pCamera));
+			break;
+		case Renderer_Light:
+			SetLight(std::make_shared<LightNode>(actor.second));
 			break;
 		}
 
-		if (!s_pCamera)
+		if (!m_pCamera)
 		{
 			if (actor.second->GetComponent<Camera>())
 			{
-				s_pCamera = actor.second->GetComponent<Camera>();
+				SetCamera(actor.second->GetComponent<Camera>());
 			}
 		}
 		if (!m_pCharacterController)

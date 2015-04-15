@@ -3,6 +3,10 @@
 #include "SkyBoxNode.h"
 #include "Camera.h"
 
+class SkyBoxShader;
+
+typedef std::shared_ptr<SkyBoxShader> SkyBoxShaderPtr;
+
 class SkyBoxShader : public GLSLShaderProgram
 {
 private:
@@ -22,7 +26,7 @@ public:
 		return m_uniforms;
 	}
 
-	void					PreRender();
+	void					PreRender(const CameraPtr pCamera);
 
 	inline void				PostRender()
 	{
@@ -30,6 +34,6 @@ public:
 	}
 
 	void					AttachAndBuildProgram(const LPWSTR vertexShader = nullptr, const LPWSTR fragmentShader = nullptr);
-	void					UpdateUniformValues(const SkyBoxNodePtr pSceneNode = nullptr, const CameraPtr pCamera = nullptr) const;
+	void					UpdateUniformValues(const SkyBoxNodePtr pSceneNode) const;
 };
 

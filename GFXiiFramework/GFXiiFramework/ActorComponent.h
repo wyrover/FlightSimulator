@@ -23,5 +23,11 @@ public:
 		return m_pOwner;
 	}
 
+	template <class ComponentType>
+	inline std::shared_ptr<ComponentType>		GetComponent()
+	{
+		return m_pOwner->GetComponent<ComponentType>();
+	}
+
 	inline virtual ActorComponentID				GetComponentID() const = 0;
 };

@@ -9,6 +9,8 @@
 #define CAMERA_POSITION "cameraPosition"
 #define ROTATION "rotation"
 #define CALCULATE_SPECULAR "calculateSpecular"
+#define LIGHT_POSITION "lightPosition"
+#define LIGHT_COLOUR "lightColour"
 
 MeshShader::MeshShader()
 {
@@ -40,34 +42,28 @@ void MeshShader::AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR f
 	m_uniforms.cameraPosition = glGetUniformLocation(GetProgramHandle(), CAMERA_POSITION);
 	m_uniforms.rotation = glGetUniformLocation(GetProgramHandle(), ROTATION);
 	m_uniforms.bCalculateSpecular = glGetUniformLocation(GetProgramHandle(), CALCULATE_SPECULAR);
+	m_uniforms.lightColour = glGetUniformLocation(GetProgramHandle(), LIGHT_COLOUR);
+	m_uniforms.lightPosition = glGetUniformLocation(GetProgramHandle(), LIGHT_POSITION);
 }
 
-void MeshShader::UpdateUniformValues(const MeshNodePtr pSceneNode, const CameraPtr pCamera) const
+void MeshShader::UpdateUniformValues(const MeshNodePtr pSceneNode) const
 {
-	if (pSceneNode)
-	{
-		ActorPtr pActor;
+	pSceneNode->PreRender();
 
-		if (pActor = pSceneNode->GetActor().lock())
-		{
-			glUniformMatrix4fv(m_uniforms.localToWorld, 1, GL_FALSE, glm::value_ptr(pActor->GetComponent<Transform>()->GetTransformation()));
-			glUniformMatrix4fv(m_uniforms.rotation, 1, GL_FALSE, glm::value_ptr(pActor->GetComponent<Transform>()->GetOrientation()));
+	glUniformMatrix4fv(m_uniforms.localToWorld, 1, GL_FALSE, glm::value_ptr(pSceneNode->GetComponent<Transform>()->GetTransformation()));
+	glUniformMatrix4fv(m_uniforms.rotation, 1, GL_FALSE, glm::value_ptr(pSceneNode->GetComponent<Transform>()->GetOrientation()));
 
-			glUniform1i(m_uniforms.bCalculateSpecular, pSceneNode->GetCalculateSpecular());
-		}
-	}
-	if (pCamera)
-	{
-		glUniformMatrix4fv(m_uniforms.modelview, 1, GL_FALSE, glm::value_ptr(pCamera->GetViewMatrixMat4()));
-		glUniformMatrix4fv(m_uniforms.projection, 1, GL_FALSE, glm::value_ptr(pCamera->GetProjectionMat4()));
-
-		glUniform3f(m_uniforms.cameraPosition, 1, GL_FALSE, *glm::value_ptr(pCamera->GetOwner()->GetComponent<Transform>()->GetPosition()));
-	}
+	glUniform1i(m_uniforms.bCalculateSpecular, pSceneNode->GetCalculateSpecular());
 }
 
-void MeshShader::PreRender()
+void MeshShader::PreRender(CameraPtr pCamera, LightNodePtr pLight)
 {
 	ActivateShaderProgram();
 
-	UpdateUniformValues(nullptr, Scene::GetCamera());
+	glUniformMatrix4fv(m_uniforms.modelview, 1, GL_FALSE, glm::value_ptr(pCamera->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniforms.projection, 1, GL_FALSE, glm::value_ptr(pCamera->GetProjectionMat4()));
+
+	glUniform3fv(m_uniforms.cameraPosition, 1, glm::value_ptr(pCamera->GetOwner()->GetComponent<Transform>()->GetPosition()));
+	glUniform3fv(m_uniforms.lightColour, 1, glm::value_ptr(pLight->GetLightColour()));
+	glUniform3fv(m_uniforms.lightPosition, 1, glm::value_ptr(pLight->GetComponent<Transform>()->GetPosition()));
 }

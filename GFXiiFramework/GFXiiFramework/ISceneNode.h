@@ -15,33 +15,34 @@ typedef std::weak_ptr<Actor> WeakActorPtr;
 class ISceneNode
 {
 protected:
-	WeakActorPtr				m_pWeakActorPtr;
+	ActorPtr									m_pActor;
 
-	ISceneNode					*m_pParent;
-	SceneNodeList				m_children;
+	ISceneNode									*m_pParent;
+	SceneNodeList								m_children;
 
 	// Used to set whether a node should be rendered/used in the scene
-	bool						m_visible;
+	bool										m_visible;
 
 public:
-								ISceneNode() { }
-	virtual						~ISceneNode() { }
+	ISceneNode() { }
+	virtual										~ISceneNode() { }
 
 	// NOTE: The node should render itself, then each of its children
-	virtual void				Render() = 0;
+	virtual void								Render() = 0;
 
-	inline virtual void			AddChild(const SceneNodePtr pNode)
+	inline virtual void							AddChild(const SceneNodePtr pNode)
 	{
 		pNode->m_pParent = this;
 
 		m_children.push_back(pNode);
 	}
 
-	inline virtual WeakActorPtr	GetActor() const
+	template <class ComponentType>
+	inline std::shared_ptr<ComponentType>		GetComponent()
 	{
-		return m_pWeakActorPtr;
+		return m_pActor->GetComponent<ComponentType>();
 	}
 
-	virtual void						PreRender() = 0;
+	virtual void								PreRender() = 0;
 };
 

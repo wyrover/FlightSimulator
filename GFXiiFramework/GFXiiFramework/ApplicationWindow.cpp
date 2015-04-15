@@ -9,7 +9,6 @@
 #include "Mesh.h"
 #include "Camera.h"
 #include "SkyBox.h"
-#include "RootNode.h"
 #include "SkyBoxNode.h"
 #include "CharacterController.h"
 

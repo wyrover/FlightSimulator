@@ -3,35 +3,23 @@
 #include "Transform.h"
 #include "Scene.h"
 
-SkyBoxNode::SkyBoxNode(ActorPtr pActor)
+SkyBoxNode::SkyBoxNode(const ActorPtr pActor, const CameraPtr pCamera)
 {
-	m_pWeakActorPtr = pActor;
+	m_pCamera = pCamera;
+	m_pActor = pActor;
 }
 
 void SkyBoxNode::Render()
 {
-	ActorPtr pActor;
+	GetComponent<SkyBox>()->Render();
 
-	if (pActor = m_pWeakActorPtr.lock())
+	for (const SceneNodePtr &pSceneNode : m_children)
 	{
-		pActor->GetComponent<Transform>()->SetPosition(Scene::GetCamera()->GetOwner()->GetComponent<Transform>()->GetPosition());
-		pActor->GetComponent<SkyBox>()->Render();
-
-		for (const SceneNodePtr &pSceneNode : m_children)
-		{
-			pSceneNode->Render();
-		}
+		pSceneNode->Render();
 	}
 }
 
 void SkyBoxNode::PreRender()
 {
-	ActorPtr pActor;
-
-	if (pActor = m_pWeakActorPtr.lock())
-	{
-		pActor->GetComponent<Transform>()->SetPosition(Scene::GetCamera()->GetOwner()->GetComponent<Transform>()->GetPosition());
-	}
-
-	Scene::GetSkyBoxShaderProgram().UpdateUniformValues(std::make_shared<SkyBoxNode>(*this));
+	GetComponent<Transform>()->SetPosition(m_pCamera->GetComponent<Transform>()->GetPosition());
 }

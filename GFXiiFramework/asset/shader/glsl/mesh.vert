@@ -6,6 +6,8 @@ layout (location = 2) uniform mat4 localToWorld;
 layout (location = 3) uniform vec3 cameraPosition;
 layout (location = 4) uniform mat4 rotation;
 layout (location = 5) uniform bool calculateSpecular;
+layout (location = 6) uniform vec3 lightPosition;
+layout (location = 7) uniform vec3 lightColour;
 
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec3 inNormal;
@@ -16,6 +18,8 @@ out vec3 outNormal;
 out vec3 outPosition;
 out vec3 outCameraPosition;
 flat out int outCalculateSpecular;
+out vec3 outLightPosition;
+out vec3 outLightColour;
 
 void main()
 {	
@@ -26,4 +30,6 @@ void main()
 	outPosition = vec3(localToWorld * position);
 	outCameraPosition = vec3(projection * modelview * vec4(cameraPosition, 0));
 	outCalculateSpecular = int(calculateSpecular);
+	outLightPosition = lightPosition;
+	outLightColour = lightColour;
 }

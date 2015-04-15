@@ -26,6 +26,8 @@
     <ClInclude Include="ImageIO.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ISceneNode.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightNode.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Material.h" />
@@ -35,7 +37,6 @@
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="RootNode.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderBase.h" />
     <ClInclude Include="SkyBox.h" />
@@ -66,7 +67,6 @@
     <ClCompile Include="MeshShader.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RootNode.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SkyBoxNode.cpp" />

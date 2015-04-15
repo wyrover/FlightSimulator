@@ -5,7 +5,7 @@
 
 MeshNode::MeshNode(ActorPtr pActor)
 {
-	m_pWeakActorPtr = pActor;
+	m_pActor = pActor;
 
 	if (pActor->GetComponent<Material>()->GetSpecular())
 	{
@@ -19,20 +19,14 @@ MeshNode::MeshNode(ActorPtr pActor)
 
 void MeshNode::Render()
 {
-	ActorPtr pActor;
+	GetComponent<Mesh>()->Render();
 
-	if (pActor = m_pWeakActorPtr.lock())
+	for (const SceneNodePtr &pSceneNode : m_children)
 	{
-		pActor->GetComponent<Mesh>()->Render();
-
-		for (const SceneNodePtr &pSceneNode : m_children)
-		{
-			pSceneNode->Render();
-		}
+		pSceneNode->Render();
 	}
 }
 
 void MeshNode::PreRender()
 {
-	Scene::GetMeshShaderProgram().UpdateUniformValues(std::make_shared<MeshNode>(*this));
 }

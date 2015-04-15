@@ -4,27 +4,31 @@
 #include "CharacterController.h"
 #include "SkyBox.h"
 #include "Actor.h"
-#include "GLSLShader.h"
 #include "MeshShader.h"
 #include "SkyBoxShader.h"
-#include "RootNode.h"
 
 class Scene;
 
 typedef std::shared_ptr<std::map<ActorID, ActorPtr>> ActorMap;
 typedef std::shared_ptr<Scene> ScenePtr;
 
+typedef std::vector<MeshNodePtr> MeshNodeList;
+typedef std::vector<SkyBoxNodePtr> SkyBoxNodeList;
+typedef std::vector<LightNodePtr> LightNodeList;
+
 class Scene final
 {
 private:
-	static CameraPtr					s_pCamera;
-	static MeshShader					s_pMeshShader;
-	static SkyBoxShader					s_pSkyBoxShader;
+	MeshShaderPtr						m_pMeshShader;
+	SkyBoxShaderPtr						m_pSkyBoxShader;
 
-	RootNodePtr							m_pRoot;
 	CharacterControllerPtr				m_pCharacterController;
-	SkyBoxPtr							m_pSkyBox;
 	ActorMap							m_pActors;
+
+	MeshNodeList						m_meshNodes;
+	SkyBoxNodeList						m_skyBoxNodes;
+	LightNodePtr						m_pLight;
+	CameraPtr							m_pCamera;
 
 	void								CreateScene();
 
@@ -33,53 +37,63 @@ public:
 	Scene(const ActorMap actors);
 	~Scene() { }
 
-	inline void							Render() const
+	inline void							Render()
 	{
 		// Update player
 		m_pCharacterController->Update();
 
-		// Render meshes
-		m_pRoot->Render();
+		m_pSkyBoxShader->PreRender(m_pCamera);
+		for (const SkyBoxNodePtr &pSceneNode : m_skyBoxNodes)
+		{
+			m_pSkyBoxShader->UpdateUniformValues(pSceneNode);
+
+			pSceneNode->Render();
+		}
+		m_pSkyBoxShader->PostRender();
+		
+		m_pMeshShader->PreRender(m_pCamera, m_pLight);
+		for (const MeshNodePtr &pSceneNode : m_meshNodes)
+		{
+			m_pMeshShader->UpdateUniformValues(pSceneNode);
+
+			pSceneNode->Render();
+		}
+		m_pMeshShader->PostRender();
 	}
 
-	inline void							SetRoot(const RootNodePtr pRoot)
-	{
-		m_pRoot = pRoot;
-	}
-
-	inline SceneNodePtr					GetRoot() const
-	{
-		return m_pRoot;
-	}
-
-	inline void							SetSkyBox(SkyBoxPtr pSkyBox)
-	{
-		m_pSkyBox = pSkyBox;
-	}
-
-	inline void							SetCharacterController(CharacterControllerPtr pCharacterController)
+	inline void						SetCharacterController(CharacterControllerPtr pCharacterController)
 	{
 		m_pCharacterController = pCharacterController;
 	}
 
-	inline void							SetCamera(const CameraPtr pCamera)
+	inline void						AddMeshNode(const MeshNodePtr pMeshNode)
 	{
-		s_pCamera = pCamera;
+		m_meshNodes.push_back(pMeshNode);
 	}
 
-	inline static const CameraPtr		GetCamera()
+	inline void						AddSkyBoxNode(const SkyBoxNodePtr pSkyBoxNode)
 	{
-		return s_pCamera;
+		m_skyBoxNodes.push_back(pSkyBoxNode);
 	}
 
-	inline static MeshShader&			GetMeshShaderProgram()
+	inline void						SetLight(const LightNodePtr pLight)
 	{
-		return s_pMeshShader;
+		m_pLight = pLight;
 	}
 
-	inline static SkyBoxShader&			GetSkyBoxShaderProgram()
+	inline const LightNodePtr		GetLight() const
 	{
-		return s_pSkyBoxShader;
+		return m_pLight;
+	}
+
+	inline void						SetCamera(const CameraPtr pCamera)
+	{
+		m_pCamera = pCamera;
+	}
+
+	inline const CameraPtr			GetCamera() const
+	{
+		return m_pCamera;
 	}
 
 	void								Init();

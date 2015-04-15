@@ -1,7 +1,7 @@
-﻿Build started 14/04/2015 21:00:03.
+﻿Build started 15/04/2015 20:15:01.
      1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp RootNode.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
          XMLReader.cpp
          ApplicationWindow.cpp
          Vector3.cpp
@@ -12,7 +12,6 @@
          SkyBoxNode.cpp
          SkyBox.cpp
          Scene.cpp
-         RootNode.cpp
          Player.cpp
          OBJFileReader.cpp
          MeshShader.cpp
@@ -22,9 +21,9 @@
          Input.cpp
          ImageIO.cpp
          GLSLShader.cpp
+         GFXiiFramework.cpp
          Generating Code...
          Compiling...
-         GFXiiFramework.cpp
          DocumentObjectModel.cpp
          Cube.cpp
          CharacterController.cpp
@@ -52,7 +51,6 @@
          Debug\MeshShader.obj
          Debug\OBJFileReader.obj
          Debug\Player.obj
-         Debug\RootNode.obj
          Debug\Scene.obj
          Debug\SkyBox.obj
          Debug\SkyBoxNode.obj
@@ -69,4 +67,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:15.46
+Time Elapsed 00:00:15.87

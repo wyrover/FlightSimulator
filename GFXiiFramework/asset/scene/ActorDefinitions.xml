@@ -1,5 +1,14 @@
 <ActorFactory>
 
+	<Actor renderer="light">
+		<TransformComponent>
+			<Position X="0" Y="40" Z="0" />
+		</TransformComponent>
+		<LightComponent>
+			<Colour R="1.0" G="1.0" B="1.0" />
+		</LightComponent>
+	</Actor>
+
 	<Actor renderer="mesh">
 		<TransformComponent>
 			<Position X="0" Y="-10" Z="-20" />

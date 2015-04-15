@@ -10,7 +10,7 @@ typedef unsigned int ActorID, ActorComponentID;
 typedef std::shared_ptr<ActorComponent> ActorComponentPtr;
 typedef std::map<ActorComponentID, ActorComponentPtr> ActorComponents;
 
-enum Renderer { Renderer_Mesh, Renderer_SkyBox, Renderer_Pass };
+enum Renderer { Renderer_Mesh, Renderer_SkyBox, Renderer_Light, Renderer_Pass };
 
 class Actor
 {

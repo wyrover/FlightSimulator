@@ -21,8 +21,10 @@ private:
 	void						AddNewCharacterControllerComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 	void						AddNewCameraComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 	void						AddNewSkyBoxComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
+	void						AddNewLightComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 
 	const glm::vec3				GetXYZ(std::map<std::string, std::string> data) const;
+	const glm::vec3				GetRGB(std::map < std::string, std::string> data) const;
 
 	const Renderer				GetRenderer(const TagNodePtr pTagNode) const;
 

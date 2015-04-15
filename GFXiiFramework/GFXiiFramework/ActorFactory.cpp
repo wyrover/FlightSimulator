@@ -6,6 +6,15 @@
 #include "Camera.h"
 #include "CharacterController.h"
 #include "SkyBox.h"
+#include "Light.h"
+
+#define CAMERA "CameraComponent"
+#define CHARACTER_CONTROLLER "CharacterControllerComponent"
+#define SKY_BOX "SkyBoxComponent"
+#define MATERIAL "MaterialComponent"
+#define MESH "MeshComponent"
+#define TRANSFORM "TransformComponent"
+#define LIGHT "LightComponent"
 
 ActorFactory::ActorFactory() : m_currentActorID{ 0 }
 {
@@ -67,6 +76,10 @@ const Renderer ActorFactory::GetRenderer(const TagNodePtr pTagNode) const
 	{
 		return Renderer_SkyBox;
 	}
+	else if (attribute == "light")
+	{
+		return Renderer_Light;
+	}
 	else if (attribute == "pass")
 	{
 		return Renderer_Pass;
@@ -81,29 +94,33 @@ void ActorFactory::AddNewComponent(ActorPtr pActor, const TagNodePtr pTagNode) c
 {
 	std::string component = pTagNode->name;
 
-	if (component == "TransformComponent")
+	if (component == TRANSFORM)
 	{
 		AddNewTransformComponent(pActor, pTagNode);
 	}
-	else if (component == "MeshComponent")
+	else if (component == MESH)
 	{
 		AddNewMeshComponent(pActor, pTagNode);
 	}
-	else if (component == "MaterialComponent")
+	else if (component == MATERIAL)
 	{
 		AddNewMaterialComponent(pActor, pTagNode);
 	}
-	else if (component == "SkyBoxComponent")
+	else if (component == SKY_BOX)
 	{
 		AddNewSkyBoxComponent(pActor, pTagNode);
 	}
-	else if (component == "CharacterControllerComponent")
+	else if (component == CHARACTER_CONTROLLER)
 	{
 		AddNewCharacterControllerComponent(pActor, pTagNode);
 	}
-	else if (component == "CameraComponent")
+	else if (component == CAMERA)
 	{
 		AddNewCameraComponent(pActor, pTagNode);
+	}
+	else if (component == LIGHT)
+	{
+		AddNewLightComponent(pActor, pTagNode);
 	}
 	else
 	{
@@ -119,6 +136,17 @@ const glm::vec3 ActorFactory::GetXYZ(std::map<std::string, std::string> data) co
 	x = (float)atof(data["X"].c_str());
 	y = (float)atof(data["Y"].c_str());
 	z = (float)atof(data["Z"].c_str());
+
+	return glm::vec3(x, y, z);
+}
+
+const glm::vec3 ActorFactory::GetRGB(std::map<std::string, std::string> data) const
+{
+	float x, y, z;
+
+	x = (float)atof(data["R"].c_str());
+	y = (float)atof(data["G"].c_str());
+	z = (float)atof(data["B"].c_str());
 
 	return glm::vec3(x, y, z);
 }
@@ -280,4 +308,27 @@ void ActorFactory::AddNewSkyBoxComponent(ActorPtr pActor, const TagNodePtr pTagN
 	pSkyBox->Init(faces["Front"], faces["Back"], faces["Left"], faces["Right"], faces["Top"], faces["Bottom"]);
 	pSkyBox->SetOwner(pActor);
 	pActor->AddComponent(pSkyBox);
+}
+
+void ActorFactory::AddNewLightComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	LightPtr pLight = std::make_shared<Light>();
+
+	for (const TagNodePtr &pTag : pTagNode->children)
+	{
+		std::string attribute = pTag->name;
+
+		if (attribute == "Colour")
+		{
+			pLight->SetColour(GetRGB(pTag->data));
+		}
+		else
+		{
+			// Shouldn't happen
+			assert(false);
+		}
+	}
+
+	pLight->SetOwner(pActor);
+	pActor->AddComponent(pLight);
 }

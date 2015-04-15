@@ -11,7 +11,7 @@ typedef std::shared_ptr<MeshNode> MeshNodePtr;
 
 class MeshNode : public ISceneNode
 {
-protected:
+private:
 	bool						m_bCalculateSpecular;
 
 public:
@@ -23,6 +23,6 @@ public:
 		return m_bCalculateSpecular;
 	}
 
-	void						Render() override;
+	virtual void				Render() override;
 	virtual void				PreRender() override;
 };

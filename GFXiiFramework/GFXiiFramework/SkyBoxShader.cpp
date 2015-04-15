@@ -37,27 +37,17 @@ void SkyBoxShader::AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR
 
 }
 
-void SkyBoxShader::UpdateUniformValues(const SkyBoxNodePtr pSceneNode, const CameraPtr pCamera) const
+void SkyBoxShader::UpdateUniformValues(const SkyBoxNodePtr pSceneNode) const
 {
-	if (pSceneNode)
-	{
-		ActorPtr pActor;
+	pSceneNode->PreRender();
 
-		if (pActor = pSceneNode->GetActor().lock())
-		{
-			glUniformMatrix4fv(m_uniforms.localToWorld, 1, GL_FALSE, glm::value_ptr(pActor->GetComponent<Transform>()->GetTransformation()));
-		}
-	}
-	if (pCamera)
-	{
-		glUniformMatrix4fv(m_uniforms.modelview, 1, GL_FALSE, glm::value_ptr(pCamera->GetViewMatrixMat4()));
-		glUniformMatrix4fv(m_uniforms.projection, 1, GL_FALSE, glm::value_ptr(pCamera->GetProjectionMat4()));
-	}
+	glUniformMatrix4fv(m_uniforms.localToWorld, 1, GL_FALSE, glm::value_ptr(pSceneNode->GetComponent<Transform>()->GetTransformation()));
 }
 
-void SkyBoxShader::PreRender()
+void SkyBoxShader::PreRender(const CameraPtr pCamera)
 {
 	ActivateShaderProgram();
 
-	UpdateUniformValues(nullptr, Scene::GetCamera());
+	glUniformMatrix4fv(m_uniforms.modelview, 1, GL_FALSE, glm::value_ptr(pCamera->GetViewMatrixMat4()));
+	glUniformMatrix4fv(m_uniforms.projection, 1, GL_FALSE, glm::value_ptr(pCamera->GetProjectionMat4()));
 }
