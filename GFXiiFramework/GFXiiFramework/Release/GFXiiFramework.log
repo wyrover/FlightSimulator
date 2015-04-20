@@ -1,15 +1,36 @@
-﻿Build started 14/04/2015 20:02:07.
-     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Build target(s)).
+﻿Build started 19/04/2015 23:08:38.
+     1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ApplicationWindow.cpp BaseApplication.cpp GFXiiFramework.cpp MeshShader.cpp RootNode.cpp Scene.cpp SkyBoxNode.cpp SkyBoxShader.cpp
-         ApplicationWindow.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
+         ActorFactory.cpp
          BaseApplication.cpp
+         Camera.cpp
+         CharacterController.cpp
+         Cube.cpp
+         DocumentObjectModel.cpp
          GFXiiFramework.cpp
+         GLSLShader.cpp
+         ImageIO.cpp
+         Input.cpp
+         Material.cpp
+         Mesh.cpp
+         MeshNode.cpp
          MeshShader.cpp
-         RootNode.cpp
+         OBJFileReader.cpp
+         Player.cpp
          Scene.cpp
+         SkyBox.cpp
          SkyBoxNode.cpp
          SkyBoxShader.cpp
+         Compiling...
+         Texture.cpp
+         Transform.cpp
+         Triangle.cpp
+         Vector3.cpp
+         ApplicationWindow.cpp
+         XMLReader.cpp
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\GFXiiFramework.res" GFXiiFramework.rc 
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.lib" /MACHINE:X86 /SAFESEH Release\GFXiiFramework.res
          Release\ActorFactory.obj
@@ -28,7 +49,6 @@
          Release\MeshShader.obj
          Release\OBJFileReader.obj
          Release\Player.obj
-         Release\RootNode.obj
          Release\Scene.obj
          Release\SkyBox.obj
          Release\SkyBoxNode.obj
@@ -43,8 +63,8 @@
          Generating code
          Finished generating code
          GFXiiFramework.vcxproj -> D:\GitHub\FlightSimulator\GFXiiFramework\Release\GFXiiFramework.exe
-     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Build target(s)).
+     1>Done Building Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:07.92
+Time Elapsed 00:00:16.03

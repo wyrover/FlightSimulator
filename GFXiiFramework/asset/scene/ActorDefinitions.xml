@@ -2,7 +2,7 @@
 
 	<Actor renderer="light">
 		<TransformComponent>
-			<Position X="0" Y="40" Z="0" />
+			<Position X="0" Y="30" Z="50" />
 		</TransformComponent>
 		<LightComponent>
 			<Colour R="1.0" G="1.0" B="1.0" />
@@ -11,7 +11,7 @@
 
 	<Actor renderer="mesh">
 		<TransformComponent>
-			<Position X="0" Y="-10" Z="-20" />
+			<Position X="0" Y="0" Z="0" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="-1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="1" />
@@ -28,43 +28,9 @@
 		<CameraComponent />
 	</Actor>
 	
-		<Actor renderer="mesh">
-		<TransformComponent>
-			<Position X="20" Y="-" Z="0" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="-1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="1" />
-			<Scale uniform="0.01" />
-			<Rotation yaw="180" pitch="0" roll="0" />
-		</TransformComponent>
-		<MeshComponent>
-			<Model dir="../asset/models/ARC170.obj" />
-		</MeshComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/ARC170_diffuse.tga" />
-		</MaterialComponent>
-	</Actor>
-	
-		<Actor renderer="mesh">
-		<TransformComponent>
-			<Position X="-20" Y="-10" Z="-20" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="-1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="1" />
-			<Scale uniform="0.01" />
-			<Rotation yaw="180" pitch="0" roll="0" />
-		</TransformComponent>
-		<MeshComponent>
-			<Model dir="../asset/models/ARC170.obj" />
-		</MeshComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/ARC170_diffuse.tga" />
-		</MaterialComponent>
-	</Actor>
-	
     <Actor renderer="mesh">
 		<TransformComponent>
-			<Position X="0" Y="0" Z="-20" />
+			<Position X="0" Y="-17" Z="-30" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
@@ -78,9 +44,9 @@
 		</MaterialComponent>
 	</Actor>
 	
-	    <Actor renderer="mesh">
+	 <Actor renderer="mesh">
 		<TransformComponent>
-			<Position X="0" Y="-20" Z="0" />
+			<Position X="0" Y="-17" Z="-50" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
@@ -94,9 +60,9 @@
 		</MaterialComponent>
 	</Actor>
 	
-	    <Actor renderer="mesh">
+	 <Actor renderer="mesh">
 		<TransformComponent>
-			<Position X="0" Y="0" Z="20" />
+			<Position X="0" Y="-17" Z="-70" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
@@ -107,6 +73,55 @@
 		<MaterialComponent>
 			<Diffuse dir="../asset/texture/house_diffuse.tga" />
 			<Specular dir="../asset/texture/house_spec.tga" />
+		</MaterialComponent>
+	</Actor>
+	
+	 <Actor renderer="mesh">
+		<TransformComponent>
+			<Position X="0" Y="-17" Z="-90" />
+			<Up X="0" Y="1" Z="0" />
+			<Right X="1" Y="0" Z="0" />
+			<View X="0" Y="0" Z="-1" />
+		</TransformComponent>
+		<MeshComponent>
+			<Model dir="../asset/models/house.obj" />
+		</MeshComponent>
+		<MaterialComponent>
+			<Diffuse dir="../asset/texture/house_diffuse.tga" />
+			<Specular dir="../asset/texture/house_spec.tga" />
+		</MaterialComponent>
+	</Actor>
+	
+	 <Actor renderer="mesh">
+		<TransformComponent>
+			<Position X="0" Y="-17" Z="-120" />
+			<Up X="0" Y="1" Z="0" />
+			<Right X="1" Y="0" Z="0" />
+			<View X="0" Y="0" Z="-1" />
+		</TransformComponent>
+		<MeshComponent>
+			<Model dir="../asset/models/house.obj" />
+		</MeshComponent>
+		<MaterialComponent>
+			<Diffuse dir="../asset/texture/house_diffuse.tga" />
+			<Specular dir="../asset/texture/house_spec.tga" />
+		</MaterialComponent>
+	</Actor>
+	
+	 <Actor renderer="mesh">
+		<TransformComponent>
+			<Position X="-400" Y="-20" Z="400" />
+			<Up X="0" Y="1" Z="0" />
+			<Right X="1" Y="0" Z="0" />
+			<View X="0" Y="0" Z="-1" />
+			<Scale uniform="1000" />
+			<Rotation yaw="0" pitch="-90" roll="0" />
+		</TransformComponent>
+		<MeshComponent>
+			<Model dir="../asset/models/Ring_Of_Doom.obj" />
+		</MeshComponent>
+		<MaterialComponent>
+			<Diffuse dir="../asset/texture/Ring_Of_Doom_Diffuse.tga" />
 		</MaterialComponent>
 	</Actor>
 	
