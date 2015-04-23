@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Shaders">
       <UniqueIdentifier>{8e0b8aa1-b6f6-41ce-a48d-5778e568fef1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Colliders">
+      <UniqueIdentifier>{4fc05322-1216-4c4a-887a-d7078b58f5f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Colliders">
+      <UniqueIdentifier>{227e520e-53a3-4523-b70c-cb7c4e4e4db7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseApplication.h">
@@ -162,6 +168,24 @@
     <ClInclude Include="Light.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ICollider.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Header Files\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="BillboardShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApplication.cpp">
@@ -242,6 +266,21 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="BillboardShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="GFXiiFramework.ico">
@@ -270,6 +309,12 @@
       <Filter>Asset\Shaders\GLSL</Filter>
     </None>
     <None Include="..\asset\shader\glsl\mesh.vert">
+      <Filter>Asset\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\asset\shader\glsl\billboard.frag">
+      <Filter>Asset\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\asset\shader\glsl\billboard.vert">
       <Filter>Asset\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

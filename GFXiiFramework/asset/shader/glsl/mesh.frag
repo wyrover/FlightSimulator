@@ -1,41 +1,99 @@
 #version 430
 
-layout (binding = 0) uniform sampler2D texColour;
-layout (binding = 1) uniform sampler2D specColour;
+layout (binding = 0) uniform sampler2D DiffuseTexture;
+layout (binding = 1) uniform sampler2D SpecularTexture;
+layout (binding = 2) uniform sampler2D NormalTexture;
 
-in vec2 outUV;
-in vec3 outNormal;
-in vec3 outPosition;
-in vec3 outCameraPosition;
-flat in int outCalculateSpecular;
-in vec3 outLightColour;
-in vec3 outLightPosition;
+flat in int bCalculateSpecular;
+flat in int bCalculateNormal;
+
+in vec3 CameraPosition;
+
+struct VertexInfo {
+	vec2 UV;
+	vec3 Normal;
+	vec3 Position;
+};
+
+in VertexInfo Vertex;
+
+struct LightInfo {
+	vec3 Position;
+	vec3 Colour;
+};
+
+in LightInfo Light;
 
 layout (location = 0) out vec4 outFrag;
 
+vec3 phongModel(LightInfo _Light)
+{
+	vec3 Ka = vec3(0.0f, 0.0f, 0.0f);
+	vec3 Kd = texture(DiffuseTexture, Vertex.UV).xyz;
+	vec3 Ks = texture(SpecularTexture, Vertex.UV).xyz;	
+
+	vec3 diffuse;
+	vec3 specular;
+
+	vec3 s = normalize(_Light.Position - Vertex.Position);
+	vec3 halfVector = normalize((_Light.Position - Vertex.Position) + (CameraPosition - Vertex.Position));
+
+	float sDotN = max(dot(s, Vertex.Normal), 0.0f);
+
+	diffuse = Kd * sDotN;
+
+	specular = vec3(0.0);
+
+	if (bCalculateSpecular == 1)
+	{
+		if (sDotN > 0.0f)
+		{
+			specular = Ks * pow(max(dot(halfVector, Vertex.Normal), 0.0f), 10.0f);
+		}
+	}
+
+	float dist = length(_Light.Position - Vertex.Position);
+	float attenuation = 1.0f / (1.0f + (0.01f * dist) + (0.0001f * dist * dist));
+
+	vec3 LightIntensity = _Light.Colour * (diffuse + specular);
+
+	return LightIntensity * attenuation;
+}
+
 void main()
 {
-	float angle;
-	vec4 diffuse;
-	vec4 specular;
+	LightInfo Light1, Light2, Light3, Light4, Light5, Light6, Light7;
 
-	if (outCalculateSpecular == 1)
-	{
-		//// ===== Diffuse ===== \\
-		angle = dot(normalize((outLightPosition - outPosition)), vec3(outNormal));
-		diffuse = texture(texColour, outUV) * vec4(outLightColour, 0) * angle;
+	Light1.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light1.Position = vec3(-50.0f, 200.0f, 0.0f);
 
-		// ==== Specular ===== \\
-		vec3 halfVector = normalize((outLightPosition - outPosition) + (outCameraPosition - outPosition));
-		float power = pow(max(dot(halfVector, outNormal), 0.0f), 20.0f);
-		specular = texture(specColour, outUV) * vec4(outLightColour, 0) * power;
+	Light2.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light2.Position = vec3(200.0f, 200.0f, 0.0f);
 
-		outFrag = diffuse + specular;
-	}
-	else
-	{
-		// ===== Diffuse ===== \\
-		angle = dot(normalize((outLightPosition - outPosition)), vec3(outNormal));
-		outFrag = texture(texColour, outUV) * vec4(outLightColour, 0) * angle;
-	}
+	Light3.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light3.Position = vec3(-50.0f, 200.0f, -200.0f);
+
+	Light4.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light4.Position = vec3(200.0f, 200.0f, -200.0f);
+
+	Light5.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light5.Position = vec3(100.0f, 50.0f, -80.0f);
+
+	Light6.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light6.Position = vec3(0.0f, 50.0f, -80.0f);
+
+	Light7.Colour = vec3(1.0f, 0.0f, 0.0f);
+	Light7.Position = vec3(70.0f, 20.0f, -250.0f);
+
+	vec3 Colour = vec3(0.0);
+
+	Colour += phongModel(Light1);
+	Colour += phongModel(Light2);
+	Colour += phongModel(Light3);
+	Colour += phongModel(Light4);
+	Colour += phongModel(Light5);
+	Colour += phongModel(Light6);
+	//Colour += phongModel(Light7);
+
+	outFrag = vec4(Colour, 1.0f);
 }

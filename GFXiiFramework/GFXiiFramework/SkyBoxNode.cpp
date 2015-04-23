@@ -21,5 +21,5 @@ void SkyBoxNode::Render()
 
 void SkyBoxNode::PreRender()
 {
-	GetComponent<Transform>()->SetPosition(m_pCamera->GetComponent<Transform>()->GetPosition());
+	GetComponent<Transform>()->SetPosition(m_pCamera->GetPosition());
 }

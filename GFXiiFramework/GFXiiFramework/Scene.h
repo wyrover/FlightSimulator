@@ -6,6 +6,9 @@
 #include "Actor.h"
 #include "MeshShader.h"
 #include "SkyBoxShader.h"
+#include "Rigidbody.h"
+#include "BillboardShader.h"
+#include "Billboard.h"
 
 class Scene;
 
@@ -21,6 +24,7 @@ class Scene final
 private:
 	MeshShaderPtr						m_pMeshShader;
 	SkyBoxShaderPtr						m_pSkyBoxShader;
+	BillboardShaderPtr					m_pBillboardShader;
 
 	CharacterControllerPtr				m_pCharacterController;
 	ActorMap							m_pActors;
@@ -30,6 +34,11 @@ private:
 	LightNodePtr						m_pLight;
 	CameraPtr							m_pCamera;
 
+	BillboardList						m_billboards;
+
+	// TODO: change this to something better
+	RigidbodyList						m_rigidbodies;
+
 	void								CreateScene();
 
 public:
@@ -37,10 +46,26 @@ public:
 	Scene(const ActorMap actors);
 	~Scene() { }
 
-	inline void							Render()
+	void								Render()
 	{
 		// Update player
 		m_pCharacterController->Update();
+
+		// Collision detection
+		// TODO: change to something better
+		for (const RigidbodyPtr &pRigidbody : m_rigidbodies)
+		{
+			pRigidbody->Update();
+		}
+
+		for (unsigned index = 1; index < m_rigidbodies.size(); index++)
+		{
+			if (m_rigidbodies[0]->GetCollider()->CollisionDetection(m_rigidbodies[index]->GetCollider()))
+			{
+				m_meshNodes[0]->GetComponent<Transform>()->MoveForward(-1);
+				m_meshNodes[0]->GetComponent<Camera>()->Update();
+			}
+		}
 
 		m_pSkyBoxShader->PreRender(m_pCamera);
 		for (const SkyBoxNodePtr &pSceneNode : m_skyBoxNodes)
@@ -59,6 +84,15 @@ public:
 			pSceneNode->Render();
 		}
 		m_pMeshShader->PostRender();
+
+		m_pBillboardShader->PreRender(m_pCamera);
+		for (const BillboardPtr &pBillboard : m_billboards)
+		{
+			m_pBillboardShader->UpdateUniformValues(pBillboard);
+
+			pBillboard->Render();
+		}
+		m_pBillboardShader->PostRender();
 	}
 
 	inline void						SetCharacterController(CharacterControllerPtr pCharacterController)

@@ -52,6 +52,11 @@ public:
 		m_scale = glm::scale(glm::mat4(), glm::vec3(x, y, z));
 	}
 
+	inline const glm::mat4				GetScale() const
+	{
+		return m_scale;
+	}
+
 	inline glm::mat4					GetTransformation()
 	{
 		return glm::translate(glm::mat4(), m_position) * m_scale * m_orientation;

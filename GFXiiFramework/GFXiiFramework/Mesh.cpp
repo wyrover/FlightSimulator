@@ -14,14 +14,26 @@ Mesh::~Mesh()
 
 void Mesh::Render()
 {
-	unsigned int difHandle = m_pOwner->GetComponent<Material>()->GetDiffuse()->m_syshandle;
-	unsigned int specHandle = m_pOwner->GetComponent<Material>()->GetSpecular()->m_syshandle;
-	
+	unsigned int difHandle = GetComponent<Material>()->GetDiffuse()->m_syshandle;
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, difHandle);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, specHandle);
+	if (m_pOwner->GetComponent<Material>()->GetSpecular())
+	{
+		unsigned int specHandle = GetComponent<Material>()->GetSpecular()->m_syshandle;
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, specHandle);
+	}
+
+	if (m_pOwner->GetComponent<Material>()->GetNormal())
+	{
+		unsigned int normHandle = GetComponent<Material>()->GetNormal()->m_syshandle;
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, normHandle);
+	}
 
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo_verts);
@@ -54,6 +66,9 @@ void Mesh::LoadAndBuildMeshFromOBJFile(LPCWSTR filename)
 
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(NULL + 2 * offset));
 	glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(NULL + 3 * offset));
+	glEnableVertexAttribArray(3);
 
 	glBindVertexArray(0);
 

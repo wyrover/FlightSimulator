@@ -8,28 +8,46 @@ layout (location = 4) uniform mat4 rotation;
 layout (location = 5) uniform bool calculateSpecular;
 layout (location = 6) uniform vec3 lightPosition;
 layout (location = 7) uniform vec3 lightColour;
+layout (location = 8) uniform bool calculateNormal;
 
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec3 inNormal;
 layout (location = 2) in vec2 inUV;
+layout (location = 3) in vec3 inTangent;
 
-out vec2 outUV;
-out vec3 outNormal;
-out vec3 outPosition;
-out vec3 outCameraPosition;
-flat out int outCalculateSpecular;
-out vec3 outLightPosition;
-out vec3 outLightColour;
+flat out int bCalculateSpecular;
+flat out int bCalculateNormal;
+
+out vec3 CameraPosition;
+
+struct VertexInfo {
+	vec2 UV;
+	vec3 Normal;
+	vec3 Position;
+};
+
+out VertexInfo Vertex;
+
+struct LightInfo {
+	vec3 Position;
+	vec3 Colour;
+};
+
+out LightInfo Light;
 
 void main()
 {	
 	gl_Position = projection * modelview * (localToWorld * position);
-		
-	outUV = inUV;
-	outNormal = vec3(rotation * vec4(inNormal, 0));
-	outPosition = vec3(localToWorld * position);
-	outCameraPosition = vec3(projection * modelview * vec4(cameraPosition, 0));
-	outCalculateSpecular = int(calculateSpecular);
-	outLightPosition = lightPosition;
-	outLightColour = lightColour;
+	
+	CameraPosition = vec3(projection * modelview * vec4(cameraPosition, 0));
+	
+	Vertex.UV = inUV;
+	Vertex.Position = vec3(localToWorld * position);
+	Vertex.Normal = vec3(rotation * vec4(inNormal, 0));
+	
+	Light.Colour = lightColour;
+	Light.Position = lightPosition;
+
+	bCalculateSpecular = int(calculateSpecular);
+	bCalculateNormal = int(calculateNormal);
 }

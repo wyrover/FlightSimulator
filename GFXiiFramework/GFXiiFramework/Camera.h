@@ -21,6 +21,8 @@ private:
 	float									m_near;
 	float									m_far;
 
+	glm::vec3								m_cameraPosition;
+
 public:
 	Camera();
 	virtual ~Camera();
@@ -39,6 +41,8 @@ public:
 
 		glm::vec3 offsetPosition = (pTransform->GetPosition() - pTransform->GetViewVector() * 12.0f) + (pTransform->GetUpVector() * 5.0f);
 
+		m_cameraPosition = offsetPosition;
+
 		m_viewMatrix = glm::lookAt(offsetPosition, offsetPosition + pTransform->GetViewVector(), pTransform->GetUpVector());
 	}
 
@@ -50,6 +54,11 @@ public:
 	inline float					GetCameraFOV() const
 	{
 		return m_fov;
+	}
+
+	inline const glm::vec3			GetPosition() const
+	{
+		return m_cameraPosition;
 	}
 
 	inline void						SetCameraAspectRatio(float ar)

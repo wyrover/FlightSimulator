@@ -7,6 +7,10 @@
 #include "CharacterController.h"
 #include "SkyBox.h"
 #include "Light.h"
+#include "Rigidbody.h"
+#include "SphereCollider.h"
+#include "BoxCollider.h"
+#include "Billboard.h"
 
 #define CAMERA "CameraComponent"
 #define CHARACTER_CONTROLLER "CharacterControllerComponent"
@@ -15,6 +19,8 @@
 #define MESH "MeshComponent"
 #define TRANSFORM "TransformComponent"
 #define LIGHT "LightComponent"
+#define RIGIDBODY "RigidbodyComponent"
+#define BILLBOARD "BillboardComponent"
 
 ActorFactory::ActorFactory() : m_currentActorID{ 0 }
 {
@@ -84,6 +90,10 @@ const Renderer ActorFactory::GetRenderer(const TagNodePtr pTagNode) const
 	{
 		return Renderer_Pass;
 	}
+	else if (attribute == "billboard")
+	{
+		return Renderer_Billboard;
+	}
 	// Something went wrong
 	assert(false);
 	
@@ -121,6 +131,14 @@ void ActorFactory::AddNewComponent(ActorPtr pActor, const TagNodePtr pTagNode) c
 	else if (component == LIGHT)
 	{
 		AddNewLightComponent(pActor, pTagNode);
+	}
+	else if (component == RIGIDBODY)
+	{
+		AddNewRigidbodyComponent(pActor, pTagNode);
+	}
+	else if (component == BILLBOARD)
+	{
+		AddNewBillboardComponent(pActor, pTagNode);
 	}
 	else
 	{
@@ -257,6 +275,12 @@ void ActorFactory::AddNewMaterialComponent(ActorPtr pActor, const TagNodePtr pTa
 
 			pMaterial->SetSpecular(directory);
 		}
+		else if (attribute == "Normal")
+		{
+			const char* directory = pTag->data["dir"].c_str();
+
+			pMaterial->SetNormal(directory);
+		}
 		else
 		{
 			// Something went wrong
@@ -331,4 +355,51 @@ void ActorFactory::AddNewLightComponent(ActorPtr pActor, const TagNodePtr pTagNo
 
 	pLight->SetOwner(pActor);
 	pActor->AddComponent(pLight);
+}
+
+void ActorFactory::AddNewRigidbodyComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	RigidbodyPtr pRigidbody = std::make_shared<Rigidbody>();
+
+	for (const TagNodePtr &pTag : pTagNode->children)
+	{
+		std::string attribute = pTag->name;
+
+		if (attribute == "Collider")
+		{
+			std::string type = pTag->data["Type"];
+
+			if (type == "Box")
+			{
+
+			}
+			else if (type == "Sphere")
+			{
+				SphereColliderPtr pCollider = std::make_shared<SphereCollider>();
+				pCollider->SetSize(glm::vec3(0.0f, 0.0f, 0.0f), (float)atof(pTag->data["Radius"].c_str()));
+
+				pRigidbody->SetCollider(pCollider);
+			}
+			else
+			{
+				assert(false);
+			}
+
+		}
+		else
+		{
+			assert(false);
+		}
+	}
+
+	pRigidbody->SetOwner(pActor);
+	pActor->AddComponent(pRigidbody);
+}
+
+void ActorFactory::AddNewBillboardComponent(ActorPtr pActor, const TagNodePtr pTagNode) const
+{
+	BillboardPtr pBillboard = std::make_shared<Billboard>();
+
+	pBillboard->SetOwner(pActor);
+	pActor->AddComponent(pBillboard);
 }

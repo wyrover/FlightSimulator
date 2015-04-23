@@ -15,6 +15,15 @@ MeshNode::MeshNode(ActorPtr pActor)
 	{
 		m_bCalculateSpecular = false;
 	}
+
+	if (pActor->GetComponent<Material>()->GetNormal())
+	{
+		m_bCalculateNormal = true;
+	}
+	else
+	{
+		m_bCalculateNormal = false;
+	}
 }
 
 void MeshNode::Render()

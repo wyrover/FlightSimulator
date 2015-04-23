@@ -13,7 +13,7 @@ class MeshShader : public GLSLShaderProgram
 private:
 	struct Uniforms
 	{
-		int modelview, projection, localToWorld, cameraPosition, rotation, bCalculateSpecular, lightPosition, lightColour;
+		int modelview, projection, localToWorld, cameraPosition, rotation, bCalculateSpecular, bCalculateNormal, lightPosition, lightColour;
 	};
 
 	Uniforms				m_uniforms;

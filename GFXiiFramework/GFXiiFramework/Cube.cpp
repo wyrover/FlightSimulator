@@ -88,7 +88,7 @@ void Cube::InitUnitCube()
 
 	glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, sizeof(SimpleVertex), (void*)(NULL+24) );
 	glEnableVertexAttribArray ( 2 );
-
+	
 		
 	glGenBuffers( 1, &m_vbo_indices );
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_vbo_indices);

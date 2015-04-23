@@ -1,8 +1,8 @@
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\vc120.pdb
+d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\skyboxshader.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\skyboxnode.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\skybox.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\scene.obj
-d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\rootnode.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\player.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\objfilereader.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\meshshader.obj
@@ -25,7 +25,6 @@ d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\vector3.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\triangle.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\transform.obj
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\texture.obj
-d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\skyboxshader.obj
 d:\github\flightsimulator\gfxiiframework\release\gfxiiframework.exe
 d:\github\flightsimulator\gfxiiframework\release\gfxiiframework.pdb
 d:\github\flightsimulator\gfxiiframework\gfxiiframework\release\gfxiiframework.res

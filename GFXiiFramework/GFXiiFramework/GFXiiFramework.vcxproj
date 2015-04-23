@@ -14,6 +14,9 @@
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="BaseApplication.h" />
+    <ClInclude Include="Billboard.h" />
+    <ClInclude Include="BillboardShader.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Cube.h" />
@@ -23,6 +26,7 @@
     <ClInclude Include="GLEW\include\glxew.h" />
     <ClInclude Include="GLEW\include\wglew.h" />
     <ClInclude Include="GLSLShader.h" />
+    <ClInclude Include="ICollider.h" />
     <ClInclude Include="ImageIO.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ISceneNode.h" />
@@ -37,11 +41,13 @@
     <ClInclude Include="OBJFileReader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderBase.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SkyBoxNode.h" />
     <ClInclude Include="SkyBoxShader.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
@@ -53,6 +59,9 @@
   <ItemGroup>
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="BaseApplication.cpp" />
+    <ClCompile Include="Billboard.cpp" />
+    <ClCompile Include="BillboardShader.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="Cube.cpp" />
@@ -67,10 +76,12 @@
     <ClCompile Include="MeshShader.cpp" />
     <ClCompile Include="OBJFileReader.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SkyBoxNode.cpp" />
     <ClCompile Include="SkyBoxShader.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -86,6 +97,8 @@
     <ResourceCompile Include="GFXiiFramework.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\asset\shader\glsl\billboard.frag" />
+    <None Include="..\asset\shader\glsl\billboard.vert" />
     <None Include="..\asset\shader\glsl\skybox.frag" />
     <None Include="..\asset\shader\glsl\skybox.vert" />
     <None Include="..\asset\shader\glsl\mesh.frag" />

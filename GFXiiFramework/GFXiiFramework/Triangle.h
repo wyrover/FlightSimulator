@@ -14,5 +14,7 @@ public:
 	void SetVertices(Vector3 v0, Vector3 v1, Vector3 v2);
 	void SetNormals(Vector3 n0, Vector3 n1, Vector3 n2);
 	void SetTexCoords(Vector3 t0, Vector3 t1, Vector3 t2);
+
+	void GenerateTanget();
 };
 

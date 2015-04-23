@@ -1,17 +1,19 @@
-﻿Build started 15/04/2015 20:15:01.
+﻿Build started 22/04/2015 22:34:43.
      1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Billboard.cpp BillboardShader.cpp BoxCollider.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp Rigidbody.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp SphereCollider.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
          XMLReader.cpp
          ApplicationWindow.cpp
          Vector3.cpp
          Triangle.cpp
          Transform.cpp
          Texture.cpp
+         SphereCollider.cpp
          SkyBoxShader.cpp
          SkyBoxNode.cpp
          SkyBox.cpp
          Scene.cpp
+         Rigidbody.cpp
          Player.cpp
          OBJFileReader.cpp
          MeshShader.cpp
@@ -20,14 +22,17 @@
          Material.cpp
          Input.cpp
          ImageIO.cpp
-         GLSLShader.cpp
-         GFXiiFramework.cpp
          Generating Code...
          Compiling...
+         GLSLShader.cpp
+         GFXiiFramework.cpp
          DocumentObjectModel.cpp
          Cube.cpp
          CharacterController.cpp
          Camera.cpp
+         BoxCollider.cpp
+         BillboardShader.cpp
+         Billboard.cpp
          BaseApplication.cpp
          ActorFactory.cpp
          Generating Code...
@@ -37,6 +42,9 @@
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\FlightSimulator\GFXiiFramework\Debug\GFXiiFramework.lib" /MACHINE:X86 Debug\GFXiiFramework.res
          Debug\ActorFactory.obj
          Debug\BaseApplication.obj
+         Debug\Billboard.obj
+         Debug\BillboardShader.obj
+         Debug\BoxCollider.obj
          Debug\Camera.obj
          Debug\CharacterController.obj
          Debug\Cube.obj
@@ -51,10 +59,12 @@
          Debug\MeshShader.obj
          Debug\OBJFileReader.obj
          Debug\Player.obj
+         Debug\Rigidbody.obj
          Debug\Scene.obj
          Debug\SkyBox.obj
          Debug\SkyBoxNode.obj
          Debug\SkyBoxShader.obj
+         Debug\SphereCollider.obj
          Debug\Texture.obj
          Debug\Transform.obj
          Debug\Triangle.obj
@@ -67,4 +77,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:15.87
+Time Elapsed 00:00:18.21

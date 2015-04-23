@@ -22,6 +22,8 @@ private:
 	void						AddNewCameraComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 	void						AddNewSkyBoxComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 	void						AddNewLightComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
+	void						AddNewRigidbodyComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
+	void						AddNewBillboardComponent(ActorPtr pActor, const TagNodePtr pTagNode) const;
 
 	const glm::vec3				GetXYZ(std::map<std::string, std::string> data) const;
 	const glm::vec3				GetRGB(std::map < std::string, std::string> data) const;

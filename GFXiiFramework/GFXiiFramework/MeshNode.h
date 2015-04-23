@@ -13,6 +13,7 @@ class MeshNode : public ISceneNode
 {
 private:
 	bool						m_bCalculateSpecular;
+	bool						m_bCalculateNormal;
 
 public:
 								MeshNode(ActorPtr pActor);
@@ -21,6 +22,11 @@ public:
 	inline const bool			GetCalculateSpecular() const
 	{
 		return m_bCalculateSpecular;
+	}
+
+	inline const bool			GetCalculateNormal() const
+	{
+		return m_bCalculateNormal;
 	}
 
 	virtual void				Render() override;

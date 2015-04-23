@@ -22,9 +22,11 @@ void Scene::Init()
 {
 	m_pMeshShader = std::make_shared<MeshShader>();
 	m_pSkyBoxShader = std::make_shared<SkyBoxShader>();
+	m_pBillboardShader = std::make_shared<BillboardShader>();
 
 	m_pMeshShader->AttachAndBuildProgram(L"../asset/shader/glsl/mesh.vert", L"../asset/shader/glsl/mesh.frag");
 	m_pSkyBoxShader->AttachAndBuildProgram(L"../asset/shader/glsl/skybox.vert", L"../asset/shader/glsl/skybox.frag");
+	m_pBillboardShader->AttachAndBuildProgram(L"../asset/shader/glsl/billboard.vert", L"../asset/shader/glsl/billboard.frag");
 }
 
 void Scene::CreateScene()
@@ -35,6 +37,12 @@ void Scene::CreateScene()
 		{
 		case Renderer_Mesh:
 			AddMeshNode(std::make_shared<MeshNode>(actor.second));
+
+			if (actor.second->GetComponent<Rigidbody>())
+			{
+				m_rigidbodies.push_back(actor.second->GetComponent<Rigidbody>());
+			}
+
 			break;
 		case Renderer_SkyBox:
 			AddSkyBoxNode(std::make_shared<SkyBoxNode>(actor.second, m_pCamera));
@@ -42,6 +50,8 @@ void Scene::CreateScene()
 		case Renderer_Light:
 			SetLight(std::make_shared<LightNode>(actor.second));
 			break;
+		case Renderer_Billboard:
+			m_billboards.push_back(actor.second->GetComponent<Billboard>());
 		}
 
 		if (!m_pCamera)

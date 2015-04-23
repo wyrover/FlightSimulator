@@ -11,6 +11,7 @@
 #define CALCULATE_SPECULAR "calculateSpecular"
 #define LIGHT_POSITION "lightPosition"
 #define LIGHT_COLOUR "lightColour"
+#define CALCULATE_NORMAL "calculateNormal"
 
 MeshShader::MeshShader()
 {
@@ -42,6 +43,7 @@ void MeshShader::AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR f
 	m_uniforms.cameraPosition = glGetUniformLocation(GetProgramHandle(), CAMERA_POSITION);
 	m_uniforms.rotation = glGetUniformLocation(GetProgramHandle(), ROTATION);
 	m_uniforms.bCalculateSpecular = glGetUniformLocation(GetProgramHandle(), CALCULATE_SPECULAR);
+	m_uniforms.bCalculateNormal = glGetUniformLocation(GetProgramHandle(), CALCULATE_NORMAL);
 	m_uniforms.lightColour = glGetUniformLocation(GetProgramHandle(), LIGHT_COLOUR);
 	m_uniforms.lightPosition = glGetUniformLocation(GetProgramHandle(), LIGHT_POSITION);
 }
@@ -54,6 +56,7 @@ void MeshShader::UpdateUniformValues(const MeshNodePtr pSceneNode) const
 	glUniformMatrix4fv(m_uniforms.rotation, 1, GL_FALSE, glm::value_ptr(pSceneNode->GetComponent<Transform>()->GetOrientation()));
 
 	glUniform1i(m_uniforms.bCalculateSpecular, pSceneNode->GetCalculateSpecular());
+	glUniform1i(m_uniforms.bCalculateNormal, pSceneNode->GetCalculateNormal());
 }
 
 void MeshShader::PreRender(CameraPtr pCamera, LightNodePtr pLight)
@@ -63,7 +66,7 @@ void MeshShader::PreRender(CameraPtr pCamera, LightNodePtr pLight)
 	glUniformMatrix4fv(m_uniforms.modelview, 1, GL_FALSE, glm::value_ptr(pCamera->GetViewMatrixMat4()));
 	glUniformMatrix4fv(m_uniforms.projection, 1, GL_FALSE, glm::value_ptr(pCamera->GetProjectionMat4()));
 
-	glUniform3fv(m_uniforms.cameraPosition, 1, glm::value_ptr(pCamera->GetOwner()->GetComponent<Transform>()->GetPosition()));
+	glUniform3fv(m_uniforms.cameraPosition, 1, glm::value_ptr(pCamera->GetPosition()));
 	glUniform3fv(m_uniforms.lightColour, 1, glm::value_ptr(pLight->GetLightColour()));
 	glUniform3fv(m_uniforms.lightPosition, 1, glm::value_ptr(pLight->GetComponent<Transform>()->GetPosition()));
 }
