@@ -4,13 +4,23 @@
 
 Rigidbody::Rigidbody()
 {
+	m_tick = 0;
 }
 
 Rigidbody::~Rigidbody()
 {
 }
 
-void Rigidbody::Update()
+bool Rigidbody::Update()
 {
 	m_pCollider->UpdateCentre(GetComponent<Transform>()->GetPosition());
+
+	if (!m_timerSet)
+		return false;
+
+	m_tick++;
+
+	if (m_tick > 60)
+		return true;
+	return false;
 }

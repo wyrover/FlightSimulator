@@ -5,9 +5,12 @@
 
 typedef std::shared_ptr<std::map<ActorID, ActorPtr>> ActorMap;
 
+// Actor Factory is a singleton class
 class ActorFactory final
 {
 private:
+	ActorFactory();
+
 	ActorID						m_currentActorID;
 
 	ActorMap					m_pActors;
@@ -31,9 +34,16 @@ private:
 	const Renderer				GetRenderer(const TagNodePtr pTagNode) const;
 
 public:
-	ActorFactory();
 	virtual						~ActorFactory();
 
+	static ActorFactory&		Get()
+	{
+		static ActorFactory actorFactory;
+
+		return actorFactory;
+	}
+
 	const ActorMap				CreateActorsFromDOM(const DocumentObjectModelPtr pDOM);
+	ActorPtr					CreateActorFromPrefab(const ActorPtr pActorPrefab);
 };
 

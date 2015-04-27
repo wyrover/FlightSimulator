@@ -3,12 +3,14 @@
 #include <Windows.h>
 #include <iostream>
 
+#define KEY_CODE_SPACE 0x20
+
 class Input final
 {
 public:
 	virtual ~Input();
 
-	inline static Input& Get()
+	inline static Input&	Get()
 	{
 		static Input input;
 
@@ -16,7 +18,7 @@ public:
 	}
 
 	// Call at the end of the frame
-	inline void Update()
+	inline void				Update()
 	{
 		GetCursorPos(&m_mousePosition);
 
@@ -30,10 +32,19 @@ public:
 		else
 			m_yaw = 0;
 
+		if ((unsigned short)GetKeyState(KEY_CODE_SPACE) >> 15)
+		{
+			m_spaceDown = true;
+		}
+		else
+		{
+			m_spaceDown = false;
+		}
+
 		UpdateMousePositions();
 	}
 
-	inline void LeftMouseButtonDown(bool mouseDown)
+	inline void				LeftMouseButtonDown(bool mouseDown)
 	{
 		m_leftMouseButtonDown = mouseDown;
 	}
@@ -46,22 +57,27 @@ public:
 	// Rotations
 	float Roll();
 
-	inline float& Pitch()
+	inline float			Pitch()
 	{
 		return m_pitch;
 	}
 
-	inline float Yaw()
+	inline float			Yaw()
 	{
 		return m_yaw;
 	}
 
-	void SetZoom(int zoomDirection)
+	inline bool				Fire()
+	{
+		return m_spaceDown;
+	}
+
+	void					SetZoom(int zoomDirection)
 	{
 		m_zoomDirection = zoomDirection > 0 ? -1 : 1;
 	}
 
-	inline float GetZoom()
+	inline float			GetZoom()
 	{
 		float result = (float)m_zoomDirection;
 
@@ -73,17 +89,18 @@ public:
 private:
 	Input();
 
-	POINT m_mousePosition;
-	POINT m_mousePositionLastFrame;
+	POINT					m_mousePosition;
+	POINT					m_mousePositionLastFrame;
 
-	float m_yaw;
-	float m_roll;
-	float m_pitch;
+	float					m_yaw;
+	float					m_roll;
+	float					m_pitch;
 
-	bool m_leftMouseButtonDown;
-	int m_zoomDirection;
+	bool					m_spaceDown;
+	bool					m_leftMouseButtonDown;
+	int						m_zoomDirection;
 
-	inline void UpdateMousePositions()
+	inline void				UpdateMousePositions()
 	{
 		m_mousePositionLastFrame = m_mousePosition;
 	}

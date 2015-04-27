@@ -13,6 +13,10 @@ class Rigidbody : public ActorComponent
 private:
 	ColliderPtr								m_pCollider;
 
+	// Just for the projectiles
+	bool									m_timerSet;
+	int										m_tick;
+
 public:
 	Rigidbody();
 	virtual									~Rigidbody();
@@ -24,5 +28,10 @@ public:
 
 	inline const ColliderPtr				GetCollider() const { return m_pCollider; }
 
-	virtual void							Update();
+	inline void								SetTimer(bool setTimer)
+	{
+		m_timerSet = setTimer;
+	}
+
+	virtual bool							Update();
 };

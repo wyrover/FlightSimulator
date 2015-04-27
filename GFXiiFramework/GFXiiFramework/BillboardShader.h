@@ -14,7 +14,7 @@ class BillboardShader : public GLSLShaderProgram
 private:
 	struct Uniforms
 	{
-		int modelview, projection, localToWorld;
+		int modelview, projection, localToWorld, dayAndNight;
 	};
 
 	Uniforms				m_uniforms;
@@ -30,14 +30,14 @@ public:
 		return m_uniforms;
 	}
 
-	void					PreRender(const CameraPtr pCamera);
+	void					PreRender(const CameraPtr pCamera, glm::vec4& dayAndNight);
 
 	inline void				PostRender()
 	{
 		DeactivateShaderProgram();
 	}
 
-	void					AttachAndBuildProgram(const LPWSTR vertexShader = nullptr, const LPWSTR fragmentShader = nullptr);
+	void					AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR fragmentShader);
 	void					UpdateUniformValues(const BillboardPtr pBillboard) const;
 };
 

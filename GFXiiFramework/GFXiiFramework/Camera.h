@@ -36,10 +36,10 @@ public:
 
 	void									UpdateViewMatrix()
 	{
-		
+		// Set camera to follow behind the actor
 		TransformPtr pTransform = m_pOwner->GetComponent<Transform>();
 
-		glm::vec3 offsetPosition = (pTransform->GetPosition() - pTransform->GetViewVector() * 12.0f) + (pTransform->GetUpVector() * 5.0f);
+		glm::vec3 offsetPosition = (pTransform->GetPosition() - pTransform->GetViewVector() * 12.0f) + (pTransform->GetUpVector() * 4.0f);
 
 		m_cameraPosition = offsetPosition;
 

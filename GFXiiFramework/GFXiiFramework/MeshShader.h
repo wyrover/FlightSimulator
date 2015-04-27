@@ -13,7 +13,7 @@ class MeshShader : public GLSLShaderProgram
 private:
 	struct Uniforms
 	{
-		int modelview, projection, localToWorld, cameraPosition, rotation, bCalculateSpecular, bCalculateNormal, lightPosition, lightColour;
+		int modelview, projection, localToWorld, cameraPosition, rotation, bCalculateSpecular, bCalculateNormal, dayAndNight;
 	};
 
 	Uniforms				m_uniforms;
@@ -27,14 +27,14 @@ public:
 		return m_uniforms;
 	}
 
-	void					PreRender(CameraPtr pCamera, LightNodePtr pLight);
+	void					PreRender(CameraPtr pCamera, glm::vec4& dayAndNight);
 
 	inline void				PostRender()
 	{
 		DeactivateShaderProgram();
 	}
 
-	void					AttachAndBuildProgram(const LPWSTR vertexShader = nullptr, const LPWSTR fragmentShader = nullptr);
+	void					AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR fragmentShader);
 	void					UpdateUniformValues(const MeshNodePtr pSceneNode) const;
 };
 

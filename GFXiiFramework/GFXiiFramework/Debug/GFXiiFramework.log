@@ -1,4 +1,4 @@
-﻿Build started 22/04/2015 22:34:43.
+﻿Build started 27/04/2015 10:49:38.
      1>Project "D:\GitHub\FlightSimulator\GFXiiFramework\GFXiiFramework\GFXiiFramework.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ActorFactory.cpp BaseApplication.cpp Billboard.cpp BillboardShader.cpp BoxCollider.cpp Camera.cpp CharacterController.cpp Cube.cpp DocumentObjectModel.cpp GFXiiFramework.cpp GLSLShader.cpp ImageIO.cpp Input.cpp Material.cpp Mesh.cpp MeshNode.cpp MeshShader.cpp OBJFileReader.cpp Player.cpp Rigidbody.cpp Scene.cpp SkyBox.cpp SkyBoxNode.cpp SkyBoxShader.cpp SphereCollider.cpp Texture.cpp Transform.cpp Triangle.cpp Vector3.cpp ApplicationWindow.cpp XMLReader.cpp
@@ -77,4 +77,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:18.21
+Time Elapsed 00:00:18.51

@@ -24,11 +24,24 @@ struct LightInfo {
 
 in LightInfo Light;
 
+in vec4 outDayAndNight;
+in mat4 normalToWorld;
+
 layout (location = 0) out vec4 outFrag;
 
 vec3 phongModel(LightInfo _Light)
 {
-	vec3 Ka = vec3(0.0f, 0.0f, 0.0f);
+	vec3 normal;
+
+	if (bCalculateNormal == 1)
+	{
+		normal = (texture(NormalTexture, Vertex.UV) * normalToWorld).xyz;
+	}
+	else
+	{
+		normal = Vertex.Normal;
+	}
+	
 	vec3 Kd = texture(DiffuseTexture, Vertex.UV).xyz;
 	vec3 Ks = texture(SpecularTexture, Vertex.UV).xyz;	
 
@@ -38,18 +51,23 @@ vec3 phongModel(LightInfo _Light)
 	vec3 s = normalize(_Light.Position - Vertex.Position);
 	vec3 halfVector = normalize((_Light.Position - Vertex.Position) + (CameraPosition - Vertex.Position));
 
-	float sDotN = max(dot(s, Vertex.Normal), 0.0f);
+	float sDotN = max(dot(s, normal), 0.0f);
 
 	diffuse = Kd * sDotN;
 
 	specular = vec3(0.0);
 
+	// check if there is a specular texutre
 	if (bCalculateSpecular == 1)
 	{
 		if (sDotN > 0.0f)
 		{
-			specular = Ks * pow(max(dot(halfVector, Vertex.Normal), 0.0f), 10.0f);
+			specular = Ks * pow(max(dot(halfVector, normal), 0.0f), 1.0f);
 		}
+	}
+	else
+	{
+			specular = vec3(0.8f, 0.8f, 0.8f) * pow(max(dot(halfVector, normal), 0.0f), 10.0f);
 	}
 
 	float dist = length(_Light.Position - Vertex.Position);
@@ -76,14 +94,11 @@ void main()
 	Light4.Colour = vec3(1.0f, 1.0f, 1.0f);
 	Light4.Position = vec3(200.0f, 200.0f, -200.0f);
 
-	Light5.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light5.Colour = vec3(1.0f, 1.0f, 0.95f);
 	Light5.Position = vec3(100.0f, 50.0f, -80.0f);
 
-	Light6.Colour = vec3(1.0f, 1.0f, 1.0f);
+	Light6.Colour = vec3(1.0f, 1.0f, 0.95f);
 	Light6.Position = vec3(0.0f, 50.0f, -80.0f);
-
-	Light7.Colour = vec3(1.0f, 0.0f, 0.0f);
-	Light7.Position = vec3(70.0f, 20.0f, -250.0f);
 
 	vec3 Colour = vec3(0.0);
 
@@ -93,7 +108,17 @@ void main()
 	Colour += phongModel(Light4);
 	Colour += phongModel(Light5);
 	Colour += phongModel(Light6);
-	//Colour += phongModel(Light7);
+	
+	// Add dayAndNight vector to simulate the day-night cycle. It's not perfect.
+	outFrag = vec4(Colour, 1.0f) * outDayAndNight;
 
-	outFrag = vec4(Colour, 1.0f);
+	// debug normals
+	//if (bCalculateNormal == 1)
+	//{
+	//	outFrag = (texture(NormalTexture, Vertex.UV) * normalToWorld);
+	//}
+	//else
+	//{
+	//	outFrag = vec4(Vertex.Normal, 0);
+	//}
 }

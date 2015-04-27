@@ -122,6 +122,7 @@ void ApplicationWindow::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+	m_pScene->PreRender();
 	m_pScene->Render();
 
 	SwapBuffers(m_hdc);
@@ -147,9 +148,7 @@ void ApplicationWindow::InitOGLState()
 
 	reader.ReadFile("../asset/scene/ActorDefinitions.xml");
 
-	ActorFactory actorFactory;
-
-	ActorMap actors = actorFactory.CreateActorsFromDOM(reader.GetDOM());
+	ActorMap actors = ActorFactory::Get().CreateActorsFromDOM(reader.GetDOM());
 
 	m_pScene = std::make_shared<Scene>(actors);
 

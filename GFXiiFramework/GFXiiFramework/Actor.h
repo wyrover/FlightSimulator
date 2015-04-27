@@ -10,7 +10,7 @@ typedef unsigned int ActorID, ActorComponentID;
 typedef std::shared_ptr<ActorComponent> ActorComponentPtr;
 typedef std::map<ActorComponentID, ActorComponentPtr> ActorComponents;
 
-enum Renderer { Renderer_Mesh, Renderer_SkyBox, Renderer_Light, Renderer_Billboard, Renderer_Pass };
+enum Renderer { Renderer_Mesh, Renderer_SkyBox, Renderer_Light, Renderer_Billboard, Renderer_Pass, Renderer_ProjectilePrefab };
 
 class Actor
 {
@@ -18,6 +18,7 @@ private:
 	ActorID							m_ID;
 	ActorComponents					m_actorComponents;
 	Renderer						m_renderer;
+	std::string						m_tag;
 
 public:
 	Actor(const ActorID id, const Renderer renderer) : m_ID{ id }, m_renderer{ renderer } { }
@@ -48,5 +49,15 @@ public:
 	{
 		// TODO: Check only one component of each type is attached
 		m_actorComponents[pComponent->GetComponentID()] = pComponent;
+	}
+
+	inline void						SetTag(const std::string tag)
+	{
+		m_tag = tag;
+	}
+
+	inline const std::string		GetTag() const
+	{
+		return m_tag;
 	}
 };

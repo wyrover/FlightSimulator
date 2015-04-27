@@ -1,22 +1,12 @@
 <ActorFactory>
 
-	<Actor renderer="light">
-		<TransformComponent>
-			<Position X="0" Y="10" Z="0" />
-		</TransformComponent>
-		<LightComponent>
-			<Colour R="1.0" G="1.0" B="1.0" />
-		</LightComponent>
-	</Actor>
-
 	<Actor renderer="mesh">
 		<TransformComponent>
 			<Position X="0" Y="0" Z="0" />
 			<Up X="0" Y="1" Z="0" />
-			<Right X="-1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="1" />
+			<Right X="1" Y="0" Z="0" />
+			<View X="0" Y="0" Z="-1" />
 			<Scale uniform="0.01" />
-			<Rotation yaw="180" pitch="0" roll="0" />
 		</TransformComponent>
 		<MeshComponent>
 			<Model dir="../asset/models/ARC170.obj" />
@@ -29,6 +19,24 @@
 		</RigidbodyComponent>
 		<CharacterControllerComponent />
 		<CameraComponent />
+	</Actor>
+	
+	<Actor renderer="projectilePrefab">
+		<TransformComponent>
+			<Position X="0" Y="0" Z="0" />
+			<Up X="0" Y="1" Z="0" />
+			<Right X="1" Y="0" Z="0" 
+			<View X="0" Y="0" Z="-1" />
+		</TransformComponent>
+		<MeshComponent>
+			<Model dir="../asset/models/missile.obj" />
+		</MeshComponent>
+		<MaterialComponent>
+			<Diffuse dir="../asset/texture/missile.tga" />
+		</MaterialComponent>
+		<RigidbodyComponent>
+			<Collider Type="Sphere" Radius="1" />
+		</RigidbodyComponent>
 	</Actor>
 	
     <Actor renderer="mesh">
@@ -129,6 +137,7 @@
 		<MaterialComponent>
 			<Diffuse dir="../asset/texture/Medieval_House_Diff.tga" />
 			<Specular dir="../asset/texture/Medieval_House_Spec.tga" />
+			<Normal dir="../asset/texture/Medieval_House_Norm.tga" />
 		</MaterialComponent>
 		<RigidbodyComponent>
 			<Collider Type="Sphere" Radius="25" />
@@ -149,6 +158,7 @@
 		<MaterialComponent>
 			<Diffuse dir="../asset/texture/Medieval_House_Diff.tga" />
 			<Specular dir="../asset/texture/Medieval_House_Spec.tga" />
+			<Normal dir="../asset/texture/Medieval_House_Norm.tga" />
 		</MaterialComponent>
 		<RigidbodyComponent>
 			<Collider Type="Sphere" Radius="25" />
@@ -169,6 +179,7 @@
 		<MaterialComponent>
 			<Diffuse dir="../asset/texture/Medieval_House_Diff.tga" />
 			<Specular dir="../asset/texture/Medieval_House_Spec.tga" />
+			<Normal dir="../asset/texture/Medieval_House_Norm.tga" />
 		</MaterialComponent>
 		<RigidbodyComponent>
 			<Collider Type="Sphere" Radius="25" />
@@ -189,6 +200,7 @@
 		<MaterialComponent>
 			<Diffuse dir="../asset/texture/Medieval_House_Diff.tga" />
 			<Specular dir="../asset/texture/Medieval_House_Spec.tga" />
+			<Normal dir="../asset/texture/Medieval_House_Norm.tga" />
 		</MaterialComponent>
 		<RigidbodyComponent>
 			<Collider Type="Sphere" Radius="25" />
@@ -209,6 +221,7 @@
 		<MaterialComponent>
 			<Diffuse dir="../asset/texture/windmill_diffuse.tga" />
 			<Specular dir="../asset/texture/windmill_spec.tga" />
+			<Normal dir="../asset/texture/windmill_normal.tga" />
 		</MaterialComponent>
 		<RigidbodyComponent>
 			<Collider Type="Sphere" Radius="10" />
@@ -234,168 +247,56 @@
 	
 	<Actor renderer="billboard">
 		<TransformComponent>
-			<Position X="10" Y="-18" Z="-115" />
+			<Position X="-40" Y="-10" Z="-116" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
+			<Scale uniform="20" />
 		</TransformComponent>
 		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
+			<Diffuse dir="../asset/texture/tree.tga" />
 		</MaterialComponent>
 		<BillboardComponent />
 	</Actor>
 	
 	<Actor renderer="billboard">
 		<TransformComponent>
-			<Position X="11" Y="-18" Z="-115" />
+			<Position X="-40" Y="-10" Z="-166" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
+			<Scale uniform="20" />
 		</TransformComponent>
 		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
+			<Diffuse dir="../asset/texture/tree.tga" />
 		</MaterialComponent>
 		<BillboardComponent />
 	</Actor>
 	
 	<Actor renderer="billboard">
 		<TransformComponent>
-			<Position X="12" Y="-18" Z="-115" />
+			<Position X="120" Y="-10" Z="-116" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
+			<Scale uniform="20" />
 		</TransformComponent>
 		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
+			<Diffuse dir="../asset/texture/tree.tga" />
 		</MaterialComponent>
 		<BillboardComponent />
 	</Actor>
 	
 	<Actor renderer="billboard">
 		<TransformComponent>
-			<Position X="13" Y="-18" Z="-115" />
+			<Position X="120" Y="-10" Z="-166" />
 			<Up X="0" Y="1" Z="0" />
 			<Right X="1" Y="0" Z="0" />
 			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
+			<Scale uniform="20" />
 		</TransformComponent>
 		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="14" Y="-18" Z="-115" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="15" Y="-18" Z="-115" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="10" Y="-18" Z="-116" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="11" Y="-18" Z="-116" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="12" Y="-18" Z="-116" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="13" Y="-18" Z="-116" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="14" Y="-18" Z="-116" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
-		</MaterialComponent>
-		<BillboardComponent />
-	</Actor>
-	
-	<Actor renderer="billboard">
-		<TransformComponent>
-			<Position X="15" Y="-18" Z="-116" />
-			<Up X="0" Y="1" Z="0" />
-			<Right X="1" Y="0" Z="0" />
-			<View X="0" Y="0" Z="-1" />
-			<Scale uniform="10" />
-		</TransformComponent>
-		<MaterialComponent>
-			<Diffuse dir="../asset/texture/grass.tga" />
+			<Diffuse dir="../asset/texture/tree.tga" />
 		</MaterialComponent>
 		<BillboardComponent />
 	</Actor>

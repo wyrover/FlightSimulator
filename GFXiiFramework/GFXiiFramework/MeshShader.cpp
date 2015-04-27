@@ -9,9 +9,8 @@
 #define CAMERA_POSITION "cameraPosition"
 #define ROTATION "rotation"
 #define CALCULATE_SPECULAR "calculateSpecular"
-#define LIGHT_POSITION "lightPosition"
-#define LIGHT_COLOUR "lightColour"
 #define CALCULATE_NORMAL "calculateNormal"
+#define DAY_AND_NIGHT "dayAndNight"
 
 MeshShader::MeshShader()
 {
@@ -25,15 +24,9 @@ void MeshShader::AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR f
 {
 	CreateShaderProgram();
 
-	if (vertexShader != nullptr)
-	{
-		AttachAndCompileShaderFromFile(vertexShader, EShaderType::SHADER_VERTEX);
-	}
-	if (fragmentShader != nullptr)
-	{
-		AttachAndCompileShaderFromFile(fragmentShader, EShaderType::SHADER_FRAGMENT);
-	}
-	
+	AttachAndCompileShaderFromFile(vertexShader, EShaderType::SHADER_VERTEX);
+	AttachAndCompileShaderFromFile(fragmentShader, EShaderType::SHADER_FRAGMENT);
+
 	BuildShaderProgram();
 
 	// Get locations
@@ -44,29 +37,31 @@ void MeshShader::AttachAndBuildProgram(const LPWSTR vertexShader, const LPWSTR f
 	m_uniforms.rotation = glGetUniformLocation(GetProgramHandle(), ROTATION);
 	m_uniforms.bCalculateSpecular = glGetUniformLocation(GetProgramHandle(), CALCULATE_SPECULAR);
 	m_uniforms.bCalculateNormal = glGetUniformLocation(GetProgramHandle(), CALCULATE_NORMAL);
-	m_uniforms.lightColour = glGetUniformLocation(GetProgramHandle(), LIGHT_COLOUR);
-	m_uniforms.lightPosition = glGetUniformLocation(GetProgramHandle(), LIGHT_POSITION);
+	m_uniforms.dayAndNight = glGetUniformLocation(GetProgramHandle(), DAY_AND_NIGHT);
 }
 
 void MeshShader::UpdateUniformValues(const MeshNodePtr pSceneNode) const
 {
 	pSceneNode->PreRender();
 
+	// Local to world matrix and rotation matrix
 	glUniformMatrix4fv(m_uniforms.localToWorld, 1, GL_FALSE, glm::value_ptr(pSceneNode->GetComponent<Transform>()->GetTransformation()));
 	glUniformMatrix4fv(m_uniforms.rotation, 1, GL_FALSE, glm::value_ptr(pSceneNode->GetComponent<Transform>()->GetOrientation()));
 
+	// Bools on where the calculate specular/normals
 	glUniform1i(m_uniforms.bCalculateSpecular, pSceneNode->GetCalculateSpecular());
 	glUniform1i(m_uniforms.bCalculateNormal, pSceneNode->GetCalculateNormal());
 }
 
-void MeshShader::PreRender(CameraPtr pCamera, LightNodePtr pLight)
+void MeshShader::PreRender(CameraPtr pCamera, glm::vec4& dayAndNight)
 {
 	ActivateShaderProgram();
 
+	// Pass in camera modelview, projection and position
 	glUniformMatrix4fv(m_uniforms.modelview, 1, GL_FALSE, glm::value_ptr(pCamera->GetViewMatrixMat4()));
 	glUniformMatrix4fv(m_uniforms.projection, 1, GL_FALSE, glm::value_ptr(pCamera->GetProjectionMat4()));
-
 	glUniform3fv(m_uniforms.cameraPosition, 1, glm::value_ptr(pCamera->GetPosition()));
-	glUniform3fv(m_uniforms.lightColour, 1, glm::value_ptr(pLight->GetLightColour()));
-	glUniform3fv(m_uniforms.lightPosition, 1, glm::value_ptr(pLight->GetComponent<Transform>()->GetPosition()));
+
+	// Pass in ambient
+	glUniform4fv(m_uniforms.dayAndNight, 1, glm::value_ptr(dayAndNight));
 }

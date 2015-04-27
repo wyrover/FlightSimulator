@@ -70,6 +70,44 @@ void ActorFactory::CreateNewActor(const TagNodePtr pTagNode)
 	}
 }
 
+// Hardcoded just to get projectiles working
+ActorPtr ActorFactory::CreateActorFromPrefab(const ActorPtr pActorPrefab)
+{
+	ActorPtr pActor = std::make_shared<Actor>(m_currentActorID, pActorPrefab->GetRenderer());
+
+	TransformPtr pTransform = std::make_shared<Transform>();
+	pTransform->SetUp(pActorPrefab->GetComponent<Transform>()->GetUpVector());
+	pTransform->SetRight(pActorPrefab->GetComponent<Transform>()->GetRightVector());
+	pTransform->SetView(pActorPrefab->GetComponent<Transform>()->GetViewVector());
+
+	MeshPtr pMesh = std::make_shared<Mesh>();
+	pMesh->LoadMeshFromTriangles(pActorPrefab->GetComponent<Mesh>()->GetMesh(), pActorPrefab->GetComponent<Mesh>()->GetTriangleCount());
+
+	MaterialPtr pMaterial = std::make_shared<Material>();
+	pMaterial->SetDiffuse("../asset/texture/missile.tga");
+
+	RigidbodyPtr pRigidbody = std::make_shared<Rigidbody>();
+
+	SphereColliderPtr pCollider = std::make_shared<SphereCollider>();
+	pCollider->SetSize(glm::vec3(0.0f, 0.0f, 0.0f), 1.0f);
+
+	pRigidbody->SetCollider(pCollider);
+	
+	pTransform->SetOwner(pActor);
+	pMesh->SetOwner(pActor);
+	pMaterial->SetOwner(pActor);
+	pRigidbody->SetOwner(pActor);
+
+	pActor->AddComponent(pTransform);
+	pActor->AddComponent(pMesh);
+	pActor->AddComponent(pMaterial);
+	pActor->AddComponent(pRigidbody);
+
+	m_currentActorID++;
+
+	return pActor;
+}
+
 const Renderer ActorFactory::GetRenderer(const TagNodePtr pTagNode) const
 {
 	std::string attribute = pTagNode->data["renderer"];
@@ -93,6 +131,10 @@ const Renderer ActorFactory::GetRenderer(const TagNodePtr pTagNode) const
 	else if (attribute == "billboard")
 	{
 		return Renderer_Billboard;
+	}
+	else if (attribute == "projectilePrefab")
+	{
+		return Renderer_ProjectilePrefab;
 	}
 	// Something went wrong
 	assert(false);

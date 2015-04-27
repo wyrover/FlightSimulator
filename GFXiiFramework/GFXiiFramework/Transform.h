@@ -62,29 +62,38 @@ public:
 		return glm::translate(glm::mat4(), m_position) * m_scale * m_orientation;
 	}
 
-	inline const glm::vec3&				GetPosition() const
+	inline const glm::vec3				GetPosition() const
 	{
 		return m_position;
 	}
 
-	inline const glm::vec3&				GetUpVector() const
+	inline const glm::vec3				GetUpVector() const
 	{
 		return m_upVector;
 	}
 
-	inline const glm::vec3&				GetRightVector() const
+	inline const glm::vec3				GetRightVector() const
 	{
 		return m_rightVector;
 	}
 
-	inline const glm::vec3&				GetViewVector() const
+	inline const glm::vec3				GetViewVector() const
 	{
 		return m_viewVector;
 	}
 
-	inline const glm::mat4&				GetOrientation() const
+	inline const glm::mat4				GetOrientation() const
 	{
 		return m_orientation;
+	}
+
+	inline void							SetOrientation(const glm::mat4 &orientation)
+	{
+		m_orientation = orientation;
+
+		m_upVector = glm::vec3(orientation * glm::vec4(m_upVector, 0));
+		m_viewVector = glm::vec3(orientation * glm::vec4(m_viewVector, 0));
+		m_rightVector = glm::vec3(orientation * glm::vec4(m_rightVector, 0));
 	}
 
 	inline void							MoveForward(float amount)
